@@ -20,3 +20,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.dashboard-content{
+  height: 100vh;
+  
+  -webkit-display: -webkit-box;
+  -webkit-display: -webkit-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.dashboard-main-container{
+  width: 100%;
+}
+
