@@ -1,0 +1,21 @@
+const express = require('express'); 
+const mongoose = require('mongoose'); 
+const app = express();
+const dotenv = require('dotenv');
+dotenv.config(); 
+const PORT = 3000;
+const DB = process.env.MONGO_URI; 
+// middlewares
+
+mongoose.connect(DB).then( () => {
+    console.log("Connection successful "); 
+}).catch( (err) => {
+    console.log(err); 
+})
+app.get('/', (req, res) => {
+    res.send("Hello World"); 
+}); 
+app.listen(PORT , "0.0.0.0" , ()=> {
+    console.log(`Server is running on port ${PORT}`); 
+})
+
