@@ -9,12 +9,78 @@ export default function dashboard() {
     let [city,changeCity] = useState("");
     let [locality,changeLocality] = useState("");
     const MainContainer = () =>{
+        const numbers = [
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            },
+            {
+                'applicationID' : 'A12334',
+                'vendorName' : 'Kirti college vada pav'
+            }];
+        const listItems = numbers.map((application) =>
+        <li>
+            <p>{application.applicationID}</p>
+            <p>{application.vendorName}</p>
+        </li>
+        );
 
-        return (
-            <div>
-                
-            </div>
-        )
+        if(state == 0){
+            return (
+                <div className="vendor-registration-main-container">
+                    <ul>{listItems}</ul>
+                </div>
+                )
+            }
+            else{
+                return (
+                <div className="vendor-registration-main-container">
+                    Approved me hai
+                    <ul>{listItems}</ul>
+                </div>
+            )
+        }
+
     }
     const SearchBar = () =>{
         return (
@@ -32,6 +98,9 @@ export default function dashboard() {
                 <div className="vendor-registration-search-bar-items">
                     <Button variant="outline-primary" className='outline-btn'>Clear</Button>{' '}
                 </div>
+                <div className="vendor-registration-search-bar-items">
+                    <Button variant="primary">Search</Button>{' '}
+                </div>
             </div>
         )
     }
@@ -41,8 +110,8 @@ export default function dashboard() {
             return (
                 <div className="vendor-registration-navbar">
                     <div 
-                    className="vendor-registration-navbar-items vendor-registration-navbar-items-active" >Pending Registration</div>
-                    <div className="vendor-registration-navbar-items" onClick={changeState(1)}>Approved Registration</div>
+                    className="vendor-registration-navbar-items vendor-registration-navbar-items-active" onClick={()=>changeState(0)}>Pending Registration</div>
+                    <div className="vendor-registration-navbar-items" onClick={()=>changeState(1)}>Approved Registration</div>
                 </div>
             )
         }
@@ -50,9 +119,9 @@ export default function dashboard() {
             return (
                 <div className="vendor-registration-navbar">
                     <div 
-                    className="vendor-registration-navbar-items vendor-registration-navbar-items-active" 
-                    onClick={changeState(0)}>Pending Registration</div>
-                    <div className="vendor-registration-navbar-items">Approved Registration</div>
+                    className="vendor-registration-navbar-items" 
+                    onClick={()=>changeState(0)}>Pending Registration</div>
+                    <div className="vendor-registration-navbar-items  vendor-registration-navbar-items-active" onClick={()=>changeState(1)}>Approved Registration</div>
                 </div>
             )
         }

@@ -10,6 +10,7 @@ body {
   --primary-color: #FF6B62;
   --secondary_color: #2C3333;
   --shade-color: #395B64;
+  --box-color: #FFBC80;
 }
 
 a {
@@ -19,6 +20,26 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+ul{
+  list-style-type: none;
+}
+
+/* Scrollbar Styling */
+div::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+div::-webkit-scrollbar-track {
+  background: #d3d3d3;        /* color of the tracking area */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid va;  /* creates padding around scroll thumb */
 }
 
 /* Dashboard CSS */
@@ -34,21 +55,30 @@ a {
 }
 .dashboard-main-container{
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* React BootStrap Buttons */
-.btn:focus , .btn:active {
-  outline: none !important;
-  outline-offset: none !important;
+.btn-check:focus + .btn, .btn:focus, .btn:active:focus {
+  background-color: var(--primary-color)!important;
+  box-shadow: 0 0 0 0.25rem var(--box-color) !important;
+  color: white!important;
+  border-color: #FF6B62!important;
 }
 .outline-btn{
   color: var(--primary-color)!important;
   border-color: var(--primary-color)!important;
 }
-.outline-btn:hover{
+.outline-btn:hover, .outline-btn:active, .btn:active, .btn-primary{
   background-color: var(--primary-color)!important;
+  border-color: #FF6B62!important;
   color: white!important;
 }
-.outline-btn:active{
-  background-color: var(--primary-color)!important;
+.btn:active, .btn:hover, .outline-btn:hover, .outline-btn:focus, .btn:focus{
+  background-color: #ff0f00!important;
+}
+.form-control:focus{
+  box-shadow: 0 0 0 0.25rem var(--box-color) !important;
+  border-color: var(--primary-color)!important;
 }

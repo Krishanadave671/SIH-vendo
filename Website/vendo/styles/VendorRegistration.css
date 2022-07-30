@@ -12,14 +12,13 @@
     background-color: var(--primary-color);
     padding:7px;
     text-align: center;
-    color: white;
+    color: #d3d3d3;
 }
 .vendor-registration-navbar-items:hover{
     cursor: pointer;
 }
 .vendor-registration-navbar-items-active{
-    background-color: white;
-    color: var(--secondary-color);
+    color: white;
 }
 .vendor-registration-search-bar{
     display: flex;
@@ -30,7 +29,15 @@
 }
 .vendor-registration-search-bar-items{
     margin: 10px;
-    /* align-items: center; */
-    /* align-self: center; */
-
+}
+.vendor-registration-main-container{
+    margin-left: 64px ;
+    margin-right: 20px;
+    flex: 1;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.vendor-registration-main-container ul li{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

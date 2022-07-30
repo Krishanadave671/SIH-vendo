@@ -21,13 +21,13 @@
 	margin: 0 4rem;
 }
 
-.landing-navbar .landing-navbar-links p {
-	color: var(--primary-color);
+.landing-navbar .landing-navbar-links p a {
+	color: var(--primary-color)!important;
 	transition: 0.2s all ease;
 }
 
-.landing-navbar .landing-navbar-links p:hover {
-	color: #281C2D;
+.landing-navbar .landing-navbar-links p a:hover {
+	color: #281C2D!important;
 }
 
 .landing-navbar-logo img {
