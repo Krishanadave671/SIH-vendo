@@ -21,6 +21,8 @@ a {
   box-sizing: border-box;
 }
 
+/* Dashboard CSS */
+
 .dashboard-content{
   height: 100vh;
   
@@ -34,3 +36,19 @@ a {
   width: 100%;
 }
 
+/* React BootStrap Buttons */
+.btn:focus , .btn:active {
+  outline: none !important;
+  outline-offset: none !important;
+}
+.outline-btn{
+  color: var(--primary-color)!important;
+  border-color: var(--primary-color)!important;
+}
+.outline-btn:hover{
+  background-color: var(--primary-color)!important;
+  color: white!important;
+}
+.outline-btn:active{
+  background-color: var(--primary-color)!important;
+}
