@@ -29,7 +29,8 @@ collections : vendingzones
 - vendingzoneaddress
 - vendingzonelocation
 - vendingzonedescription
-- vendingzoneimage
-- vendingzonemap
+- vendingzoneimage 
+- maximumvendors - int
+- vendingzonemap - int 
 
 middlewares - vendor , admin 
