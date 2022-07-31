@@ -13,68 +13,92 @@ export default function dashboard() {
     const MainContainer = () =>{
         const numbers = [
             {
-                'applicationID' : 'A12334',
+                'applicationID' : 'A11',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12324',
+                'applicationID' : 'A12',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A42334',
+                'applicationID' : 'A13',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A02334',
+                'applicationID' : 'A14',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A72334',
+                'applicationID' : 'A15',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A52634',
+                'applicationID' : 'A16',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12304',
+                'applicationID' : 'A17',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12334',
+                'applicationID' : 'A18',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12384',
+                'applicationID' : 'A19',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12534',
+                'applicationID' : 'A20',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12344',
+                'applicationID' : 'A21',
                 'vendorName' : 'Kirti college vada pav'
             },
             {
-                'applicationID' : 'A12004',
+                'applicationID' : 'A22',
                 'vendorName' : 'Kirti college vada pav'
             }];
-        const listItems = numbers.map((application) =>
-        <li>
-            <Card>
-                <Card.Body>
-                    <Card.Title>{application.vendorName}</Card.Title>
-                    <Card.Subtitle className="mb-2 text-muted">{application.applicationID}</Card.Subtitle>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                    </Card.Text>
-                    <Card.Link href="#">Card Link</Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
-                </Card.Body>
-            </Card>
-        </li>
+        const listItems = numbers.map((application) =>{
+            if(state == 0){
+                return (
+                    <li>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>{application.vendorName}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">{application.applicationID}</Card.Subtitle>
+                                <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content.
+                                </Card.Text>
+                                <Card.Link href={`/pending_application/${application.applicationID}`}>Card Link</Card.Link>
+                                <Card.Link href="#">Another Link</Card.Link>
+                            </Card.Body>
+                        </Card>
+                    </li>
+                );
+            }
+            else{
+                return (
+                    <li>
+                        <Card>
+                            <Card.Body>
+                                <Card.Title>{application.vendorName}</Card.Title>
+                                <Card.Subtitle className="mb-2 text-muted">{application.applicationID}</Card.Subtitle>
+                                <Card.Text>
+                                Some quick example text to build on the card title and make up the
+                                bulk of the card's content. Application ke andar hu
+                                </Card.Text>
+                                <Card.Link href={`/approved_application/${application.applicationID}`}>Card Link</Card.Link>
+                                <Card.Link href="#">Another Link</Card.Link>
+                            </Card.Body>
+                        </Card>
+                    </li>
+                );
+            }
+        }
+       
         );
 
         if(state == 0){
@@ -87,7 +111,6 @@ export default function dashboard() {
             else{
                 return (
                 <div className="vendor-registration-main-container">
-                    Approved me hai
                     <ul>{listItems}</ul>
                 </div>
             )
