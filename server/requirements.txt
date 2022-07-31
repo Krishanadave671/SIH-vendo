@@ -1,0 +1,35 @@
+collections vendor details
+- vendorid
+- vendor name
+- vendor address
+- vendor phone             
+- vendor addharno
+- panno
+- passport bool
+- electionid bool 
+- MCGM license issued 
+- pancard 
+- addharcard 
+- shop location 
+- complaints - array 
+- credit score - int
+
+Collections : Complaints 
+- complaint id
+- complaint date
+- complaint type
+- complaint description
+- complaint status
+- complaint resolved date
+- vendorschema 
+
+collections : vendingzones 
+- vendingzoneid
+- vendingzonename
+- vendingzoneaddress
+- vendingzonelocation
+- vendingzonedescription
+- vendingzoneimage
+- vendingzonemap
+
+middlewares - vendor , admin 
