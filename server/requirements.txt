@@ -26,11 +26,9 @@ Collections : Complaints
 collections : vendingzones 
 - vendingzoneid
 - vendingzonename
-- vendingzoneaddress
-- vendingzonelocation
+- vendingzonelocation  -- streetlocation
 - vendingzonedescription
 - vendingzoneimage 
 - maximumvendors - int
-- vendingzonemap - int 
 
 middlewares - vendor , admin 
