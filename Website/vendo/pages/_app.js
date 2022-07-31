@@ -4,6 +4,7 @@ import '../styles/Navbar.components.css';
 import '../styles/DashboardSideMenu.components.css';
 import '../styles/VendorRegistration.css';
 import '../styles/VendorApplication.css';
+import '../styles/PendingApplication.css';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />

@@ -82,3 +82,4 @@ div::-webkit-scrollbar-thumb {
   box-shadow: 0 0 0 0.25rem var(--box-color) !important;
   border-color: var(--primary-color)!important;
 }
+/* React Bootstrap Accordion */

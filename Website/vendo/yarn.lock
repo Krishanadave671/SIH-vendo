@@ -1537,10 +1537,10 @@
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
-"react-transition-group@^4.4.2":
-  "integrity" "sha512-ylc4S7Pi/2rR8j0Z+5WK23oTh4o4qDKIETL4Vzw4GAGa6EEFSIN8AbT3qdXFO8Wa6aYKe0bgKewSUqw+QP7BrA=="
-  "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.3.tgz"
-  "version" "4.4.3"
+"react-transition-group@^4.4.2", "react-transition-group@^4.4.4":
+  "integrity" "sha512-TKS7/dTpwBKEG9nrzVK3qNzvaJyKzEIFB5xVtnKdjEk5wTstklWnNJ/N3RM6uKG8wm36nlgHTT7+UZT3LIFHLA=="
+  "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.4.tgz"
+  "version" "4.4.4"
   dependencies:
     "@babel/runtime" "^7.5.5"
     "dom-helpers" "^5.0.1"
