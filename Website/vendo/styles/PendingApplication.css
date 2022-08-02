@@ -25,6 +25,7 @@
     font-size: 1.2rem;
     padding-top: 10px;
     padding-bottom: 10px;
+    color: var(--secondary-color);
 }
 .pending-application-banner{
     height: 50px;

@@ -3,6 +3,7 @@ import DashboardSidebar from './components/DashboardSidebar'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Navbar2 from './components/Navbar2.jsx';
 
 export default function dashboard() {
     let [state,changeState] = useState(0);
@@ -183,6 +184,7 @@ export default function dashboard() {
             <div className="dashboard-content">
                 <DashboardSidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
                 <div className="dashboard-main-container">
+                    <Navbar2 />
                     <Navbar />
                     <SearchBar/>
                     <MainContainer/>

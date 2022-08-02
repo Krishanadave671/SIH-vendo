@@ -6,7 +6,7 @@ export default function dashboard() {
     <div>
         <DashboardSidebar pageWrapId={'page-wrap'} outerContainerId={'outer-container'}/>
         <div className="dashboard-main-container">
-            Hello main page 
+            Hello main page
         </div>
     </div>
   )
