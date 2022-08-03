@@ -44,3 +44,12 @@
     margin-top: 20px;
     justify-content: space-between;
 }
+.pending-application-docs a{
+    display: block;
+    border: 1px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 30px;
+    border-radius: 40px;
+    text-align: center;
+}

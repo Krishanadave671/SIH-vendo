@@ -35,9 +35,9 @@
     color: var(--secondary-color);
 }
 .license-id{
-    width: 400px;
-    height: 48px;
-    border-radius: 48px;
+    width: 360px;
+    height: 40px;
+    border-radius: 40px;
     text-align: center;
     font-weight: 600;
     margin-top: 80px;
@@ -45,5 +45,24 @@
     margin-bottom: 20px;
     font-size: 1.4rem;
     background-color: rgb(87, 196, 87);
-    padding: 8px;
+    padding: 4px;
+}
+
+.approved-application-main-container{
+    margin-left: 40px;
+    margin-right: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+    margin-top: 30px;
+    height: 70vh;
+    overflow: hidden;
+    overflow-y: scroll;
+
+}
+.approved-application-main-container iframe{
+    width: 100%;
+}
+.approved-application-main-container ul li{
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
