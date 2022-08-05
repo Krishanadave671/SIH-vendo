@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
+
 // Text Styles
 
 // To make it clear which weight we are using, we'll define the weight even for regular
@@ -64,3 +65,5 @@ const TextStyle body2Style = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.bold,
 );
+
+
