@@ -1,6 +1,8 @@
 .approved-application-container{
     width: 100%;
-    margin-top: 30px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 .approved-application-navbar{
     display: flex;
@@ -40,7 +42,6 @@
     border-radius: 40px;
     text-align: center;
     font-weight: 600;
-    margin-top: 80px;
     margin-left: 20px;
     margin-bottom: 20px;
     font-size: 1.4rem;
@@ -54,7 +55,8 @@
     padding-right: 20px;
     padding-bottom: 30px;
     margin-top: 30px;
-    height: 70vh;
+    /* flex-grow: 1; */
+    height: 60vh;
     overflow: hidden;
     overflow-y: scroll;
 

@@ -46,7 +46,10 @@
 }
 .pending-application-docs a{
     display: block;
-    border: 1px solid black;
+    width: 256px;
+    align-self: center;
+    background-image: var(--gradient-text);
+    color: white;
     margin-top: 20px;
     margin-bottom: 20px;
     height: 30px;

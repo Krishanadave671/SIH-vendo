@@ -12,20 +12,20 @@ function VendorApplicationDetails({VendorId}){
         const customer_review = [
             {
                 'rating':'2.5',
-                'customer_name':'Anoymous 1',
-                'customer_title': 'Average food service',
+                'custom_officer_date':'16/04/2023',
+                'custom_officer_title': 'Quality not upto expectation, bad quality of water used',
                 'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis felis non ante mattis tempus rutrum vel massa. Suspendisse efficitur, augue sit amet vestibulum lobortis, urna mi finibus lectus, vel luctus nunc risus eu turpis. Curabitur eget est eget nisi scelerisque pellentesque. Fusce faucibus sapien vel mauris commodo aliquet. In id dapibus erat. Ut fringilla, nulla et imperdiet aliquet, orci erat fringilla est, quis fermentum mauris lorem ut odio. Quisque est enim, eleifend vel erat vel, lobortis tristique dolor. In molestie massa quam, sed laoreet odio congue eu. Integer a dui dapibus, accumsan nulla in, dictum mi. Ut viverra, dui vel dignissim vehicula, nulla quam rutrum neque, nec rutrum sem mauris nec dui. In tempus lobortis urna quis auctor. Morbi gravida maximus nisi eget fermentum. Praesent pulvinar, velit eget mattis auctor, nunc dui elementum augue, ut hendrerit dui nisl non diam.'
             },
             {
                 'rating':'4.5',
-                'customer_name':'Anoymous 2',
-                'customer_title': 'Best food in dadar',
+                'custom_officer_date':'16/05/2023',
+                'custom_officer_title': 'All standards passed 👍',
                 'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis felis non ante mattis tempus rutrum vel massa. Suspendisse efficitur, augue sit amet vestibulum lobortis, urna mi finibus lectus, vel luctus nunc risus eu turpis. Curabitur eget est eget nisi scelerisque pellentesque. Fusce faucibus sapien vel mauris commodo aliquet. In id dapibus erat. Ut fringilla, nulla et imperdiet aliquet, orci erat fringilla est, quis fermentum mauris lorem ut odio. Quisque est enim, eleifend vel erat vel, lobortis tristique dolor. In molestie massa quam, sed laoreet odio congue eu. Integer a dui dapibus, accumsan nulla in, dictum mi. Ut viverra, dui vel dignissim vehicula, nulla quam rutrum neque, nec rutrum sem mauris nec dui. In tempus lobortis urna quis auctor. Morbi gravida maximus nisi eget fermentum. Praesent pulvinar, velit eget mattis auctor, nunc dui elementum augue, ut hendrerit dui nisl non diam.'
             },
             {
                 'rating':'1',
-                'customer_name':'Anoymous 2',
-                'customer_title': 'Worst food',
+                'custom_officer_date':'16/06/2023',
+                'custom_officer_title': 'Cannot provide documents for verification',
                 'desc': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam quis felis non ante mattis tempus rutrum vel massa. Suspendisse efficitur, augue sit amet vestibulum lobortis, urna mi finibus lectus, vel luctus nunc risus eu turpis. Curabitur eget est eget nisi scelerisque pellentesque. Fusce faucibus sapien vel mauris commodo aliquet. In id dapibus erat. Ut fringilla, nulla et imperdiet aliquet, orci erat fringilla est, quis fermentum mauris lorem ut odio. Quisque est enim, eleifend vel erat vel, lobortis tristique dolor. In molestie massa quam, sed laoreet odio congue eu. Integer a dui dapibus, accumsan nulla in, dictum mi. Ut viverra, dui vel dignissim vehicula, nulla quam rutrum neque, nec rutrum sem mauris nec dui. In tempus lobortis urna quis auctor. Morbi gravida maximus nisi eget fermentum. Praesent pulvinar, velit eget mattis auctor, nunc dui elementum augue, ut hendrerit dui nisl non diam.'
             },
            
@@ -36,10 +36,10 @@ function VendorApplicationDetails({VendorId}){
                     <li>
                         <Card>
                             <Card.Body>
-                                <Card.Title>{reviews.customer_name}</Card.Title>
+                                <Card.Title>{reviews.custom_officer_date}</Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">
                                     <Rating name="read-only" precision={0.5} value={parseInt(reviews.rating)} readOnly />
-                                    <div className="pending-application-section-desc"> {reviews.customer_title} </div>
+                                    <div className="pending-application-section-desc"> {reviews.custom_officer_title} </div>
                                 </Card.Subtitle>
                                 <Card.Text>
                                 
@@ -118,7 +118,7 @@ function VendorApplicationDetails({VendorId}){
                     <div 
                     className="approved-application-navbar-items approved-application-navbar-items-active" onClick={()=>changeState(0)}>Vendor Details</div>
                     <div className="approved-application-navbar-items" onClick={()=>changeState(1)}>Locations and Documents</div>
-                    <div className="approved-application-navbar-items" onClick={()=>changeState(2)}>Customer Review and feedback</div>
+                    <div className="approved-application-navbar-items" onClick={()=>changeState(2)}>Custom officer Review </div>
                 </div>
             )
         }
@@ -128,7 +128,7 @@ function VendorApplicationDetails({VendorId}){
                     <div className="approved-application-navbar-items" onClick={()=>changeState(0)}>Vendor Details</div>
                     <div 
                     className="approved-application-navbar-items approved-application-navbar-items-active" onClick={()=>changeState(1)}>Locations and Documents</div>
-                    <div className="approved-application-navbar-items" onClick={()=>changeState(2)}>Customer Review and feedback</div>
+                    <div className="approved-application-navbar-items" onClick={()=>changeState(2)}>Custom officer Review </div>
                 </div>
             )
         }
@@ -138,7 +138,7 @@ function VendorApplicationDetails({VendorId}){
                     <div className="approved-application-navbar-items" onClick={()=>changeState(0)}>Vendor Details</div>
                     <div className="approved-application-navbar-items" onClick={()=>changeState(1)}>Locations and Documents</div>
                     <div 
-                    className="approved-application-navbar-items approved-application-navbar-items-active" onClick={()=>changeState(2)}>Customer Review and feedback</div>
+                    className="approved-application-navbar-items approved-application-navbar-items-active" onClick={()=>changeState(2)}>Custom officer Review</div>
                 </div>
             )
         }
