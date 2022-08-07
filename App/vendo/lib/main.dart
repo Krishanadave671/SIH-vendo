@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       //home: language_selector(),
       onGenerateRoute: generateRoute,
-      initialRoute: "/languageSelect_screen",
+      initialRoute: "/calendar_screen",
     );
   }
 }
