@@ -1,9 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    overflow: hidden; /* Hide scrollbars */
+    font-family: 'Dosis', sans-serif;
+}
+
+:root{
+  --primary-color: #FF6B62;
+  --primary-color-dark: #c20a00;
+  --secondary-color: #2C3333;
+  --shade-color: #395B64;
+  --box-color: #FFBC80;
+  --gradient-text: linear-gradient(270deg,#FFBC80  0.08%, #FF6B62 94.04%);
+	--gradient-bg: linear-gradient(90deg,#ffd8b5  0.08%, #ffa29e 94.04%);
 }
 
 a {
@@ -14,3 +28,65 @@ a {
 * {
   box-sizing: border-box;
 }
+
+ul{
+  list-style-type: none;
+}
+
+/* Scrollbar Styling */
+div::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+div::-webkit-scrollbar-track {
+  background: #d3d3d3;        /* color of the tracking area */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px solid va;  /* creates padding around scroll thumb */
+}
+
+/* Dashboard CSS */
+
+.dashboard-content{
+  height: 100vh;
+  
+  -webkit-display: -webkit-box;
+  -webkit-display: -webkit-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+.dashboard-main-container{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* React BootStrap Buttons */
+.btn-check:focus + .btn, .btn:focus, .btn:active:focus {
+  background-color: var(--primary-color)!important;
+  box-shadow: 0 0 0 0.25rem var(--box-color) !important;
+  color: white!important;
+  border-color: #FF6B62!important;
+}
+.outline-btn{
+  color: var(--primary-color-dark)!important;
+  border-color: var(--primary-color)!important;
+}
+.outline-btn:hover, .outline-btn:active, .btn:active, .btn-primary{
+  background-color: var(--primary-color-dark)!important;
+  border-color: #FF6B62!important;
+  color: white!important;
+}
+.btn:active, .btn:hover, .outline-btn:hover, .outline-btn:focus, .btn:focus{
+  background-color: #ff0f00!important;
+}
+.form-control:focus{
+  box-shadow: 0 0 0 0.25rem var(--box-color) !important;
+  border-color: var(--primary-color)!important;
+}
+/* React Bootstrap Accordion */

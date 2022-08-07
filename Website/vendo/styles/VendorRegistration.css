@@ -1,0 +1,44 @@
+.vendor-registration-navbar{
+    display: flex;
+    justify-content:space-evenly;
+    align-items: center;
+}
+
+.vendor-registration-navbar-items{
+    display: inline-block;
+    background-color: var(--primary-color);
+    text-align: center;
+    color: #ffb6b6;
+    font-size: 1rem;
+	font-weight: 600;
+    padding: 1.1rem 2.75rem;
+	border-radius: 0.9rem;
+}
+.vendor-registration-navbar-items:hover{
+    cursor: pointer;
+}
+.vendor-registration-navbar-items-active{
+    color: white;
+}
+.vendor-registration-search-bar{
+    display: flex;
+    justify-content: flex-end;
+    /* align-items: center; */
+    margin-right: 64px ;
+    margin-top: 40px;
+}
+.vendor-registration-search-bar-items{
+    margin: 10px;
+}
+.vendor-registration-main-container{
+    margin-left: 64px ;
+    margin-right: 20px;
+    flex: 1;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.vendor-registration-main-container ul li{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 8px;
+}
