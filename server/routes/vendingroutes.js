@@ -3,10 +3,10 @@ const vendingzonerouter = express.Router();
 const { vendingzones } = require("../models/vendingzones"); 
 
 // find vendingzones according to location search bar for vendors app
-vendingzonerouter.get("/api/getvendingzones/search/:city/:ward/:tax" , async (req , res) => { 
+vendingzonerouter.get("/api/getvendingzones/search/:city/:ward/:tax"  , async (req , res) => { 
     try {
+        
         const { city , ward , tax} = req.params ; 
-    
         let vendingzone = await vendingzones.find({
             vendingzonecity : city , 
             vendingzoneward : ward , 

@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config(); 
 const PORT = process.env.PORT || 3000;
 const DB = process.env.MONGO_URI; 
+// routers 
 const vendingzonerouter = require("./routes/vendingroutes"); 
 // middlewares
 app.use(express.json()); 

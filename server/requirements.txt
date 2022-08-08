@@ -1,4 +1,4 @@
-collections vendor details
+collections : vendor details
 - vendorid
 - vendor name
 - vendor address
@@ -26,9 +26,24 @@ Collections : Complaints
 collections : vendingzones 
 - vendingzoneid
 - vendingzonename
-- vendingzonelocation  -- streetlocation
+- vendingzonelocation   
 - vendingzonedescription
 - vendingzoneimage 
-- maximumvendors - int
+- vendingzoneprofits 
+- vendingzonecrowds 
+- vendingzonefacilities
+- vendingzonevendors
+- vendingzonecomplaints
 
-middlewares - vendor , admin 
+middlewares : vendor , admin 
+ weekly bazaars 
+- bazaarid
+- bazaarname
+- bazaarlocation
+- bazaardescription
+- bazaarimage
+- bazaarstartdate
+- bazaarenddate
+- bazaarstatus
+- bazaarvendors - array
+- bazaartime  
