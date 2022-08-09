@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:vendo/util/colors.dart';
-
 
 const Widget horizontalSpaceTiny = SizedBox(width: 5.0);
 const Widget horizontalSpaceSmall = SizedBox(width: 10.0);
@@ -14,6 +12,14 @@ const Widget verticalSpaceSmall = SizedBox(height: 10.0);
 const Widget verticalSpaceRegular = SizedBox(height: 18.0);
 const Widget verticalSpaceMedium = SizedBox(height: 25.0);
 const Widget verticalSpaceLarge = SizedBox(height: 50.0);
+
+List<BoxShadow> shadowList = [
+  BoxShadow(
+    color: Colors.grey,
+    blurRadius: 30,
+    offset: Offset(0, 10),
+  )
+];
 
 //box decorations
 BoxDecoration borderBoxOutline = BoxDecoration(
