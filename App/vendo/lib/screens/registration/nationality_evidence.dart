@@ -40,6 +40,12 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                 height: 50,
                 width: 350,
                 child: DecoratedBox(
+                  decoration: const BoxDecoration(
+                    color: colors.primary,
+                    borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(20),
+                        bottomEnd: Radius.circular(20)),
+                  ),
                   child: Padding(
                     padding:
                         const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8),
@@ -50,12 +56,6 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                         color: colors.backgroundColor,
                       ),
                     ),
-                  ),
-                  decoration: BoxDecoration(
-                    color: colors.primary,
-                    borderRadius: BorderRadiusDirectional.only(
-                        topEnd: Radius.circular(20),
-                        bottomEnd: Radius.circular(20)),
                   ),
                 ),
               ),
@@ -68,9 +68,9 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                   children: [
                     DecoratedBox(
                       decoration: borderBoxOutline,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: const TextField(
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: TextField(
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               labelText: 'Aadhar Card Number',
@@ -81,9 +81,9 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                     verticalSpaceMedium,
                     DecoratedBox(
                       decoration: borderBoxOutline,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: const TextField(
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 20),
+                        child: TextField(
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               labelText: 'Pan Card Number',
@@ -207,11 +207,12 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
+        elevation: 0,
         child: Padding(
-          padding: EdgeInsets.only(right: 60, bottom: 8),
+          padding: const EdgeInsets.only(right: 60, bottom: 8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               SizedBox(
                 width: 70,
                 height: 50,
@@ -229,7 +230,6 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
             ],
           ),
         ),
-        elevation: 0,
       ),
     );
   }
