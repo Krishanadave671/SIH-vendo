@@ -46,7 +46,8 @@ const vendingzoneSchema = new mongoose.Schema({
         type : String , 
         required : true , 
         trim : true 
-    } 
+    } , 
+    
 }) 
 
 const vendingzones = mongoose.model('vendingzones', vendingzoneSchema);

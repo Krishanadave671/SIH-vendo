@@ -1,0 +1,10 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.hbs": "html",
+    "utility": "cpp",
+    "list": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp"
+  }
+}

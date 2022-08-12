@@ -36,7 +36,7 @@ collections : vendingzones
 - vendingzonecomplaints
 
 middlewares : vendor , admin 
- weekly bazaars 
+ weeklybazaars 
 - bazaarid
 - bazaarname
 - bazaarlocation
@@ -47,3 +47,10 @@ middlewares : vendor , admin
 - bazaarstatus
 - bazaarvendors - array
 - bazaartime  
+Govermentschemes , 
+- govermentschemeid 
+- govermentschemename
+- govermentschemedescription
+- govermentschemeimage
+- govermentschemeprofits
+
