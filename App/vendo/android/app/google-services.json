@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "79338234029",
+    "project_id": "vendo-35469",
+    "storage_bucket": "vendo-35469.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79338234029:android:48d500e95248def8696624",
+        "android_client_info": {
+          "package_name": "com.example.vendo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79338234029-lk3u6e48ok3of7u4jcf0rhdqgs0psnr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUma8lbgZybLW0VwWgctgsVb31WTOlsqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79338234029-lk3u6e48ok3of7u4jcf0rhdqgs0psnr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

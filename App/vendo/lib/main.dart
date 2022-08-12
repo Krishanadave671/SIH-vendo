@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: generateRoute,
-      initialRoute: "/main_page",
+      initialRoute: Routes.registerView,
     );
   }
 }

@@ -5,10 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-import share_plus_macos
-import url_launcher_macos
+
+import firebase_core
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
-  SharePlusMacosPlugin.register(with: registry.registrar(forPlugin: "SharePlusMacosPlugin"))
-  UrlLauncherPlugin.register(with: registry.registrar(forPlugin: "UrlLauncherPlugin"))
+  FLTFirebaseCorePlugin.register(with: registry.registrar(forPlugin: "FLTFirebaseCorePlugin"))
+
 }
