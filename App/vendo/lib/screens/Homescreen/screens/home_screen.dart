@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:vendo/Screens/Homescreen/screens/widgets/services_card.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
-import 'package:share_plus/share_plus.dart';
+import 'widgets/myCard.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -44,105 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 height: 10,
               ),
-              PhysicalModel(
-                color: Colors.white,
-                elevation: 8,
-                borderRadius: BorderRadius.circular(20.0),
-                child: Container(
-                  height: 200,
-                  margin: const EdgeInsets.only(bottom: 6.0),
-                  // decoration: BoxDecoration(
-                  //   borderRadius: BorderRadius.circular(20.0),
-                  //   color: Colors.grey.shade100,
-                  //   boxShadow: [
-                  //     BoxShadow(
-                  //       color: Colors.grey,
-                  //       offset: Offset(0.0, 1.0), //(x,y)
-                  //       blurRadius: 6.0,
-                  //     ),
-                  //   ],
-                  // ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                        leading: Container(
-                          child: CircleAvatar(
-                            radius: 30,
-                            backgroundImage: NetworkImage(
-                                "https://avatars.githubusercontent.com/u/84977709?s=400&u=6061e991de17cb0ba45b5713ee1eceb8d7a16ea4&v=4"),
-                          ),
-                        ),
-                        title: AppText.headingThree("Krishana Dave "),
-                        subtitle: AppText.body('Vendorid : VX1233439 '),
-                        hoverColor: Colors.red,
-                        trailing: Icon(
-                          Icons.food_bank,
-                          size: 40,
-                          color: Colors.green,
-                        ),
-                      ),
-                      Center(
-                          child: Text(
-                        "Kirti Vadapav Center",
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
-                      )),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: AppText.body1("Expiry date : 05/27 "),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.location_on,
-                              color: Colors.blue,
-                            ),
-                            Text(
-                              "Location",
-                              style: TextStyle(
-                                color: Colors.blue,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Icon(
-                              Icons.call,
-                              color: Colors.green,
-                            ),
-                            Text(
-                              "8104875867",
-                              style: TextStyle(
-                                color: Colors.green,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 80,
-                            ),
-                            Icon(
-                              Icons.qr_code_scanner,
-                              size: 30,
-                            ),
-                            // contact us
-                            //
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+              MyCard(
+                vendorImageurl:
+                    "https://avatars.githubusercontent.com/u/84977709?s=400&u=6061e991de17cb0ba45b5713ee1eceb8d7a16ea4&v=4",
+                vendorName: "Krishana Dave",
+                vendorId: "VX1234567",
+                vendorshopName: "Kirti Vadapav Center",
+                expiryDate: "05/27",
+                phoneNumber: "8104875867",
+                category: Icons.clean_hands,
               ),
               SizedBox(
                 height: 10,
@@ -157,81 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
+                      Servicescard(
+                        icon: Icons.document_scanner_sharp,
+                        serviceName: "My Schemes",
+                        color: Colors.red,
                       ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
-                      ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
-                      )
+                      Servicescard(
+                          color: Colors.green,
+                          icon: Icons.health_and_safety,
+                          serviceName: "Health and safety"),
+                      Servicescard(
+                          color: Colors.blue,
+                          icon: Icons.search,
+                          serviceName: "Search Locations"),
                     ],
                   ),
                   SizedBox(
@@ -240,81 +87,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
+                      Servicescard(
+                        icon: Icons.location_city,
+                        serviceName: "New shops",
+                        color: Colors.yellow,
                       ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
+                      Servicescard(
+                        color: Colors.lightGreen,
+                        icon: Icons.phone_in_talk,
+                        serviceName: "Contact TVC's",
                       ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
-                      )
+                      Servicescard(
+                          color: Colors.lightBlue,
+                          icon: Icons.map_sharp,
+                          serviceName: "Vending Maps"),
                     ],
                   ),
                   SizedBox(
@@ -323,77 +109,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
+                      Servicescard(
+                        color: Colors.purple,
+                        icon: Icons.online_prediction_rounded,
+                        serviceName: "Take Permissions",
                       ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 40,
-                                  color: Colors.blue,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
-                      ),
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 4,
-                        shadowColor: Colors.blue,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                            width: 100,
-                            height: 75,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Icon(
-                                  Icons.search,
-                                  size: 30,
-                                  color: Colors.blue,
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                AppText.caption("Search Locations"),
-                              ],
-                            )),
+                      Servicescard(
+                          color: Colors.teal,
+                          icon: Icons.shop,
+                          serviceName: "License renewal"),
+                      Servicescard(
+                        color: Colors.green,
+                        icon: Icons.money,
+                        serviceName: "Loan Facilities",
                       )
                     ],
                   ),
@@ -401,9 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   AppText.headingThree("Goverment Schemes"),
-                  
                 ],
-
               )
               // Gridview
               // MySchemes ,
