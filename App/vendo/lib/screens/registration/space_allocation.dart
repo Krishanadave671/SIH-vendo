@@ -23,6 +23,18 @@ class _SpaceAllocation extends State<SpaceAllocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+              padding: const EdgeInsets.all(0),
+              icon: Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
+        ),
       body: Container(
         color: Colors.white,
         child: Padding(
