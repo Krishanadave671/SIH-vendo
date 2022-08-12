@@ -1,5 +1,6 @@
 const express = require('express'); 
 const mongoose = require('mongoose'); 
+const localtunnel = require('localtunnel');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config(); 
@@ -10,12 +11,13 @@ const vendingzonerouter = require("./routes/vendingroutes");
 // middlewares
 app.use(express.json()); 
 app.use(vendingzonerouter); 
-
+ 
 // connection to mongodb 
 mongoose.connect(DB).then( () => {
     console.log("Connection successful "); 
 }).catch( (err) => {
     console.log(err); 
+    
 })
 
 // testing server 

@@ -10,6 +10,8 @@
 .svn/
 migrate_working_dir/
 .fvm
+.env*
+/ios/Runner/AppDelegate.swift
 
 # IntelliJ related
 *.iml
