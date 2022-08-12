@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
+import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
+import 'package:vendo/util/AppFonts/styles.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
@@ -15,6 +17,9 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterView extends State<RegisterView> {
   GenderSelection? _gender = GenderSelection.male;
+  String _location = '';
+  String _name = '';
+  String _dob = '';
 
   TextEditingController dateInput = TextEditingController();
 
@@ -32,18 +37,51 @@ class _RegisterView extends State<RegisterView> {
       ),
     );
 
-    // Handle the result in your way
-    print(result);
+    print(result.city.name.toString());
+    setState(() {
+      _location = result.city.name.toString();
+    });
+  }
+
+  void uploadVendorData() {
+    String _genderType = '';
+    switch (_gender) {
+      case GenderSelection.male:
+        _genderType = "male";
+        break;
+      case GenderSelection.female:
+        _genderType = "female";
+        break;
+      case GenderSelection.other:
+        _genderType = "other";
+        break;
+    }
+
+    //implement api here
+    print("vendor data $_name , $_dob , $_genderType , $_location");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            padding: const EdgeInsets.all(0),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ),
       body: Container(
         color: Colors.white,
         child: Padding(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.1,
+            top: MediaQuery.of(context).size.height * 0.01,
             bottom: 20,
             left: 0,
             right: 20,
@@ -100,29 +138,32 @@ class _RegisterView extends State<RegisterView> {
                     children: [
                       DecoratedBox(
                         decoration: borderBoxOutline,
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 20),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
                           child: TextField(
-                            decoration: InputDecoration(
+                            onChanged: ((value) {
+                              _name = value;
+                            }),
+                            decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 labelText: 'Applicant Name',
                                 hintText: 'Enter Applicant Name'),
                           ),
                         ),
                       ),
-                      verticalSpaceMedium,
-                      DecoratedBox(
-                        decoration: borderBoxOutline,
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 20),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                border: InputBorder.none,
-                                labelText: 'Address',
-                                hintText: 'Enter Address'),
-                          ),
-                        ),
-                      ),
+                      // verticalSpaceMedium,
+                      // DecoratedBox(
+                      //   decoration: borderBoxOutline,
+                      //   child: const Padding(
+                      //     padding: EdgeInsets.only(left: 20),
+                      //     child: TextField(
+                      //       decoration: InputDecoration(
+                      //           border: InputBorder.none,
+                      //           labelText: 'Address',
+                      //           hintText: 'Enter Address'),
+                      //     ),
+                      //   ),
+                      // ),
                       verticalSpaceMedium,
                       TextField(
                         controller: dateInput,
@@ -144,8 +185,28 @@ class _RegisterView extends State<RegisterView> {
                             setState(() {
                               dateInput.text = formattedDate;
                             });
+                            _dob = formattedDate;
                           } else {}
                         },
+                      ),
+                      verticalSpaceMedium,
+                      DecoratedBox(
+                        decoration: borderBoxOutline,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: TextField(
+                            onChanged: (value) => value,
+                            readOnly: true,
+                            onTap: () {
+                              showPlacePicker();
+                            },
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Location',
+                                hintText: _location,
+                                hintStyle: body1Style),
+                          ),
+                        ),
                       ),
                       verticalSpaceMedium,
                       AppText.bodyBold("Gender : "),
@@ -203,26 +264,32 @@ class _RegisterView extends State<RegisterView> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.only(right: 60, bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              SizedBox(
-                width: 70,
-                height: 50,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                      color: colors.primary,
-                      borderRadius: BorderRadius.all(Radius.circular(20))),
-                  child: Icon(
-                    Icons.arrow_forward,
-                    size: 50,
-                    color: colors.backgroundColor,
+        child: GestureDetector(
+          onTap: () {
+            uploadVendorData();
+            Navigator.of(context).pushNamed(Routes.nationalityEvidence);
+          },
+          child: Padding(
+            padding: const EdgeInsets.only(right: 60, bottom: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                SizedBox(
+                  width: 70,
+                  height: 50,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                        color: colors.primary,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    child: Icon(
+                      Icons.arrow_forward,
+                      size: 50,
+                      color: colors.backgroundColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
