@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
@@ -33,7 +34,7 @@ class _RegisterView extends State<RegisterView> {
     LocationResult result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
-            PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
+            PlacePicker(DotEnv().env['GOOGLE_API']),
       ),
     );
 
