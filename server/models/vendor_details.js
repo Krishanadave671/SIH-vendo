@@ -3,20 +3,32 @@ const complaintSchema = require("./complaints")
 
 const vendorDetails = mongoose.Schema({
     vendorid: {
-      type: Number , 
-      required: true , 
-      trim: true , 
-      unique: true 
+        type: Number, 
+        required: true, 
+        trim: true, 
+        unique: true 
       },
     name: {
         required: true,
         type: String,
         trim: true,
-      },
+    },
+    dob: {
+        required: true,
+        type: String
+    },
+    gender: {
+        required: true,
+        type: String
+    },
     address: {
         type: String,
         default: "",
-      },
+    },
+    password: {
+      required: true,
+      type: String,
+    },
     phone: {
       type: String,
       required: true,
