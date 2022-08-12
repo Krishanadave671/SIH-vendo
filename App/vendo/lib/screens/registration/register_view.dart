@@ -34,7 +34,7 @@ class _RegisterView extends State<RegisterView> {
     LocationResult result = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
-            PlacePicker(DotEnv().env['GOOGLE_API']),
+            PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
       ),
     );
 
