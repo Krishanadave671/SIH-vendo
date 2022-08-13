@@ -50,12 +50,13 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
   }
 
   void getZones() {
+    //add api implementation here
     for (int i = 0; i < 6; i++) {
       String id = '23';
       String streetName = 'kanderpada';
       String location = "34.23323.23";
       String description = "this is a nice place to sell";
-      String imageFile = "https://sdfsadf";
+      String imageFile = "assets/images/user.png";
       int max = 34;
       String city = "mumbai";
       String ward = "R";
@@ -108,20 +109,22 @@ class SpaceAllocationListView extends ConsumerWidget {
         padding: EdgeInsets.only(
           top: MediaQuery.of(context).size.height * 0.01,
           bottom: 20,
-          left: 0,
-          right: 20,
+          left: 10,
+          right: 10,
         ),
         child: ListView.builder(
           itemCount: vendingZones.length,
           itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              minVerticalPadding: MediaQuery.of(context).size.height * 0.03,
-              isThreeLine: true,
-              leading: Image.asset("assets/images/register.png",fit: BoxFit.fill,),
-              title: AppText.headingThree("Goregaon, district 4"),
-              subtitle: AppText.body("category : food \ntype : food"),
-              trailing: AppText.body("caption"),
-              onTap: () {},
+            return Card(
+              child: ListTile(
+                minVerticalPadding: MediaQuery.of(context).size.height * 0.03,
+                isThreeLine: true,
+                leading: Image.asset(vendingZones[index].imageFile,fit: BoxFit.fill,),
+                title: AppText.headingThree(vendingZones[index].city),
+                subtitle: AppText.body(vendingZones[index].description),
+                trailing: AppText.body(vendingZones[index].ward),
+                onTap: () {},
+              ),
             );
           },
         ),

@@ -1,14 +1,13 @@
 import 'dart:io';
-import 'dart:math';
-
+import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
-
 import '../../routes.dart';
+import 'dart:ui' as ui;
 
 class DocumentaryEvidence extends StatefulWidget {
   const DocumentaryEvidence({Key? key}) : super(key: key);
@@ -18,39 +17,98 @@ class DocumentaryEvidence extends StatefulWidget {
 }
 
 class _DocumentaryEvidence extends State<DocumentaryEvidence> {
+  @override
+  void initState() {
+    uniqueString = 'yash';
+    panPathString = 'vendor_documents/$uniqueString/pan.jpeg';
+    aadharPathString = 'vendor_documents/$uniqueString/aadhar.jpeg';
 
-  
-// Future getPdfAndUpload()async{
-//   var rng = Random();
-//   String randomName="";
-//   for (var i = 0; i < 20; i++) {
-//     print(rng.nextInt(100));
-//     randomName += rng.nextInt(100).toString();
-//   }
-//   File file = await FilePicker.getFile(type: FileType.CUSTOM, fileExtension: 'pdf');
-//   String fileName = '${randomName}.pdf';
-//   print(fileName);
-//   print('${file.readAsBytesSync()}');
-//   savePdf(file.readAsBytesSync(), fileName);
-// }
+    super.initState();
+  }
 
-// Future savePdf(List<int> asset, String name) async {
+  bool uploadedAdhar = false;
+  bool uploadedPan = false;
+  late final panCardRef;
+  late final panImage;
+  late final aadharRef;
+  late final aadharImage;
+  late final String uniqueString;
+  late final String panPathString;
+  late final String aadharPathString;
 
-//   StorageReference reference = FirebaseStorage.instance.ref().child(name);
-//   StorageUploadTask uploadTask = reference.putData(asset);
-//   String url = await (await uploadTask.onComplete).ref.getDownloadURL();
-//   print(url);
-//   documentFileUpload(url);
-//   return  url;
-// }
-// void documentFileUpload(String str) {
+  Future<void> uploadPan() async {
+    FilePickerResult? result;
+    try {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpeg', 'png'],
+      );
+    } catch (e) {
+      print(e);
+    }
+    File file = File(result!.paths[0]!);
 
-//   var data = {
-//     "PDF": str,
-//   };
-//   mainReference.child("Documents").child('pdf').set(data).then((v) {
-//   });
-// }
+    try {
+      final storage = FirebaseStorage.instance;
+      panCardRef = storage.ref().child(panPathString);
+      await panCardRef.putFile(file, SettableMetadata(contentType: "jpeg"));
+      await getPan();
+      setState(() {
+        uploadedPan = true;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> getPan() async {
+    try {
+      final link = await panCardRef.getDownloadURL();
+      setState(() {
+        panImage = link;
+      });
+    } on FirebaseException catch (e) {}
+  }
+
+  Future<void> getAadhar() async {
+    try {
+      final link = await aadharRef.getDownloadURL();
+      setState(() {
+        aadharImage = link;
+      });
+    } on FirebaseException catch (e) {}
+  }
+
+  Future<void> uploadAadhar() async {
+    FilePickerResult? result;
+    try {
+      result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['jpeg', 'png'],
+      );
+    } catch (e) {
+      print(e);
+    }
+    File file = File(result!.paths[0]!);
+
+    try {
+      String uniqueString = 'yash';
+      final storage = FirebaseStorage.instance;
+      aadharRef = storage.ref().child(aadharPathString);
+      await aadharRef.putFile(file, SettableMetadata(contentType: "jpeg"));
+      await getAadhar();
+      setState(() {
+        uploadedAdhar = true;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void onContinue() {
+    //implement api here;
+    print("end game : $panPathString , $aadharPathString ");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,76 +127,115 @@ class _DocumentaryEvidence extends State<DocumentaryEvidence> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.01,
-            bottom: 20,
-            left: 0,
-            right: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: AppText.headingOne("Register"),
-              ),
-              verticalSpaceMedium,
-              SizedBox(
-                height: 50,
-                width: 300,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: colors.primary,
-                    borderRadius: BorderRadiusDirectional.only(
-                      topEnd: Radius.circular(20),
-                      bottomEnd: Radius.circular(20),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.01,
+              bottom: 20,
+              left: 0,
+              right: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: AppText.headingOne("Register"),
+                ),
+                verticalSpaceMedium,
+                SizedBox(
+                  height: 50,
+                  width: 300,
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: colors.primary,
+                      borderRadius: BorderRadiusDirectional.only(
+                        topEnd: Radius.circular(20),
+                        bottomEnd: Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: AppText.headingTwo(
-                      "Documentary Evidence",
-                      color: colors.backgroundColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: AppText.headingTwo(
+                        "Documentary Evidence",
+                        color: colors.backgroundColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              verticalSpaceLarge,
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    AppText.bodyBold("Upload Documents all in pdf format"),
-                    verticalSpaceLarge,
-                    Row(
-                      children: [
-                        AppText.body("1.Pan Card"),
-                        horizontalSpaceLarge,
-                        GestureDetector(
-                            onTap: () {},
-                            child: Icon(Icons.file_upload_outlined)),
-                      ],
-                    ),
-                    verticalSpaceMedium,
-                    Row(
-                      children: [
-                        AppText.body("2.Aadhar Card"),
-                        horizontalSpaceLarge,
-                        GestureDetector(
-                            onTap: () {},
-                            child: Icon(Icons.file_upload_outlined)),
-                      ],
-                    ),
-                  ],
+                verticalSpaceLarge,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText.bodyBold(
+                          "Upload all Documents in png or jpeg format"),
+                      verticalSpaceLarge,
+                      Row(
+                        children: [
+                          AppText.body("1.Pan Card"),
+                          horizontalSpaceLarge,
+                          GestureDetector(
+                            onTap: () {
+                              uploadPan();
+                            },
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: (uploadedPan)
+                                      ? Colors.green
+                                      : colors.primary,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: const Icon(Icons.file_upload_outlined),
+                            ),
+                          ),
+                        ],
+                      ),
+                      horizontalSpaceSmall,
+                      (uploadedPan)
+                          ? SizedBox(
+                              height: 200,
+                              child: Image.network(panImage.toString(),
+                                  fit: BoxFit.scaleDown),
+                            )
+                          : SizedBox(),
+                      verticalSpaceMedium,
+                      Row(
+                        children: [
+                          AppText.body("2.Aadhar Card"),
+                          horizontalSpaceLarge,
+                          GestureDetector(
+                            onTap: () {
+                              uploadAadhar();
+                            },
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                  color: (uploadedAdhar)
+                                      ? Colors.green
+                                      : colors.primary,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: const Icon(Icons.file_upload_outlined),
+                            ),
+                          ),
+                        ],
+                      ),
+                      horizontalSpaceSmall,
+                      (uploadedAdhar)
+                          ? SizedBox(
+                              height: 200,
+                              child: Image.network(aadharImage.toString(),
+                                  fit: BoxFit.scaleDown),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -146,7 +243,8 @@ class _DocumentaryEvidence extends State<DocumentaryEvidence> {
         elevation: 0,
         child: GestureDetector(
           onTap: () {
-            Navigator.of(context).pushNamed(Routes.documentaryEvidence);
+            onContinue();
+            Navigator.of(context).pushNamed(Routes.spaceallocation);
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 60, bottom: 8),

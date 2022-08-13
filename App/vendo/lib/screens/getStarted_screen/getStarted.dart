@@ -3,6 +3,8 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
+import '../../routes.dart';
+
 class getStarted extends StatefulWidget {
   const getStarted({Key? key}) : super(key: key);
 
@@ -36,7 +38,7 @@ class _getStartedState extends State<getStarted> {
               height: 300,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage("lib/assets/images/vendor.png"),
+                  image: AssetImage("assets/images/vendor.png"),
                   fit: BoxFit.fitHeight,
                 )
               ),
@@ -52,7 +54,7 @@ class _getStartedState extends State<getStarted> {
             
             Padding(
               padding: const EdgeInsets.only(bottom: 28),
-              child: ElevatedButton(onPressed: ()=> Navigator.of(context).pushNamed('/login_screen'),
+              child: ElevatedButton(onPressed: ()=> Navigator.of(context).pushNamed(Routes.loginScreen),
                   style: ElevatedButton.styleFrom(
                     primary: colors.primary,
                     shape: RoundedRectangleBorder(

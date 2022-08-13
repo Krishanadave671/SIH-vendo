@@ -4,14 +4,14 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-class login_screen extends StatefulWidget {
-  const login_screen({Key? key}) : super(key: key);
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<login_screen> createState() => _login_screenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _login_screenState extends State<login_screen> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,41 +20,33 @@ class _login_screenState extends State<login_screen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 12,top: 12),
+                padding: const EdgeInsets.only(left: 12, top: 12),
                 child: Row(
                   children: [
-                    AppText.headingThree("Let's sign you in\nWelcome back\nYou have been missed")
+                    AppText.headingThree(
+                        "Let's sign you in\nWelcome back\nYou have been missed")
                   ],
                 ),
               ),
-
               verticalSpaceMedium,
-
               Container(
                 height: 100,
                 decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("lib/assets/images/user.png"),
-                    fit: BoxFit.fitHeight,
-                  )
-                ),
+                    image: DecorationImage(
+                  image: AssetImage("assets/images/user.png"),
+                  fit: BoxFit.fitHeight,
+                )),
               ),
-              
               verticalSpaceMedium,
-
               Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Row(
-                  children: [
-                    AppText.headline("Login")
-                  ],
+                  children: [AppText.headline("Login")],
                 ),
               ),
-
               verticalSpaceMedium,
-
               Padding(
-                padding: const EdgeInsets.only(left: 24,right: 24),
+                padding: const EdgeInsets.only(left: 24, right: 24),
                 child: TextFormField(
                   cursorColor: colors.primary,
                   initialValue: 'Enter your number',
@@ -70,9 +62,8 @@ class _login_screenState extends State<login_screen> {
                   ),
                 ),
               ),
-
               Padding(
-                padding: const EdgeInsets.only(left: 24,right: 24,top: 12),
+                padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
                 child: PasswordField(
                   color: colors.primary,
                   passwordConstraint: r'.*[@$#.*].*',
@@ -94,41 +85,35 @@ class _login_screenState extends State<login_screen> {
                     focusedErrorBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(5),
                       borderSide:
-                      const BorderSide(width: 2, color: colors.primary),
+                          const BorderSide(width: 2, color: colors.primary),
                     ),
                   ),
                   errorMessage:
-                  'must contain special character either . * @ # \$',
+                      'must contain special character either . * @ # \$',
                 ),
               ),
-              
               Padding(
                 padding: const EdgeInsets.only(top: 12),
-                child: ElevatedButton(onPressed: (){}, 
+                child: ElevatedButton(
+                  onPressed: () {},
                   child: AppText.buttonText("Login"),
                   style: ElevatedButton.styleFrom(
-                    primary: colors.primary,
+                      primary: colors.primary,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)
-                      )
-                  ),
+                          borderRadius: BorderRadius.circular(30))),
                 ),
               ),
-
               verticalSpaceLarge,
-
               Row(
                 children: [
                   Expanded(child: Container()),
                   AppText.bodyBold("New Vendor ?"),
-                  TextButton(onPressed: (){},
-                      child: const Text(
-                        "Register",
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontSize: 16
-                        ),
-                      ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Register",
+                      style: TextStyle(color: Colors.blueAccent, fontSize: 16),
+                    ),
                   ),
                   Expanded(child: Container())
                 ],
