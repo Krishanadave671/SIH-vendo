@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:passwordfield/passwordfield.dart';
+import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
@@ -95,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 12),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () { Navigator.of(context).pushNamed(Routes.mainPage);},
                   child: AppText.buttonText("Login"),
                   style: ElevatedButton.styleFrom(
                       primary: colors.primary,
@@ -109,7 +110,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(child: Container()),
                   AppText.bodyBold("New Vendor ?"),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(Routes.registerView);
+                    },
                     child: const Text(
                       "Register",
                       style: TextStyle(color: Colors.blueAccent, fontSize: 16),
