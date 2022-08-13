@@ -15,7 +15,6 @@ class Servicescard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      
       child: PhysicalModel(
         color: Colors.white,
         elevation: 4,

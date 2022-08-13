@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:vendo/models/vendingzone_details.dart';
+import 'package:vendo/providers/vending_zoneprovider.dart';
 
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
@@ -71,23 +73,18 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
         ward: ward,
         tax: tax,
       );
+
       addZone(vd);
     }
   }
 }
 
-final vendingZonesProvider =
-    StateNotifierProvider<VendingZonesNotifier, List<VendingZones>>((ref) {
-  return VendingZonesNotifier();
-});
-
 class SpaceAllocationListView extends ConsumerWidget {
   const SpaceAllocationListView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
-
+  Widget build(BuildContext context, ref) {
+    final _data = ref.watch(vendingzonedataProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -105,28 +102,39 @@ class SpaceAllocationListView extends ConsumerWidget {
         title: AppText.headingThree("Vending Zones"),
       ),
       body: Padding(
-        padding: EdgeInsets.only(
-          top: MediaQuery.of(context).size.height * 0.01,
-          bottom: 20,
-          left: 0,
-          right: 20,
-        ),
-        child: ListView.builder(
-          itemCount: vendingZones.length,
-          itemBuilder: (BuildContext context, int index) {
-            return ListTile(
-              minVerticalPadding: MediaQuery.of(context).size.height * 0.03,
-              isThreeLine: true,
-              leading: Image.asset("assets/images/register.png",fit: BoxFit.fill,),
-              title: AppText.headingThree("Goregaon, district 4"),
-              subtitle: AppText.body("category : food \ntype : food"),
-              trailing: AppText.body("caption"),
-              onTap: () {},
-            );
-          },
-        ),
-      ),
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.01,
+            bottom: 20,
+            left: 0,
+            right: 20,
+          ),
+          child: _data.when(
+              data: (data) {
+                List<VendingzoneModel?> vendingzonelist =
+                    data.map((e) => e).toList();
+                return ListView.builder(
+                  itemCount: vendingzonelist.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      minVerticalPadding:
+                          MediaQuery.of(context).size.height * 0.03,
+                      isThreeLine: true,
+                      leading: Image.asset(
+                        "assets/images/register.png",
+                        fit: BoxFit.fill,
+                      ),
+                      title: AppText.headingThree(
+                          vendingzonelist[index]!.vendingzonelocation),
+                      subtitle: AppText.body("category : food \ntype : food"),
+                      trailing: AppText.body(
+                          "Maximum vendors allowed ${vendingzonelist[index]!.maximumVendorsallowed}"),
+                      onTap: () {},
+                    );
+                  },
+                );
+              },
+              error: (err, s) => Text(err.toString()),
+              loading: () => CircularProgressIndicator())),
     );
   }
 }
-

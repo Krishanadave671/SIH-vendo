@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:vendo/Screens/registration/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppFonts/styles.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
@@ -24,17 +25,17 @@ class _SpaceAllocation extends State<SpaceAllocation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          automaticallyImplyLeading: true,
-          leading: IconButton(
-              padding: const EdgeInsets.all(0),
-              icon: Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ),
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            padding: const EdgeInsets.all(0),
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ),
       body: Container(
         color: Colors.white,
         child: Padding(
@@ -152,7 +153,10 @@ class _SpaceAllocation extends State<SpaceAllocation> {
                     ),
                     verticalSpaceLarge,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        DioClient dioClient = DioClient();
+                        print(dioClient.getvendingZones().toString()) ; 
+                      },
                       child: Center(
                         child: SizedBox(
                           height: 50,
