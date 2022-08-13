@@ -11,13 +11,7 @@ const vendingzonerouter = require("./routes/vendingroutes");
 // middlewares
 app.use(express.json()); 
 app.use(vendingzonerouter); 
-
-
-const tunnel = localtunnel(PORT, { subdomain: 'ypdalvi'},  (err, tunnel) => {
-    console.log("tunnel started"); 
-}); 
-
-
+ 
 // connection to mongodb 
 mongoose.connect(DB).then( () => {
     console.log("Connection successful "); 

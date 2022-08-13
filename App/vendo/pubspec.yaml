@@ -21,6 +21,7 @@ dependencies:
   firebase_core: ^1.20.1
   file_picker: ^5.0.1
   flutter_dotenv: ^5.0.2
+  firebase_storage: ^10.3.5
   
 
 dev_dependencies:
@@ -42,7 +43,7 @@ flutter:
   assets:
 
     - assets/images/
-    - .env
+  
 
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
