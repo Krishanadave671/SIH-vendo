@@ -33,7 +33,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.loginScreen:
       return MaterialPageRoute(
-        builder: (context) => const login_screen(),
+        builder: (context) => const LoginScreen(),
       );
     case Routes.mainPage:
       return MaterialPageRoute(
@@ -41,7 +41,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.languageSelect:
       return MaterialPageRoute(
-        builder: (context) => const language_selector(),
+        builder: (context) => const LanguageSelector(),
       );
     case Routes.welcomeScreen:
       return MaterialPageRoute(
@@ -70,7 +70,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     default:
       return MaterialPageRoute(
-        builder: (context) => const language_selector(),
+        builder: (context) => const LanguageSelector(),
       );
   }
 }
