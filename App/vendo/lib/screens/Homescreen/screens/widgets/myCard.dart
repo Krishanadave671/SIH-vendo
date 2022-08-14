@@ -30,7 +30,7 @@ class MyCard extends StatelessWidget {
       elevation: 8,
       borderRadius: BorderRadius.circular(20.0),
       child: Container(
-        height: 200,
+        height: 210,
         margin: const EdgeInsets.only(bottom: 6.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
