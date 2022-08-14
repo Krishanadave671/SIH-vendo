@@ -26,7 +26,15 @@ a {
 }
 
 * {
+  padding:0;
+  margin:0;
   box-sizing: border-box;
+}
+
+.body{
+  background: white;
+  width:100%;
+  height:100%;
 }
 
 ul{
@@ -35,7 +43,7 @@ ul{
 
 /* Scrollbar Styling */
 div::-webkit-scrollbar {
-  width: 12px;               /* width of the entire scrollbar */
+  width: 6px;               /* width of the entire scrollbar */
 }
 
 div::-webkit-scrollbar-track {
@@ -62,6 +70,10 @@ div::-webkit-scrollbar-thumb {
 }
 .dashboard-main-container{
   width: 100%;
+  margin-left: 300px;
+  height: 100vh;
+  overflow: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 }
@@ -85,8 +97,100 @@ div::-webkit-scrollbar-thumb {
 .btn:active, .btn:hover, .outline-btn:hover, .outline-btn:focus, .btn:focus{
   background-color: #ff0f00!important;
 }
+
+/* React accordion */
+.accordion-button:not(.collapsed){
+  color: #ff0f00;
+  background-color: white;
+
+}
+/* .accordion-button:not(.collapsed)::after{
+
+} */
+.accordion-button:focus{
+  box-shadow: none;
+}
+
+
+/* Form */
+
 .form-control:focus{
   box-shadow: 0 0 0 0.25rem var(--box-color) !important;
   border-color: var(--primary-color)!important;
 }
-/* React Bootstrap Accordion */
+
+input {
+	width: 100%;
+	border: 1px solid var(--primary-color-dark);
+	padding: 1rem 2rem;
+	border-radius: 0.9rem;
+	font-family: Inter;
+	font-size: 1rem;
+	font-weight: 400;
+}
+
+input:active,
+input:focus {
+	outline: none;
+}
+
+input:placeholder {
+	color: var(--primary-color);
+}
+
+
+/* Landing page */
+.download-btn{
+  
+  display: inline-block;
+  width: 148px;
+  padding:6px;
+  border-radius: 4px;
+  margin: 4px;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+}
+.download-btn div{
+  margin-left: 12px;
+  font-size: 1.25rem;
+  padding-right: 8px;
+  align-items: center;
+}
+.google-play{
+  color: #f8f9fa;
+  /* background-color: white; */
+  border: 2px solid #f8f9fa;
+}
+.google-play:hover{
+  background-color: #f8f9fa;
+  color: black;
+}
+.app-store{
+  color: #f8f9fa;
+  background-color: black;
+}
+.flex{
+  display: flex;
+  justify-content:space-around;
+  
+}
+.font-awesome-icons{
+  color: var(--box-color);
+  opacity: 1;
+  margin: 20px;
+}
+.font-awesome-icons:hover{
+  color: var(--primary-color);
+}
+.social-media-icons a{
+  margin: 32px;
+}
+.social-media-icons{
+  display: flex;
+  color: var(--secondary-color);
+}
+.social-media-icons a:hover{
+  color: var(--shade-color);
+}

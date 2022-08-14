@@ -17,6 +17,7 @@ const Navbar = () => {
 		<div className="landing-navbar">
 			<div className="landing-navbar-logo">
 				{/* <img src={logo} alt="aankh-logo" /> */}
+				Vendo
 			</div>
 			<div className="landing-navbar-links">
 				<NavLinks />

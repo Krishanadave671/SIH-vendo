@@ -3,22 +3,20 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-class language_selector extends StatefulWidget {
-  const language_selector({Key? key}) : super(key: key);
+import '../../routes.dart';
 
+class LanguageSelector extends StatefulWidget {
+  const LanguageSelector({Key? key}) : super(key: key);
 
   @override
-  State<language_selector> createState() => _language_selectorState();
+  State<LanguageSelector> createState() => _LanguageSelectorState();
 }
 
-class _language_selectorState extends State<language_selector> {
+class _LanguageSelectorState extends State<LanguageSelector> {
   String dropdownvalue = 'English';
 
   // List of items in our dropdown menu
-  var items = [
-    'English',
-    'Hindi'
-  ];
+  var items = ['English', 'Hindi'];
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +36,7 @@ class _language_selectorState extends State<language_selector> {
             verticalSpace(20),
 
             const Image(
-              image: AssetImage("lib/assets/images/languages.png"),
+              image: AssetImage("assets/images/languages.png"),
               height: 120,
             ),
 
@@ -46,7 +44,7 @@ class _language_selectorState extends State<language_selector> {
 
             //dropdown menu
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: DropdownButton(
                 isExpanded: true,
                 //isDense: false,
@@ -79,12 +77,13 @@ class _language_selectorState extends State<language_selector> {
             Expanded(child: Container()),
 
             Padding(
-              padding: const EdgeInsets.only(bottom: 60,right: 20),
+              padding: const EdgeInsets.only(bottom: 60, right: 20),
               child: Row(
                 children: [
                   Expanded(child: Container()),
                   ElevatedButton(
-                    onPressed: ()=> Navigator.of(context).pushNamed('/welcome_screen'),
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed(Routes.welcomeScreen),
                     style: ElevatedButton.styleFrom(
                       primary: colors.primary,
                     ),
@@ -93,12 +92,9 @@ class _language_selectorState extends State<language_selector> {
                 ],
               ),
             )
-
           ],
         ),
       ),
     );
   }
 }
-
-
