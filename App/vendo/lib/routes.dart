@@ -8,6 +8,7 @@ import 'package:vendo/screens/registration/nationality_evidence.dart';
 import 'package:vendo/screens/registration/register_view.dart';
 import 'package:vendo/screens/registration/space_allocation.dart';
 import 'package:vendo/screens/registration/space_allocation_list.dart';
+import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
 import 'Screens/calendar_screen/calendar.dart';
 
 class Routes {
@@ -21,6 +22,8 @@ class Routes {
   static const documentaryEvidence = '/documentary_evidence_screen';
   static const nationalityEvidence = '/nationality_evidence_screen';
   static const registerView = '/register_view';
+  static const complaintPage = '/complaint_page';
+  
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -67,6 +70,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const RegisterView(),
       );
+       case Routes.complaintPage:
+      return MaterialPageRoute(
+        builder: (context) =>  AddComplaints(),
+      );
+
 
     default:
       return MaterialPageRoute(
