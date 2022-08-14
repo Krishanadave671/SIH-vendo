@@ -38,9 +38,10 @@ class _RegisterView extends State<RegisterView> {
       ),
     );
 
-    print(result.city.name.toString());
+    print(result.latLng);
+    print(result.formattedAddress);
     setState(() {
-      _location = result.city.name.toString();
+      _location = result.formattedAddress.toString();
     });
   }
 
