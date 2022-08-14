@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
