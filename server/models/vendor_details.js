@@ -59,7 +59,7 @@ const vendorDetails = mongoose.Schema({
         validator: function (v) {
           return /[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(v);
         },
-        message: '{VALUE} is not a valid Aadhar number!'
+        message: '{VALUE} is not a valid Pancard number!'
       }
     },
     passport: {
