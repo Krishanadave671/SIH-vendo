@@ -22,10 +22,6 @@ mongoose.connect(DB).then( () => {
     
 })
 
-// testing server 
-app.get('/', (req, res) => {
-    res.send("Hello World"); 
-}); 
 
 // listen to port
 app.listen(PORT , "0.0.0.0" , ()=> {

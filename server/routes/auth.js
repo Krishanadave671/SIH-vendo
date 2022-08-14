@@ -8,7 +8,7 @@ const auth = require("../middlewares/auth");
 //Sign Up
 authRouter.post("/api/signup", async (req, res) => {
     try {
-        const { name, address, dob, gender, phone, aadharno, pancardno, 
+        const { vendorid  , name, address, dob, gender, phone, aadharno, pancardno,password ,  
                 passport, electionid, mcgmlicense, aadharcard, pancard, shoplocation} = req.body;
         
         const existingVendor = await Vendor.findOne({ phone });
@@ -21,6 +21,7 @@ authRouter.post("/api/signup", async (req, res) => {
         const hashedPassword = await bcryptjs.hash(password, 8);
 
         let vendor = new Vendor({
+          vendorid , 
             name,
             dob,
             gender,

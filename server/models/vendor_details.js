@@ -40,13 +40,13 @@ const vendorDetails = mongoose.Schema({
         message: '{VALUE} is not a valid 10 digit phone number!'
       }
     },
-    aadhaarno: {
+    aadharno: {
       type: String,
       required: true,
       trim: true,
       validate: {
         validator: function (v) {
-          return /^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$/.test(v);
+          return /^[0-9]{12}/.test(v);
         },
         message: '{VALUE} is not a valid Aadhar number!'
       }
@@ -63,22 +63,28 @@ const vendorDetails = mongoose.Schema({
       }
     },
     passport: {
-      type: Boolean
+      type: Boolean, 
+      required : true
     },
     electionid: {
-      type: Boolean
+      type: Boolean, 
+      required : true 
     },
     mcgmlicense: {
-      type: Boolean
+      type: Boolean, 
+      required : true 
     },
     aadharcard: {
-      type: String
+      type: String, 
+      required : true 
     },
     pancard: {
-      type: String
+      type: String, 
+      required : true 
     },
     shoplocation: {
-      type: String
+      type: String, 
+      required : true 
     },
     creditscore: {
       type: Number

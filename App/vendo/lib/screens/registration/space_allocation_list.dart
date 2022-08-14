@@ -86,7 +86,6 @@ final vendingZonesProvider =
 
 class SpaceAllocationListView extends ConsumerWidget {
   const SpaceAllocationListView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context, ref) {
    List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
