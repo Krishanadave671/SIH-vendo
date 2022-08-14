@@ -1,0 +1,90 @@
+.ContentContainer{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 300px;
+    margin-top: 100px;
+
+
+}
+
+.ScrollText{
+  display : flex;
+  flex-shrink: 0;
+  height: 50px;
+  align-items: left;
+  padding-left: 10px;
+  animation: slide-right 20s linear infinite;
+  background: none;
+  margin-left: 100px;
+  font-size: xx-large;
+  margin-top: -70px;
+  padding-top: 0%;
+}
+
+@keyframes slide-right {
+    from {
+      -webkit-transform: translateX(0);
+              transform: translateX(0);
+    }
+    to {
+      -webkit-transform: translateX(300%);
+              transform: translateX(300%);
+    }
+  }
+
+  .p{
+    margin-left: 50px;
+  }
+
+
+
+
+.ContentWrapper{
+    display: flex;
+    padding: 20px;
+    gap: 40px;
+}
+
+.Tabs{
+   margin-top: -40px;
+   display: flex; 
+   justify-content: space-evenly;
+   align-items: center;
+   width: 450px;
+   height: 300px;
+   background-color: rgb(230, 238, 245);
+   border-radius: 10px;
+   cursor: pointer;
+   box-shadow: 0px 3px 5px 0px rgb(0, 6, 7);
+}
+
+.charts{
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    align-items: right;
+    margin-left: 30px;
+    row-gap: 40px;
+    gap: 800px;
+}
+.bar{
+    margin-left: 20px;
+    display: flex;
+    width: 500px;
+    height: 500px;
+    
+    
+    
+}
+
+.circle{
+    margin-left: 120px;
+    margin-right: -40px;
+    width: 400px;
+    height: 400px;
+}
+
+.bar line{
+    flex: 1;
+
+}

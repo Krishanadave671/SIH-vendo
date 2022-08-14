@@ -1,0 +1,60 @@
+.HeaderContainer{
+    display:flex;
+    flex-wrap: wrap;
+    height: 100px;
+    background-color: rgb(248, 244, 244);
+    margin-left: 200px;
+    border-radius: 3%;
+    box-shadow: 3px 0px 6px 0px rgba(0, 0, 0, 0.75);
+}
+
+.HeaderWrapper{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Title{
+    margin-left: 100px;
+    margin-top: 10px;
+
+   
+
+}
+
+.Title>h2{
+    color: rgb(33, 3, 3);
+   
+}
+
+.Title>p{
+    color: black;
+    font-size: x-large;
+    font-style: oblique;
+}
+
+.Profile{
+    position: absolute;
+    right: 20px;
+    height: 100px;
+    width: 100px;
+    border-radius: 90%;
+}
+
+.image{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+@media only screen and (max-width:768px){
+    .HeaderContainer{
+        width:100%;
+        margin-left: 70px;
+    }
+
+    .Profile{
+        right: 5px;
+    }
+}
