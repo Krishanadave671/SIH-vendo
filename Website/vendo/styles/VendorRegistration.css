@@ -2,6 +2,7 @@
     display: flex;
     justify-content:space-evenly;
     align-items: center;
+    margin-top: 20px;
 }
 
 .vendor-registration-navbar-items{
@@ -31,7 +32,7 @@
     margin: 10px;
 }
 .vendor-registration-main-container{
-    margin-left: 64px ;
+    /* margin-left: 250px ; */
     margin-right: 20px;
     flex: 1;
     overflow: hidden;

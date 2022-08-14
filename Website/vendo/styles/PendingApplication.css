@@ -6,10 +6,11 @@
 }
 .pending-application-container-item{
     width: 50%;
-    height: 80%;
+    height: 80vh;
     text-align: left;
     margin: 10px;
     margin-left: 20px;
+    padding-right: 5px;
     /* overflow: hidden; */
     overflow-y: auto;
 }
