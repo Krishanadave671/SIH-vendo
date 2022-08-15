@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
+
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -23,7 +24,6 @@ class Routes {
   static const nationalityEvidence = '/nationality_evidence_screen';
   static const registerView = '/register_view';
   static const complaintPage = '/complaint_page';
-  
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -70,11 +70,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const RegisterView(),
       );
-       case Routes.complaintPage:
+    case Routes.complaintPage:
       return MaterialPageRoute(
-        builder: (context) =>  AddComplaints(),
+        builder: (context) => AddComplaints(),
       );
-
 
     default:
       return MaterialPageRoute(
