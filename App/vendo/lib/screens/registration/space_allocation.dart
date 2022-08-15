@@ -183,7 +183,8 @@ class _SpaceAllocation extends State<SpaceAllocation> {
                     GestureDetector(
                       onTap: () {
                         onContinue();
-                        Navigator.of(context).pushNamed(Routes.spaceallocationList);
+                        Navigator.of(context)
+                            .pushNamed(Routes.spaceallocationList);
                       },
                       child: Center(
                         child: SizedBox(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:vendo/util/AppFonts/app_text.dart';
 
-//  
+//
 class MyCard extends StatelessWidget {
   final String vendorImageurl;
   final String vendorName;
@@ -10,7 +10,7 @@ class MyCard extends StatelessWidget {
   final String vendorshopName;
   final String expiryDate;
   final String phoneNumber;
-  final IconData category; 
+  final IconData category;
 
   const MyCard({
     Key? key,
@@ -20,7 +20,7 @@ class MyCard extends StatelessWidget {
     required this.vendorshopName,
     required this.expiryDate,
     required this.phoneNumber,
-     required this.category,
+    required this.category,
   }) : super(key: key);
 
   @override
@@ -46,7 +46,7 @@ class MyCard extends StatelessWidget {
               subtitle: AppText.body('Vendorid : $vendorId'),
               hoverColor: Colors.red,
               trailing: Icon(
-                category , 
+                category,
                 size: 40,
                 color: Colors.green,
               ),

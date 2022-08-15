@@ -79,6 +79,7 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
     }
   }
 }
+
 final vendingZonesProvider =
     StateNotifierProvider<VendingZonesNotifier, List<VendingZones>>((ref) {
   return VendingZonesNotifier();
@@ -88,7 +89,7 @@ class SpaceAllocationListView extends ConsumerWidget {
   const SpaceAllocationListView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, ref) {
-   List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
+    List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -119,7 +120,10 @@ class SpaceAllocationListView extends ConsumerWidget {
               child: ListTile(
                 minVerticalPadding: MediaQuery.of(context).size.height * 0.03,
                 isThreeLine: true,
-                leading: Image.asset(vendingZones[index].imageFile,fit: BoxFit.fill,),
+                leading: Image.asset(
+                  vendingZones[index].imageFile,
+                  fit: BoxFit.fill,
+                ),
                 title: AppText.headingThree(vendingZones[index].city),
                 subtitle: AppText.body(vendingZones[index].description),
                 trailing: AppText.body(vendingZones[index].ward),

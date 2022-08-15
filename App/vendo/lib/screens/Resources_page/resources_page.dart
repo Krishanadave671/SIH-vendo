@@ -10,7 +10,7 @@ class ResourcesPage extends StatefulWidget {
 class _ResourcesPageState extends State<ResourcesPage> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       child: Center(child: Text("Resources page")),
     );
   }

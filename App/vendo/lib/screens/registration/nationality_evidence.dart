@@ -98,8 +98,8 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                           bottomEnd: Radius.circular(20)),
                     ),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8),
+                      padding: const EdgeInsets.only(
+                          top: 8.0, right: 8.0, bottom: 8),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: AppText.headingTwo(

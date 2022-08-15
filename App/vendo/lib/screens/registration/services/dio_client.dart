@@ -3,8 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzone_details.dart';
 
-
-
 class DioClient {
   final Dio _dio = Dio();
   static const _baseurl = "http://192.168.1.100:3000";

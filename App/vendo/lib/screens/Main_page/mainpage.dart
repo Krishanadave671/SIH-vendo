@@ -43,7 +43,7 @@ class _MainPageState extends State<MainPage> {
           unselectedItemColor: Colors.grey,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          items: [
+          items: const [
             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
             BottomNavigationBarItem(
                 label: 'Complaints', icon: Icon(Icons.edit_note)),
