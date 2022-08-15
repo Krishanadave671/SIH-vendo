@@ -38,9 +38,10 @@ class _RegisterView extends State<RegisterView> {
       ),
     );
 
-    print(result.city.name.toString());
+    print(result.latLng);
+    print(result.formattedAddress);
     setState(() {
-      _location = result.city.name.toString();
+      _location = result.formattedAddress.toString();
     });
   }
 
@@ -152,19 +153,6 @@ class _RegisterView extends State<RegisterView> {
                           ),
                         ),
                       ),
-                      // verticalSpaceMedium,
-                      // DecoratedBox(
-                      //   decoration: borderBoxOutline,
-                      //   child: const Padding(
-                      //     padding: EdgeInsets.only(left: 20),
-                      //     child: TextField(
-                      //       decoration: InputDecoration(
-                      //           border: InputBorder.none,
-                      //           labelText: 'Address',
-                      //           hintText: 'Enter Address'),
-                      //     ),
-                      //   ),
-                      // ),
                       verticalSpaceMedium,
                       TextField(
                         controller: dateInput,

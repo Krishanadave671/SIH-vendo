@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod/riverpod.dart';
+import 'package:vendo/models/vendingzone_details.dart';
+import 'package:vendo/providers/vending_zoneprovider.dart';
 
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
@@ -72,11 +74,11 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
         ward: ward,
         tax: tax,
       );
+
       addZone(vd);
     }
   }
 }
-
 final vendingZonesProvider =
     StateNotifierProvider<VendingZonesNotifier, List<VendingZones>>((ref) {
   return VendingZonesNotifier();
@@ -84,11 +86,9 @@ final vendingZonesProvider =
 
 class SpaceAllocationListView extends ConsumerWidget {
   const SpaceAllocationListView({Key? key}) : super(key: key);
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
-
+  Widget build(BuildContext context, ref) {
+   List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -132,4 +132,3 @@ class SpaceAllocationListView extends ConsumerWidget {
     );
   }
 }
-
