@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,6 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 import '../../routes.dart';
-import 'dart:ui' as ui;
 
 class DocumentaryEvidence extends StatefulWidget {
   const DocumentaryEvidence({Key? key}) : super(key: key);

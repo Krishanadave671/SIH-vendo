@@ -1,14 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod/riverpod.dart';
-import 'package:vendo/models/vendingzone_details.dart';
-import 'package:vendo/providers/vending_zoneprovider.dart';
-
 import 'package:vendo/util/AppFonts/app_text.dart';
-import 'package:vendo/util/AppInterface/ui_helpers.dart';
-import 'package:vendo/util/colors.dart';
 
 @immutable
 class VendingZones {
