@@ -40,7 +40,7 @@ class _BMCBottomNav extends State<BMCBottomNav> {
           currentIndex: currentindex,
           selectedItemColor: colors.primary,
           unselectedItemColor: Colors.grey,
-          showSelectedLabels: false,
+          showSelectedLabels: true,
           showUnselectedLabels: false,
           items: [
             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),

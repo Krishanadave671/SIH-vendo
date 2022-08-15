@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:passwordfield/passwordfield.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
 import 'package:vendo/routes.dart';
@@ -21,6 +22,8 @@ class _RegisterView extends State<RegisterView> {
   String _location = '';
   String _name = '';
   String _dob = '';
+  String _phoneNo = '';
+  String _password = '';
 
   TextEditingController dateInput = TextEditingController();
 
@@ -60,7 +63,7 @@ class _RegisterView extends State<RegisterView> {
     }
 
     //implement api here
-    print("vendor data $_name , $_dob , $_genderType , $_location");
+    print("vendor data $_name , $_dob , $_genderType , $_location , $_phoneNo , $_password ");
   }
 
   @override
@@ -150,6 +153,41 @@ class _RegisterView extends State<RegisterView> {
                                 border: InputBorder.none,
                                 labelText: 'Applicant Name',
                                 hintText: 'Enter Applicant Name'),
+                          ),
+                        ),
+                      ),
+                      verticalSpaceMedium,
+                      DecoratedBox(
+                        decoration: borderBoxOutline,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: TextField(
+                            onChanged: ((value) {
+                              _phoneNo = value;
+                            }),
+                            decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Applicant Phone No',
+                                hintText: 'Enter phone no'),
+                          ),
+                        ),
+                      ),
+                      verticalSpaceMedium,
+                      DecoratedBox(
+                        decoration: borderBoxOutline,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: PasswordField(
+                            
+                            onChanged: (value) {
+                              _password = value;
+                            },
+                            
+                            passwordConstraint: r'.*[@$#.*].*',
+                            inputDecoration: PasswordDecoration(inputStyle: null),
+                            hintText: 'must have special characters',
+                            errorMessage:
+                                'must contain special character either . * @ # \$',
                           ),
                         ),
                       ),

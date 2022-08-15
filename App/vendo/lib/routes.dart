@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/screens/BMCModule/AddComplaints/vendor_check.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
+import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
 
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
@@ -28,6 +29,7 @@ class Routes {
   static const complaintPage = '/complaint_page';
   static const bmcMainPage = '/bmc_main_page';
   static const vendorCheck = '/vendor_check';
+  static const bmcNavBar = '/bmc_nav_bar';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -78,7 +80,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => AddComplaints(),
       );
-    case Routes.bmcMainPage:
+
+    case Routes.bmcNavBar:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
       );
