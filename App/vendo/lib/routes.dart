@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
+
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';

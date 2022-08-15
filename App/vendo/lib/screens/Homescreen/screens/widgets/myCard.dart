@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:vendo/routes.dart';
 
 import 'package:vendo/util/AppFonts/app_text.dart';
 
@@ -100,9 +102,14 @@ class MyCard extends StatelessWidget {
                   SizedBox(
                     width: 80,
                   ),
-                  Icon(
-                    Icons.qr_code_scanner,
-                    size: 30,
+                  GestureDetector(
+                    onTap: () {
+                      ;
+                    },
+                    child: Icon(
+                      Icons.qr_code_scanner,
+                      size: 30,
+                    ),
                   ),
                   // contact us
                   //
