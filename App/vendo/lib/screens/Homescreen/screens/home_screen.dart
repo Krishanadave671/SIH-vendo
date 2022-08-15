@@ -20,6 +20,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final String uniqueString = "*7%";
   String? vendorImageURL =
       "https://avatars.githubusercontent.com/u/84977709?s=400&u=6061e991de17cb0ba45b5713ee1eceb8d7a16ea4&v=4";
   String? vendorName = "Krishana Dave";
@@ -310,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                       child: QrImage(
                         data:
-                            "Shop name : $vendorShopName \nVendor location : $vendorLocation \nExpiry : $expiryDate \nPhone number : $vendorPhoneNo",
+                            "SN:$vendorShopName \nVL:$vendorLocation \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
                         version: QrVersions.auto,
                         size: 300.0,
                       ),
