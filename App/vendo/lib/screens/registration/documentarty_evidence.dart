@@ -90,7 +90,7 @@ class _DocumentaryEvidence extends State<DocumentaryEvidence> {
     File file = File(result!.paths[0]!);
 
     try {
-      String uniqueString = 'yash';
+
       final storage = FirebaseStorage.instance;
       aadharRef = storage.ref().child(aadharPathString);
       await aadharRef.putFile(file, SettableMetadata(contentType: "jpeg"));
