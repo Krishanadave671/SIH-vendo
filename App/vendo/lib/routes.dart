@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
+import 'package:vendo/screens/BMCModule/AddComplaints/vendor_check.dart';
+import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
@@ -24,6 +26,8 @@ class Routes {
   static const nationalityEvidence = '/nationality_evidence_screen';
   static const registerView = '/register_view';
   static const complaintPage = '/complaint_page';
+  static const bmcMainPage = '/bmc_main_page';
+  static const vendorCheck = '/vendor_check';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -74,10 +78,37 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => AddComplaints(),
       );
+    case Routes.bmcMainPage:
+      return MaterialPageRoute(
+        builder: (context) => const BMCBottomNav(),
+      );
+    case Routes.vendorCheck:
+      final args = settings.arguments as VendorCheckArguments;
+      return MaterialPageRoute(
+        builder: (context) => VendorCheck(
+          expiry: args.expiry,
+          shopName: args.shopName,
+          vendorLocation: args.vendorLocation,
+          phoneNo: args.phoneNo,
+        ),
+      );
 
     default:
       return MaterialPageRoute(
         builder: (context) => const LanguageSelector(),
       );
   }
+}
+
+class VendorCheckArguments {
+  VendorCheckArguments({
+    required this.shopName,
+    required this.expiry,
+    required this.vendorLocation,
+    required this.phoneNo,
+  });
+  final String shopName;
+  final String vendorLocation;
+  final String expiry;
+  final String phoneNo;
 }
