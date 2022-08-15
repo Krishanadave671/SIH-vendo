@@ -3,23 +3,23 @@ part 'vendor_details.g.dart';
 
 @JsonSerializable()
 class VendorModel {
-  final int vendorid;
-  final String name;
-  final String dob;
-  final String gender;
-  final String address;
-  final String password;
-  final String phone;
-  final String aadharno;
-  final String pancardno;
-  final bool passport;
-  final bool electionid;
-  final bool mcgmlicense;
-  final String aadharcard;
-  final String pancard;
-  final String shoplocation; 
-  final String token;
-  final List<dynamic> complaints;
+   int vendorid;
+   String name;
+   String dob;
+   String gender;
+   String address;
+   String password;
+   String phone;
+   String aadharno;
+  String pancardno;
+  bool passport;
+  bool electionid;
+  bool mcgmlicense;
+  String aadharcard;
+  String pancard;
+  String shoplocation; 
+   String token;
+   List<dynamic> complaints;
   VendorModel({
     required this.vendorid,
     required this.name,

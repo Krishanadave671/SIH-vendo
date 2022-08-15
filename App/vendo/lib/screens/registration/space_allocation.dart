@@ -7,7 +7,6 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppFonts/styles.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
-
 import '../../routes.dart';
 
 class SpaceAllocation extends StatefulWidget {
@@ -32,11 +31,12 @@ class _SpaceAllocation extends State<SpaceAllocation> {
     print(result.city.name.toString());
     setState(() {
       //get whatever data about gmaps you want here
-      _location = result.city.name.toString();
+      _location = result.formattedAddress.toString();
     });
   }
 
   void onContinue() {
+    
     print(" $_location , $_dropdownValue , $_currentSliderValue ");
   }
 

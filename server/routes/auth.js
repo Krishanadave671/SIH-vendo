@@ -8,7 +8,7 @@ const auth = require("../middlewares/auth");
 //Sign Up
 authRouter.post("/api/signup", async (req, res) => {
     try {
-        const { vendorid  , name, address, dob, gender, phone, aadharno, pancardno,password ,  
+        const { vendorid ,  name, address, dob, gender, phone, aadharno, pancardno,password ,  
                 passport, electionid, mcgmlicense, aadharcard, pancard, shoplocation} = req.body;
         
         const existingVendor = await Vendor.findOne({ phone });
@@ -19,9 +19,9 @@ authRouter.post("/api/signup", async (req, res) => {
         }
 
         const hashedPassword = await bcryptjs.hash(password, 8);
-
+        var uniqueid = 'VX' + (new Date()).getTime().toString().substring(0 , 5); 
         let vendor = new Vendor({
-          vendorid , 
+          vendorid : uniqueid , 
             name,
             dob,
             gender,
@@ -84,9 +84,9 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   });
 
   // get user data
-  authRouter.get("/", auth, async (req, res) => {
-    const vendor = await Vendor.findById(req.vendor);
-    res.json({ ...vendor._doc, token: req.token });
-  });
+  // authRouter.get("/", auth, async (req, res) => {
+  //   const vendor = await Vendor.findById(req.vendor);
+  //   res.json({ ...vendor._doc, token: req.token });
+  // });
 
   module.exports = authRouter;

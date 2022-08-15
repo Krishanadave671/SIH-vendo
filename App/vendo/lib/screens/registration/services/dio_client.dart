@@ -10,7 +10,7 @@ import 'package:vendo/providers/vendor_detailsprovider.dart';
 
 class Apiservice {
   final Dio _dio = Dio();
-  static const _baseurl = "http://192.168.1.100:3000";
+  static const _baseurl = "http://192.168.1.101:4000";
   static const searchvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -40,12 +40,13 @@ class Apiservice {
 
   Future<Response> registerUser(WidgetRef ref) async {
     try {
-      VendorModel vendordata = ref.watch(vendordetailsProvider); 
+      final vendordata = ref.watch(vendordetailsProvider);
       Response response = await _dio.post(_baseurl + vendorregistration,
           data: vendordata.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json; charset=UTF-8',
           }));
+      log(vendordata.toJson().toString()); 
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

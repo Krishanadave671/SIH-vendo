@@ -76,6 +76,7 @@ final vendingZonesProvider =
   return VendingZonesNotifier();
 });
 
+
 class SpaceAllocationListView extends ConsumerWidget {
   const SpaceAllocationListView({Key? key}) : super(key: key);
   @override

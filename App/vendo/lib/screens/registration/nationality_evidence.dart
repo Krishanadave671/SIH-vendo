@@ -1,17 +1,22 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-class NationalityEvidence extends StatefulWidget {
+class NationalityEvidence extends ConsumerStatefulWidget {
   const NationalityEvidence({Key? key}) : super(key: key);
 
   @override
-  State<NationalityEvidence> createState() => _NationalityEvidenceState();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _NationalityEvidenceState();
 }
 
-class _NationalityEvidenceState extends State<NationalityEvidence> {
+class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
   BasicOptions? _passport = BasicOptions.yes;
   BasicOptions? _election = BasicOptions.yes;
   BasicOptions? _liscense = BasicOptions.yes;
@@ -46,9 +51,15 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
         liscense = false;
         break;
     }
-
+    final vendordata = ref.read(vendordetailsProvider);
+    vendordata.passport = passport;
+    vendordata.aadharcard = _aadhar;
+    vendordata.pancard = _pan;
+    vendordata.electionid = election;
+    vendordata.mcgmlicense = liscense;
     //make api call here
     print("nationality $_aadhar , $_pan , $passport , $election , $liscense ");
+    log(vendordata.toJson().toString());
   }
 
   @override
@@ -98,8 +109,8 @@ class _NationalityEvidenceState extends State<NationalityEvidence> {
                           bottomEnd: Radius.circular(20)),
                     ),
                     child: Padding(
-                      padding:
-                          const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8),
+                      padding: const EdgeInsets.only(
+                          top: 8.0, right: 8.0, bottom: 8),
                       child: Padding(
                         padding: const EdgeInsets.only(left: 20),
                         child: AppText.headingTwo(
