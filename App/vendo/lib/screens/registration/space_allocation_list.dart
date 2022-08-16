@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/Screens/registration/services/dio_client.dart';
@@ -53,7 +52,7 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
 
   void getZones() {
     //add api implementation here
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 12; i++) {
       String id = '23';
       String streetName = 'kanderpada';
       String location = "34.23323.23";

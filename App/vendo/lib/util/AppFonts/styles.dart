@@ -30,7 +30,7 @@ const TextStyle bodyStyle = TextStyle(
 );
 
 const TextStyle bodyBoldStyle = TextStyle(
-  fontSize: 16,
+  fontSize: 19,
   fontWeight: FontWeight.bold,
 );
 
