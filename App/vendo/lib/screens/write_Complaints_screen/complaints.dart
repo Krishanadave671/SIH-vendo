@@ -26,7 +26,7 @@ class _AddComplaintsState extends State<AddComplaints> {
   String? _complaintType;
   String _location = '';
   bool isInitialized = false;
-  XFile? _image;
+  XFile? image;
   String? _description;
   late final String uniqueString;
   late final String imagePathString;
@@ -94,32 +94,17 @@ class _AddComplaintsState extends State<AddComplaints> {
     print(" $_location , $_complaintType , $_description , $imagePathString ");
   }
 
-  Future<void> uploadPath() async {
-    FilePickerResult? result;
-    try {
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpeg', 'png'],
-      );
-    } catch (e) {
-      print(e);
-    }
-    File file = File(result!.paths[0]!);
-
+  Future<void> uploadPhoto() async {
     try {
       final storage = FirebaseStorage.instance;
       imageRef = storage.ref().child(imagePathString);
-      await imageRef.putFile(file, SettableMetadata(contentType: "jpeg"));
+      await imageRef.putFile(File(displayImagePath!), SettableMetadata(contentType: "jpeg"));
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> getPan() async {
-    try {
-      final link = await imageRef.getDownloadURL();
-    } on FirebaseException catch (e) {}
-  }
+
 
   @override
   void initState() {
@@ -307,7 +292,8 @@ class _AddComplaintsState extends State<AddComplaints> {
                   ),
                   verticalSpaceMedium,
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async{
+                      await uploadPhoto();
                       onContinue();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Complaint Registered"),

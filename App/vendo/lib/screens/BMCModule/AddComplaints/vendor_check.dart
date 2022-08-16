@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:camera/camera.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -5,6 +10,7 @@ import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/colors.dart';
 import '../../../util/AppInterface/ui_helpers.dart';
+import '../../Write_complaints_screen/take_picture.dart';
 
 class VendorCheck extends StatefulWidget {
   const VendorCheck({
@@ -24,73 +30,499 @@ class VendorCheck extends StatefulWidget {
 }
 
 class _VendorCheckState extends State<VendorCheck> {
+  Choices? q1 = Choices.yes;
+
+  Choices? q2 = Choices.yes;
+  Choices? q3 = Choices.yes;
+  Choices? q4 = Choices.yes;
+  bool q5 = false;
+  bool q6 = false;
+  bool q7 = false;
+  String description = '';
+  late final String uniqueString;
+  late final String imagePathString;
+  late final imageRef;
+  late final CameraController cameraController;
+  late CameraDescription cameraDescription;
+  bool isInitialized = false;
+  XFile? image;
+  String? displayImagePath;
+
+  Future<void> onContinue() async {
+    await uploadPhoto();
+  }
+
+  Future<void> uploadPhoto() async {
+    try {
+      final storage = FirebaseStorage.instance;
+      imageRef = storage.ref().child(imagePathString);
+      await imageRef.putFile(
+          File(displayImagePath!), SettableMetadata(contentType: "jpeg"));
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> cameraSettings() async {
+    late final CameraController _cameraController;
+    final _cameras = await availableCameras();
+
+    _cameraController = CameraController(_cameras[0], ResolutionPreset.max);
+    _cameraController.initialize().then((_) {
+      setState(() {
+        cameraController = _cameraController;
+        isInitialized = true;
+        cameraDescription = _cameras[0];
+      });
+    }).catchError((Object e) {
+      if (e is CameraException) {
+        switch (e.code) {
+          case 'CameraAccessDenied':
+            print('User denied camera access.');
+            break;
+          default:
+            print('Handle other errors.');
+            break;
+        }
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    uniqueString = 'yash';
+    imagePathString = 'bmc_reviews/$uniqueString/photo.jpeg';
+    cameraSettings();
+    super.initState();
+  }
+
+  Future<void> takePhoto() async {
+    final _displayImagePath = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TakePictureScreen(
+          camera: cameraDescription,
+        ),
+      ),
+    );
+    setState(
+      () {
+        displayImagePath = _displayImagePath;
+        print(" hi $displayImagePath");
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          padding: const EdgeInsets.all(0),
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.black,
+      backgroundColor: colors.primary,
+      body: ListView(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.1,
+              right: MediaQuery.of(context).size.width * 0.1,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppText.headingOne(
+                  "${widget.shopName}",
+                  color: Colors.white,
+                ),
+                AppText.bodyBold(
+                  "expiry date : ${widget.expiry}",
+                  color: Colors.white,
+                ),
+              ],
+            ),
           ),
-          onPressed: () {
-            Navigator.of(context).pushNamed(Routes.bmcNavBar);
-          },
-        ),
-      ),
-      body: Center(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-          ),
-          height: MediaQuery.of(context).size.height * 0.85,
-          width: MediaQuery.of(context).size.width * 0.9,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
+          verticalSpaceMedium,
+          Container(
+            padding: const EdgeInsets.only(left: 20, right: 10),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15.0),
+              ),
+            ),
             child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: const Icon(Icons.clean_hands),
+                    title: AppText.bodyBold("Sanitaztion Checks"),
+                  ),
+                  verticalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText.body("Is the stall area water clogging free ?"),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Row(
+                              children: [
+                                Radio<Choices>(
+                                  value: Choices.yes,
+                                  groupValue: q1,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q1 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("yes"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.no,
+                                  groupValue: q1,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q1 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("no"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.notApplicable,
+                                  groupValue: q1,
+                                  onChanged: (Choices? value) {
+                                    setState(
+                                      () {
+                                        q1 = value;
+                                      },
+                                    );
+                                  },
+                                ),
+                                AppText.body("not-applicable"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText.body("Is food covered ?"),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Row(
+                              children: [
+                                Radio<Choices>(
+                                  value: Choices.yes,
+                                  groupValue: q2,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q2 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("yes"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.no,
+                                  groupValue: q2,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q2 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("no"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.notApplicable,
+                                  groupValue: q2,
+                                  onChanged: (Choices? value) {
+                                    setState(
+                                      () {
+                                        q2 = value;
+                                      },
+                                    );
+                                  },
+                                ),
+                                AppText.body("not-applicable"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText.body(
+                          "Is clean drinking water used for cooking ?"),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Row(
+                              children: [
+                                Radio<Choices>(
+                                  value: Choices.yes,
+                                  groupValue: q3,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q3 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("yes"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.no,
+                                  groupValue: q3,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q3 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("no"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.notApplicable,
+                                  groupValue: q3,
+                                  onChanged: (Choices? value) {
+                                    setState(
+                                      () {
+                                        q3 = value;
+                                      },
+                                    );
+                                  },
+                                ),
+                                AppText.body("not-applicable"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText.body("Is the vendor wearing gloves ?"),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Row(
+                              children: [
+                                Radio<Choices>(
+                                  value: Choices.yes,
+                                  groupValue: q4,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q4 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("yes"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.no,
+                                  groupValue: q4,
+                                  onChanged: (Choices? value) {
+                                    setState(() {
+                                      q4 = value;
+                                    });
+                                  },
+                                ),
+                                AppText.body("no"),
+                                const Spacer(),
+                                Radio<Choices>(
+                                  value: Choices.notApplicable,
+                                  groupValue: q4,
+                                  onChanged: (Choices? value) {
+                                    setState(
+                                      () {
+                                        q4 = value;
+                                      },
+                                    );
+                                  },
+                                ),
+                                AppText.body("not-applicable"),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  ListTile(
+                    leading: const Icon(Icons.location_on),
+                    title: AppText.bodyBold("Location check"),
+                  ),
+                  verticalSpaceSmall,
+                  Row(
+                    children: <Widget>[
+                      AppText.body("Is the stall in the approved location ?"),
+                      const Spacer(),
+                      Checkbox(
+                        value: q5,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              q5 = value!;
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  verticalSpaceSmall,
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                          flex: 5,
+                          child: AppText.body(
+                              "Is the foot traffic well managed ?")),
+                      const Spacer(),
+                      Checkbox(
+                        value: q6,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              q6 = value!;
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                   verticalSpaceMedium,
-                  AppText.bodyBold("Shop Name : ${widget.shopName}"),
+                  ListTile(
+                    leading: const Icon(Icons.child_care),
+                    title: AppText.bodyBold("Malpractices check"),
+                  ),
+                  verticalSpaceSmall,
+                  Row(
+                    children: <Widget>[
+                      AppText.body("Is the working staff over 14 ?"),
+                      const Spacer(),
+                      Checkbox(
+                        value: q7,
+                        onChanged: (value) {
+                          setState(
+                            () {
+                              q7 = value!;
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                   verticalSpaceMedium,
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AppText.body("Write short description"),
+                      TextField(
+                        onChanged: ((value) {
+                          description = value;
+                        }),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                      )
+                    ],
+                  ),
+                  verticalSpaceMedium,
+                  Card(
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: (displayImagePath != null)
+                                ? Image.file(File(displayImagePath!))
+                                : Image.asset("assets/images/user.png"),
+                          ),
+                          verticalSpaceSmall,
+                          GestureDetector(
+                            onTap: () {
+                              takePhoto();
+                            },
+                            child: SizedBox(
+                              height: 100,
+                              width: 100,
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                ),
+                                child: Icon(
+                                  Icons.camera,
+                                  size: MediaQuery.of(context).size.width * 0.2,
+                                  color: colors.primary,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  verticalSpaceLarge,
                   GestureDetector(
                     onTap: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Check complete!"),
-                        ),
-                      );
-                      Navigator.of(context).pushNamed(Routes.mainPage);
+                      onContinue();
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("Review Submitted"),
+                      ));
+                      Navigator.of(context).pushNamed(Routes.bmcNavBar);
                     },
                     child: Center(
                       child: SizedBox(
-                        width: 100,
+                        width: 150,
                         height: 50,
                         child: DecoratedBox(
                           decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    offset: Offset(4, 4),
+                                    color: colors.kcGreyBackground),
+                              ],
                               color: colors.primary,
                               borderRadius: BorderRadius.circular(20)),
                           child: Center(
-                            child: AppText.body("Submit"),
+                            child: AppText.body("Submit Review"),
                           ),
                         ),
                       ),
                     ),
                   ),
-                  verticalSpaceMedium,
+                  verticalSpaceLarge,
                 ],
               ),
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
+}
+
+enum Choices {
+  yes,
+  no,
+  notApplicable,
 }

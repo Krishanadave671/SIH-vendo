@@ -25,7 +25,6 @@ class _BMCBottomNav extends State<BMCBottomNav> {
   List pages = [
     BMCHomePage(),
     ScanQR(),
-    Calendar(title: 'Krishana'),
   ];
 
   @override
@@ -46,8 +45,6 @@ class _BMCBottomNav extends State<BMCBottomNav> {
             BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
             BottomNavigationBarItem(
                 label: 'Complaints', icon: Icon(Icons.qr_code_scanner_sharp)),
-            BottomNavigationBarItem(
-                label: 'weekly bazaar ', icon: Icon(Icons.calendar_month)),
           ]),
     );
   }
