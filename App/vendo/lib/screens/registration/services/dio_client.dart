@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/models/vendorDetails/vendor_details.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+
+import '../../../models/vendorDetails/vendor_details.dart';
 
 class Apiservice {
   final Dio _dio = Dio();
@@ -38,15 +39,29 @@ class Apiservice {
     return <VendingzoneModel>[];
   }
 
-  Future<Response> registerUser(WidgetRef ref) async {
+  // @POST( _baseurl + vendorregistration)
+  // Future<SendDataResponse> setAWSDrivingFiles(
+  //     @Body() SetAWSDrivingFilesBody setAWSDrivingFilesBody);
+
+      
+
+ 
+
+  Future<Response> registerUser(VendorModel vendordata) async {
     try {
-      final vendordata = ref.watch(vendordetailsProvider);
-      Response response = await _dio.post(_baseurl + vendorregistration,
-          data: vendordata.toJson(),
-          options: Options(headers: {
-            'Content-Type': 'application/json; charset=UTF-8',
-          }));
-      log(vendordata.toJson().toString()); 
+      vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
+      log(vendordata.toJson().toString());
+      log(vendordata.toString());
+      log(_baseurl + vendorregistration);
+      
+      Response response = await _dio.post(
+        _baseurl + vendorregistration,
+        data: vendordata.toJson(), 
+      );
+      log(response.toString()); 
+      // log(response.data);
+      log(vendordata.toJson().toString());
+      // log(response.data);
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
@@ -59,7 +74,7 @@ class Apiservice {
           data: {"phone": phoneno, "password": password});
       return response.data;
     } on DioError catch (e) {
-      return e.response!.data;
+      return e.response?.data;
     }
   }
 }
@@ -67,3 +82,32 @@ class Apiservice {
 final apiserviceProvider = Provider<Apiservice>((ref) {
   return Apiservice();
 });
+
+
+// @freezed
+// class SendDataResponse with _$SendDataResponse {
+//   SendDataResponse._();
+
+//   factory SendDataResponse({
+//     @JsonKey(name: "success") bool? success,
+//   }) = _SendDataResponse;
+
+//   factory SendDataResponse.fromJson(Map<String, dynamic> json) =>
+//       _$SendDataResponseFromJson(json);
+// }
+
+// @JsonSerializable(explicitToJson: true)
+// class SetAWSDrivingFilesBody {
+  
+//   final String drivingLicence;
+
+//   SetAWSDrivingFilesBody(
+    
+//     this.drivingLicence,
+//   );
+
+//   factory SetAWSDrivingFilesBody.fromJson(Map<String, dynamic> json) =>
+//       _$SetAWSDrivingFilesBodyFromJson(json);
+
+//   Map<String, dynamic> toJson() => _$SetAWSDrivingFilesBodyToJson(this);
+// }

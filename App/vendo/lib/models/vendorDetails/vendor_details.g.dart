@@ -7,7 +7,7 @@ part of 'vendor_details.dart';
 // **************************************************************************
 
 VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
-      vendorid: json['vendorid'] as int,
+      vendorid: json['vendorid'] as String,
       name: json['name'] as String,
       dob: json['dob'] as String,
       gender: json['gender'] as String,
@@ -24,6 +24,8 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       shoplocation: json['shoplocation'] as String,
       token: json['token'] as String,
       complaints: json['complaints'] as List<dynamic>,
+      isapproved: json['isapproved'] as String,
+      vendorcategory: json['vendorcategory'] as String,
     );
 
 Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
@@ -43,6 +45,8 @@ Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
       'aadharcard': instance.aadharcard,
       'pancard': instance.pancard,
       'shoplocation': instance.shoplocation,
+      'vendorcategory': instance.vendorcategory,
       'token': instance.token,
+      'isapproved': instance.isapproved,
       'complaints': instance.complaints,
     };

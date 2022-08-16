@@ -69,12 +69,15 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     final vendordata = ref.read(vendordetailsProvider);
     vendordata.gender = _genderType;
     vendordata.dob = _dob;
-    vendordata.address = _location;
+    vendordata.address ="jdnkfwskfkf";
     vendordata.name = _name;
+    vendordata.phone = _phoneNo;
+    vendordata.password = _password;
     //implement api here
     print("vendor data $_name , $_dob , $_genderType , $_location");
     log(vendordata.toJson().toString());
-    print("vendor data $_name , $_dob , $_genderType , $_location , $_phoneNo , $_password ");
+    print(
+        "vendor data $_name , $_dob , $_genderType , $_location , $_phoneNo , $_password ");
   }
 
   @override
@@ -189,13 +192,12 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: PasswordField(
-                            
                             onChanged: (value) {
                               _password = value;
                             },
-                            
                             passwordConstraint: r'.*[@$#.*].*',
-                            inputDecoration: PasswordDecoration(inputStyle: null),
+                            inputDecoration:
+                                PasswordDecoration(inputStyle: null),
                             hintText: 'must have special characters',
                             errorMessage:
                                 'must contain special character either . * @ # \$',

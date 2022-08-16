@@ -1,22 +1,27 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppFonts/styles.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 import '../../routes.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SpaceAllocation extends StatefulWidget {
+class SpaceAllocation extends ConsumerStatefulWidget {
   const SpaceAllocation({Key? key}) : super(key: key);
 
   @override
-  State<SpaceAllocation> createState() => _SpaceAllocation();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SpaceAllocationState();
 }
 
-class _SpaceAllocation extends State<SpaceAllocation> {
+class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
   String? _dropdownValue;
   double _currentSliderValue = 20;
   String _location = '';
@@ -36,7 +41,10 @@ class _SpaceAllocation extends State<SpaceAllocation> {
   }
 
   void onContinue() {
-    
+    var vendordata = ref.read(vendordetailsProvider);
+    vendordata.vendorcategory = _dropdownValue!;
+    vendordata.shoplocation = _location;
+    log(vendordata.toJson().toString()); 
     print(" $_location , $_dropdownValue , $_currentSliderValue ");
   }
 
@@ -183,7 +191,8 @@ class _SpaceAllocation extends State<SpaceAllocation> {
                     GestureDetector(
                       onTap: () {
                         onContinue();
-                        Navigator.of(context).pushNamed(Routes.spaceallocationList);
+                        Navigator.of(context)
+                            .pushNamed(Routes.spaceallocationList);
                       },
                       child: Center(
                         child: SizedBox(

@@ -53,8 +53,8 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
     }
     final vendordata = ref.read(vendordetailsProvider);
     vendordata.passport = passport;
-    vendordata.aadharcard = _aadhar;
-    vendordata.pancard = _pan;
+    vendordata.aadharno = _aadhar;
+    vendordata.pancardno = _pan;
     vendordata.electionid = election;
     vendordata.mcgmlicense = liscense;
     //make api call here

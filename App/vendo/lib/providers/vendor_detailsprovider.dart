@@ -3,7 +3,7 @@ import 'package:vendo/models/vendorDetails/vendor_details.dart';
 
 final vendordetailsProvider = Provider<VendorModel>((ref) {
   VendorModel vendor = VendorModel(
-      vendorid: 12334,
+      vendorid: '',
       name: '',
       dob: '',
       gender: "",
@@ -19,6 +19,9 @@ final vendordetailsProvider = Provider<VendorModel>((ref) {
       pancard: '',
       shoplocation: '',
       token: '',
-      complaints: []); 
+      complaints: [], 
+      isapproved: 'pending',
+      vendorcategory: '', 
+      ); 
   return vendor;
 });

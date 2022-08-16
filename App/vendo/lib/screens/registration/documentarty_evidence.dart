@@ -3,10 +3,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+import '../../providers/vendor_detailsprovider.dart';
 import '../../routes.dart';
 
 class DocumentaryEvidence extends ConsumerStatefulWidget {
@@ -20,7 +20,7 @@ class DocumentaryEvidence extends ConsumerStatefulWidget {
 class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
   @override
   void initState() {
-    uniqueString = 'VX' + DateTime.now().toString().substring(0 , 5);;
+    uniqueString = 'VX' + DateTime.now().toString().substring(0 , 5);
     panPathString = 'vendor_documents/$uniqueString/pan.jpeg';
     aadharPathString = 'vendor_documents/$uniqueString/aadhar.jpeg';
     super.initState();
