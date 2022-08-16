@@ -8,8 +8,8 @@ const auth = require("../middlewares/auth");
 //Sign Up
 authRouter.post("/api/signup", async (req, res) => {
     try {
-        const { vendorid  , name, address, dob, gender, phone, aadharno, pancardno,password ,  
-                passport, electionid, mcgmlicense, aadharcard, pancard, shoplocation} = req.body;
+        const {vendorid , vendorcategory , name, address, dob, gender, phone, aadharno, pancardno,password ,  
+                passport, electionid, mcgmlicense, aadharcard, pancard, shoplocation, isapproved} = req.body;
         
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
@@ -19,7 +19,7 @@ authRouter.post("/api/signup", async (req, res) => {
         }
 
         const hashedPassword = await bcryptjs.hash(password, 8);
-
+       
         let vendor = new Vendor({
           vendorid , 
             name,
@@ -35,7 +35,9 @@ authRouter.post("/api/signup", async (req, res) => {
             mcgmlicense,
             aadharcard,
             pancard,
-            shoplocation
+            shoplocation, 
+            vendorcategory, 
+            isapproved
         });
         vendor = await vendor.save();
         res.json(vendor);
@@ -84,9 +86,9 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   });
 
   // get user data
-  authRouter.get("/", auth, async (req, res) => {
-    const vendor = await Vendor.findById(req.vendor);
-    res.json({ ...vendor._doc, token: req.token });
-  });
+  // authRouter.get("/", auth, async (req, res) => {
+  //   const vendor = await Vendor.findById(req.vendor);
+  //   res.json({ ...vendor._doc, token: req.token });
+  // });
 
   module.exports = authRouter;

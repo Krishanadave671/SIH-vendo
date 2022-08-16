@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod/riverpod.dart';
-import 'package:vendo/models/vendingzone_details.dart';
-import 'package:vendo/providers/vending_zoneprovider.dart';
-
+import 'package:vendo/Screens/registration/services/dio_client.dart';
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
-import 'package:vendo/util/colors.dart';
 
 @immutable
 class VendingZones {
@@ -86,10 +84,14 @@ final vendingZonesProvider =
 });
 
 class SpaceAllocationListView extends ConsumerWidget {
-  const SpaceAllocationListView({Key? key}) : super(key: key);
+  SpaceAllocationListView({Key? key}) : super(key: key);
+
+  final Apiservice _api = Apiservice();
   @override
   Widget build(BuildContext context, ref) {
     List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
+    final vendordata = ref.read(vendordetailsProvider);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -133,6 +135,17 @@ class SpaceAllocationListView extends ConsumerWidget {
           },
         ),
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () async {
+        try {
+          var response = await _api.registerUser(vendordata);
+          if (response.statusCode == 200) {
+            showSnackBar(context, "Successfully registered");
+            log(response.data);
+          }
+        } on Exception catch (e) {
+          log(e.toString());
+        }
+      }),
     );
   }
 }

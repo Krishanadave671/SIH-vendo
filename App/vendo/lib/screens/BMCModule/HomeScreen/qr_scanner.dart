@@ -71,12 +71,13 @@ class _ScanQRState extends State<ScanQR> {
         //4 = end string
 
         if (scanData.code!.endsWith(uniqueString)) {
+          controller.pauseCamera();
           var listData = scanData.code!.split('\n');
           for (int i = 0; i < listData.length; i++) {
             listData[i] = listData[i].substring(3).trim();
           }
-          print(listData);
-          Navigator.of(context).popAndPushNamed(
+
+          Navigator.of(context).pushReplacementNamed(
             Routes.vendorCheck,
             arguments: VendorCheckArguments(
               shopName: listData[0],

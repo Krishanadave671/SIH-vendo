@@ -30,7 +30,6 @@ dependencies:
   qr_flutter: ^4.0.0
   url_launcher: ^6.1.5
   qr_code_scanner: ^1.0.1
-  scroll_bottom_navigation_bar: ^4.0.0
   carousel_slider: ^4.1.1
   
 
