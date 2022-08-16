@@ -5,6 +5,7 @@ import 'package:vendo/Screens/Homescreen/screens/home_screen.dart';
 import 'package:vendo/Screens/Resources_page/resources_page.dart';
 import 'package:vendo/Screens/calendar_screen/calendar.dart';
 import 'package:vendo/Screens/write_Complaints_screen/complaints.dart';
+import 'package:vendo/screens/Main_page/scroll_to_hide.dart';
 import 'package:vendo/util/colors.dart';
 
 class MainPage extends StatefulWidget {
@@ -29,11 +30,40 @@ class _MainPageState extends State<MainPage> {
     ResourcesPage(),
   ];
 
+  late ScrollController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: pages[currentindex],
+
+      // body: SingleChildScrollView(
+      //   child: ListView(
+      //     scrollDirection: Axis.vertical,
+      //     controller: controller,
+      //     children: <Widget>[
+      //       pages[currentindex],
+      //     ],
+      //   ),
+      // ),
+      // body: Column(
+      //   controller: controller,
+      //   children: [pages[currentindex],],
+      // ),
+
+      //wrap with ScrollToHideWidget
       bottomNavigationBar: BottomNavigationBar(
           onTap: onTap,
           type: BottomNavigationBarType.fixed,
