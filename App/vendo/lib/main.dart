@@ -27,8 +27,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: generateRoute,
-      initialRoute: Routes.languageSelect,
+      initialRoute: Routes.mainPage,
     );
   }
 }
-

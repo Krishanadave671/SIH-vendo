@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '79338234029',
     projectId: 'vendo-35469',
     storageBucket: 'vendo-35469.appspot.com',
-    iosClientId: '79338234029-gq3bidrq6liirpcrvb6oopj1mdrkhon4.apps.googleusercontent.com',
+    iosClientId:
+        '79338234029-gq3bidrq6liirpcrvb6oopj1mdrkhon4.apps.googleusercontent.com',
     iosBundleId: 'com.example.vendo',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '79338234029',
     projectId: 'vendo-35469',
     storageBucket: 'vendo-35469.appspot.com',
-    iosClientId: '79338234029-gq3bidrq6liirpcrvb6oopj1mdrkhon4.apps.googleusercontent.com',
+    iosClientId:
+        '79338234029-gq3bidrq6liirpcrvb6oopj1mdrkhon4.apps.googleusercontent.com',
     iosBundleId: 'com.example.vendo',
   );
 }

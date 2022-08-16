@@ -1,12 +1,12 @@
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/Screens/registration/services/dio_client.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+import 'package:vendo/screens/registration/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
@@ -169,6 +169,7 @@ class _SpaceAllocationListViewState
       ),
       floatingActionButton: FloatingActionButton(onPressed: () async {
         try {
+
           final _api = ref.watch(apiserviceProvider);
           var response = await _api.registerUser(vendordata);
           if (response.statusCode == 200) {

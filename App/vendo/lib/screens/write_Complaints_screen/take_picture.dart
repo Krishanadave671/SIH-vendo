@@ -105,7 +105,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   child: Icon(
                     Icons.camera_alt,
                     color: colors.primary,
-                    size: MediaQuery.of(context).size.width*0.2,
+                    size: MediaQuery.of(context).size.width * 0.2,
                   ),
                 ),
               ],
