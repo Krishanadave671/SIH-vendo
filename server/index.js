@@ -21,7 +21,9 @@ mongoose.connect(DB).then( () => {
     console.log(err); 
     
 })
-
+app.get("/", (req, res) => {
+    res.send("Hello world "); 
+})
 
 // listen to port
 app.listen(PORT , "0.0.0.0" , ()=> {

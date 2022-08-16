@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:place_picker/entities/location_result.dart';
-import 'package:place_picker/widgets/place_picker.dart';
+// import 'package:place_picker/entities/location_result.dart';
+// import 'package:place_picker/widgets/place_picker.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/screens/write_Complaints_screen/take_picture.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
@@ -34,19 +34,19 @@ class _AddComplaintsState extends State<AddComplaints> {
   late final CameraController cameraController;
   late CameraDescription cameraDescription;
 
-  void showPlacePicker() async {
-    LocationResult result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>
-            PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
-      ),
-    );
-    print(result.city.name.toString());
-    setState(() {
-      //get whatever data about gmaps you want here
-      _location = result.city.name.toString();
-    });
-  }
+  // void showPlacePicker() async {
+  //   LocationResult result = await Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) =>
+  //           PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
+  //     ),
+  //   );
+  //   print(result.city.name.toString());
+  //   setState(() {
+  //     //get whatever data about gmaps you want here
+  //     _location = result.city.name.toString();
+  //   });
+  // }
 
   Future<void> cameraSettings() async {
     late final CameraController _cameraController;
@@ -161,7 +161,7 @@ class _AddComplaintsState extends State<AddComplaints> {
                             onChanged: (value) => value,
                             readOnly: true,
                             onTap: () {
-                              showPlacePicker();
+                              // showPlacePicker();
                             },
                             decoration: InputDecoration(
                               enabledBorder: const UnderlineInputBorder(
