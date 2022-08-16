@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const complaintSchema = require("./complaints")
+const {complaints} = require("./complaints");
 
 const vendorDetails = mongoose.Schema({
     vendorid: {
@@ -96,7 +96,10 @@ const vendorDetails = mongoose.Schema({
       type : String  , 
       default : "pending" 
     }, 
-    complaints: [complaintSchema], 
+    complaints: {
+      type: [complaints],
+      ref: 'Complaints'
+    }, 
     vendorcategory : {
       type : String , 
       required : true 
