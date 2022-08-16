@@ -35,9 +35,7 @@ class Apiservice {
     return <VendingzoneModel>[];
   }
 
-  // @POST( _baseurl + vendorregistration)
-  // Future<SendDataResponse> setAWSDrivingFiles(
-  //     @Body() SetAWSDrivingFilesBody setAWSDrivingFilesBody);
+
 
   Future<Response> registerUser(VendorModel vendordata) async {
     try {
@@ -76,30 +74,3 @@ final apiserviceProvider = Provider<Apiservice>((ref) {
 });
 
 
-// @freezed
-// class SendDataResponse with _$SendDataResponse {
-//   SendDataResponse._();
-
-//   factory SendDataResponse({
-//     @JsonKey(name: "success") bool? success,
-//   }) = _SendDataResponse;
-
-//   factory SendDataResponse.fromJson(Map<String, dynamic> json) =>
-//       _$SendDataResponseFromJson(json);
-// }
-
-// @JsonSerializable(explicitToJson: true)
-// class SetAWSDrivingFilesBody {
-  
-//   final String drivingLicence;
-
-//   SetAWSDrivingFilesBody(
-    
-//     this.drivingLicence,
-//   );
-
-//   factory SetAWSDrivingFilesBody.fromJson(Map<String, dynamic> json) =>
-//       _$SetAWSDrivingFilesBodyFromJson(json);
-
-//   Map<String, dynamic> toJson() => _$SetAWSDrivingFilesBodyToJson(this);
-// }
