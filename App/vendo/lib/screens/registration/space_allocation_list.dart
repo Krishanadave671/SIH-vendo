@@ -1,10 +1,9 @@
 import 'dart:developer';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/Screens/registration/services/dio_client.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+import 'package:vendo/screens/registration/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
