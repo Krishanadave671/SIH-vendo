@@ -1,6 +1,9 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/Screens/registration/services/dio_client.dart';
+import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
+import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/screens/registration/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
@@ -76,19 +79,27 @@ class VendingZonesNotifier extends StateNotifier<List<VendingZones>> {
   }
 }
 
-final vendingZonesProvider =
-    StateNotifierProvider<VendingZonesNotifier, List<VendingZones>>((ref) {
-  return VendingZonesNotifier();
-});
+// final vendingZonesProvider =
+//     StateNotifierProvider<VendingZonesNotifier, List<VendingZones>>((ref) {
+//   return VendingZonesNotifier();
+// });
 
-class SpaceAllocationListView extends ConsumerWidget {
-  SpaceAllocationListView({Key? key}) : super(key: key);
+class SpaceAllocationListView extends ConsumerStatefulWidget {
+  const SpaceAllocationListView({Key? key}) : super(key: key);
 
-  final Apiservice _api = Apiservice();
   @override
-  Widget build(BuildContext context, ref) {
-    List<VendingZones> vendingZones = ref.watch(vendingZonesProvider);
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _SpaceAllocationListViewState();
+}
+
+class _SpaceAllocationListViewState
+    extends ConsumerState<SpaceAllocationListView> {
+  @override
+  Widget build(BuildContext context) {
     final vendordata = ref.read(vendordetailsProvider);
+
+    final vendingzonesdata = ref.watch(vendingzonedataProvider);
+    log(vendingzonesdata.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -113,28 +124,52 @@ class SpaceAllocationListView extends ConsumerWidget {
           left: 10,
           right: 10,
         ),
-        child: ListView.builder(
-          itemCount: vendingZones.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: ListTile(
-                minVerticalPadding: MediaQuery.of(context).size.height * 0.03,
-                isThreeLine: true,
-                leading: Image.asset(
-                  vendingZones[index].imageFile,
-                  fit: BoxFit.fill,
-                ),
-                title: AppText.headingThree(vendingZones[index].city),
-                subtitle: AppText.body(vendingZones[index].description),
-                trailing: AppText.body(vendingZones[index].ward),
-                onTap: () {},
+        child: vendingzonesdata.when(
+          data: (_vendingzonesdata) {
+            List<VendingzoneModel?> vendingzonelist =
+                _vendingzonesdata.map((e) => e).toList();
+            log(vendingzonelist.toList().toString());
+            return RefreshIndicator(
+              onRefresh: () async {
+                ref.refresh(vendingzonedataProvider);
+              },
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: vendingzonelist.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                    child: ListTile(
+                      minVerticalPadding:
+                          MediaQuery.of(context).size.height * 0.03,
+                      isThreeLine: true,
+                      leading: Image.network(
+                          vendingzonelist[index]!.vendingzoneImageurl),
+                      title: AppText.headingThree(
+                          vendingzonelist[index]!.vendingzonelocation),
+                      subtitle: AppText.body(
+                          vendingzonelist[index]!.vendingzonedescription),
+                      trailing:
+                          AppText.body(vendingzonelist[index]!.vendingzoneid),
+                      onTap: () {},
+                    ),
+                  );
+                },
               ),
             );
           },
+          error: (e, t) {
+            log(e.toString());
+            showSnackBar(context, e.toString());
+          },
+          loading: () => Center(
+            child: CircularProgressIndicator(),
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () async {
         try {
+
+          final _api = ref.watch(apiserviceProvider);
           var response = await _api.registerUser(vendordata);
           if (response.statusCode == 200) {
             showSnackBar(context, "Successfully registered");

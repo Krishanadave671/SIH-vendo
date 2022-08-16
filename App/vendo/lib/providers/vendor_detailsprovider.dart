@@ -21,7 +21,8 @@ final vendordetailsProvider = Provider<VendorModel>((ref) {
       token: '',
       complaints: [], 
       isapproved: 'pending',
-      vendorcategory: '', 
+      vendorcategory: '',
+      taxlocation:10000 , 
       ); 
   return vendor;
 });
