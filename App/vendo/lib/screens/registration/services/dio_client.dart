@@ -17,16 +17,14 @@ class Apiservice {
   static const vendorlogin = "/api/login";
 
   Future<List<VendingzoneModel?>> getvendingZones(
-    String locationcity, 
-    String vendorcategory  , 
-    int taxlocation 
-  ) async {
+      String locationcity, String vendorcategory, int taxlocation) async {
     try {
-      Response vendingzonedata = await _dio.get(_baseurl + searchallvendingzones + "");
+      Response vendingzonedata =
+          await _dio.get('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       List vendingzones = vendingzonedata.data;
-      List<VendingzoneModel> list =
+      List<VendingzoneModel?> list =
           vendingzones.map((e) => VendingzoneModel.fromJson(e)).toList();
-      log(list[0].vendingzonedescription);
+      log(list[0].toString());
       return list;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -43,22 +41,20 @@ class Apiservice {
     return <VendingzoneModel>[];
   }
 
- 
-
   Future<Response> registerUser(VendorModel vendordata) async {
     try {
       vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
       log(vendordata.toString());
       log(_baseurl + vendorregistration);
-      
+
       Response response = await _dio.post(
         _baseurl + vendorregistration,
-        data: vendordata.toJson(), 
+        data: vendordata.toJson(),
       );
-      log(response.toString()); 
+      log(response.toString());
       log(vendordata.toJson().toString());
-    
+
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;

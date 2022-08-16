@@ -37,7 +37,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     print(result.city.name.toString());
     setState(() {
       //get whatever data about gmaps you want here
-      _location = result.city.toString();
+      _location = result.city.name;
     });
   }
 
@@ -45,8 +45,9 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     var vendordata = ref.read(vendordetailsProvider);
     vendordata.vendorcategory = _dropdownValue!;
     vendordata.shoplocation = _location;
-    
-    log(vendordata.toJson().toString()); 
+    vendordata.taxlocation = 10000;
+
+    log(vendordata.toJson().toString());
     print(" $_location , $_dropdownValue , $_currentSliderValue ");
   }
 
@@ -156,9 +157,9 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                               });
                             },
                             items: <String>[
-                              'Food Vendor',
-                              'Electronics Vendor',
-                              'Utensils Vendor'
+                              'FoodVendor',
+                              'ElectronicsVendor',
+                              'UtensilsVendor'
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,

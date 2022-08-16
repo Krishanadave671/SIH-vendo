@@ -5,12 +5,10 @@ const Vendor = require("../models/vendor_details");
 // find vendingzones according to location search bar for vendors app
 vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  , async (req , res) => { 
     try {
-        
-        
         const { city,tax ,vendorcategory  } = req.params ; 
         let vendingzone = await vendingzones.find({
             vendingzonecity : city , 
-            locationtax : { $lt : tax}, 
+            vendingzonelocationtax : { $lte : tax}, 
             categoryofvendorsNotAllowed : { $nin : vendorcategory} 
         }); 
         res.status(200).json(vendingzone); 

@@ -8,7 +8,7 @@ part of 'vendingzone_details.dart';
 
 VendingzoneModel _$VendingzoneModelFromJson(Map<String, dynamic> json) =>
     VendingzoneModel(
-      vendingzoneid: json['vendingzoneid'] as int,
+      vendingzoneid: json['vendingzoneid'] as String ,
       vendingzonestreetName: json['vendingzonestreetName'] as String,
       vendingzonelocation: json['vendingzonelocation'] as String,
       vendingzonedescription: json['vendingzonedescription'] as String,

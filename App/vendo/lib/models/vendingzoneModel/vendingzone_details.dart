@@ -3,7 +3,7 @@ part 'vendingzone_details.g.dart';
 
 @JsonSerializable()
 class VendingzoneModel {
-  final int vendingzoneid;
+  final String  vendingzoneid;
   final String vendingzonestreetName;
   final String vendingzonelocation;
   final String vendingzonedescription;
