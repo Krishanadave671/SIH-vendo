@@ -19,9 +19,13 @@ Collections : Complaints
 - complaint date
 - complaint type
 - complaint description
-- complaint status
-- complaint resolved date
+- complaint status  -- pending, resolved, rejected
 - vendorschema 
+
+/getcomplaints/:locality 
+/addcomplaints
+
+
 
 collections : vendingzones 
 - vendingzoneid
@@ -34,7 +38,7 @@ collections : vendingzones
 - vendingzonefacilities
 - vendingzonevendors
 - vendingzonecomplaints
-
+- category of vendors not allowed -- array 
 middlewares : vendor , admin 
  weeklybazaars 
 - bazaarid

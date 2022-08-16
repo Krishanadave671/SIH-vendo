@@ -20,7 +20,8 @@ class VendorModel {
   String shoplocation;
   String vendorcategory;
   String token;
-  String isapproved; 
+  String isapproved;
+  int taxlocation; 
   List<dynamic> complaints;
   VendorModel(
       {required this.vendorid,
@@ -40,7 +41,8 @@ class VendorModel {
       required this.shoplocation,
       required this.token,
       required this.complaints,
-      required this.isapproved, 
+      required this.isapproved,
+      required this.taxlocation , 
       required this.vendorcategory});
 
   factory VendorModel.fromJson(Map<String, dynamic> json) =>

@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 
 const vendingzoneSchema = new mongoose.Schema({
     vendingzoneid : {
-        type : Number , 
+        type : String  , 
         required : true , 
-        trim : true , 
         unique : true 
     }, 
     vendingzonestreetName : {
@@ -47,7 +46,7 @@ const vendingzoneSchema = new mongoose.Schema({
         required : true , 
         trim : true 
     } , 
-    
+    categoryofvendorsNotAllowed : [String]
 }) 
 
 const vendingzones = mongoose.model('vendingzones', vendingzoneSchema);

@@ -26,6 +26,7 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       complaints: json['complaints'] as List<dynamic>,
       isapproved: json['isapproved'] as String,
       vendorcategory: json['vendorcategory'] as String,
+      taxlocation: json['taxlocation'] as int 
     );
 
 Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
@@ -49,4 +50,5 @@ Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
       'token': instance.token,
       'isapproved': instance.isapproved,
       'complaints': instance.complaints,
+      'taxlocation' : instance.taxlocation 
     };

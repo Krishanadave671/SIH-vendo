@@ -8,17 +8,19 @@ import '../../../models/vendorDetails/vendor_details.dart';
 class Apiservice {
   final Dio _dio = Dio();
   static const _baseurl = "http://192.168.1.101:4000";
-  static const searchvendingzones = "/api/getvendingzones/search";
+  static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
 
-  Future<List<VendingzoneModel?>> getvendingZones() async {
+  Future<List<VendingzoneModel?>> getvendingZones(
+      String locationcity, String vendorcategory, int taxlocation) async {
     try {
-      Response vendingzonedata = await _dio.get(_baseurl + searchvendingzones);
+      Response vendingzonedata =
+          await _dio.get('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       List vendingzones = vendingzonedata.data;
-      List<VendingzoneModel> list =
+      List<VendingzoneModel?> list =
           vendingzones.map((e) => VendingzoneModel.fromJson(e)).toList();
-      log(list[0].vendingzonedescription);
+      log(list[0].toString());
       return list;
     } on DioError catch (e) {
       if (e.response != null) {
@@ -35,9 +37,6 @@ class Apiservice {
     return <VendingzoneModel>[];
   }
 
-  // @POST( _baseurl + vendorregistration)
-  // Future<SendDataResponse> setAWSDrivingFiles(
-  //     @Body() SetAWSDrivingFilesBody setAWSDrivingFilesBody);
 
   Future<Response> registerUser(VendorModel vendordata) async {
     try {
@@ -51,9 +50,8 @@ class Apiservice {
         data: vendordata.toJson(),
       );
       log(response.toString());
-      // log(response.data);
       log(vendordata.toJson().toString());
-      // log(response.data);
+
       return response.data;
     } on DioError catch (e) {
       return e.response!.data;
