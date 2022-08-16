@@ -310,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Center(
                       child: QrImage(
                         data:
-                            "SN:$vendorShopName \nVL:$vendorLocation \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
+                            "SN:$vendorShopName \nVL: \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
                         version: QrVersions.auto,
                         size: 300.0,
                       ),

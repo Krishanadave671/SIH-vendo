@@ -1,28 +1,28 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+import '../../providers/vendor_detailsprovider.dart';
 import '../../routes.dart';
-import 'dart:ui' as ui;
 
-class DocumentaryEvidence extends StatefulWidget {
+class DocumentaryEvidence extends ConsumerStatefulWidget {
   const DocumentaryEvidence({Key? key}) : super(key: key);
 
   @override
-  State<DocumentaryEvidence> createState() => _DocumentaryEvidence();
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _DocumentaryEvidenceState();
 }
 
-class _DocumentaryEvidence extends State<DocumentaryEvidence> {
+class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
   @override
   void initState() {
-    uniqueString = 'yash';
+    uniqueString = 'VX' + DateTime.now().toString().substring(0 , 5);
     panPathString = 'vendor_documents/$uniqueString/pan.jpeg';
     aadharPathString = 'vendor_documents/$uniqueString/aadhar.jpeg';
-
     super.initState();
   }
 
@@ -107,6 +107,9 @@ class _DocumentaryEvidence extends State<DocumentaryEvidence> {
 
   void onContinue() {
     //implement api here;
+    final vendordata = ref.read(vendordetailsProvider);
+    vendordata.aadharcard = aadharPathString;
+    vendordata.pancard = panPathString; 
     print("end game : $panPathString , $aadharPathString ");
   }
 

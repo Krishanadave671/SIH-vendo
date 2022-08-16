@@ -3,7 +3,6 @@ import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/screens/BMCModule/AddComplaints/vendor_check.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
-
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -62,7 +61,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.spaceallocationList:
       return MaterialPageRoute(
-        builder: (context) => const SpaceAllocationListView(),
+        builder: (context) => SpaceAllocationListView(),
       );
     case Routes.documentaryEvidence:
       return MaterialPageRoute(
