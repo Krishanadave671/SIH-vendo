@@ -3,8 +3,7 @@ const complaintSchema = require("./complaints")
 
 const vendorDetails = mongoose.Schema({
     vendorid: {
-        type: Number, 
-        required: true, 
+        type: String,  
         trim: true, 
         unique: true 
       },
@@ -89,7 +88,19 @@ const vendorDetails = mongoose.Schema({
     creditscore: {
       type: Number
     },
-    complaints: [complaintSchema]
+    vendorImageurl : {
+      type : String , 
+      default : "https://avatars.githubusercontent.com/u/84977709?v=4" 
+    } , 
+    isapproved : {
+      type : String  , 
+      default : "pending" 
+    }, 
+    complaints: [complaintSchema], 
+    vendorcategory : {
+      type : String , 
+      required : true 
+    }
 });
 
 const Vendor = mongoose.model("Vendor", vendorDetails);

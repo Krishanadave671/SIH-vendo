@@ -4,8 +4,8 @@ import 'package:camera/camera.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:place_picker/entities/location_result.dart';
-import 'package:place_picker/widgets/place_picker.dart';
+// import 'package:place_picker/entities/location_result.dart';
+// import 'package:place_picker/widgets/place_picker.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/screens/write_Complaints_screen/take_picture.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
@@ -26,7 +26,7 @@ class _AddComplaintsState extends State<AddComplaints> {
   String? _complaintType;
   String _location = '';
   bool isInitialized = false;
-  XFile? _image;
+  XFile? image;
   String? _description;
   late final String uniqueString;
   late final String imagePathString;
@@ -34,19 +34,19 @@ class _AddComplaintsState extends State<AddComplaints> {
   late final CameraController cameraController;
   late CameraDescription cameraDescription;
 
-  void showPlacePicker() async {
-    LocationResult result = await Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) =>
-            PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
-      ),
-    );
-    print(result.city.name.toString());
-    setState(() {
-      //get whatever data about gmaps you want here
-      _location = result.city.name.toString();
-    });
-  }
+  // void showPlacePicker() async {
+  //   LocationResult result = await Navigator.of(context).push(
+  //     MaterialPageRoute(
+  //       builder: (context) =>
+  //           PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
+  //     ),
+  //   );
+  //   print(result.city.name.toString());
+  //   setState(() {
+  //     //get whatever data about gmaps you want here
+  //     _location = result.city.name.toString();
+  //   });
+  // }
 
   Future<void> cameraSettings() async {
     late final CameraController _cameraController;
@@ -94,32 +94,17 @@ class _AddComplaintsState extends State<AddComplaints> {
     print(" $_location , $_complaintType , $_description , $imagePathString ");
   }
 
-  Future<void> uploadPath() async {
-    FilePickerResult? result;
-    try {
-      result = await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowedExtensions: ['jpeg', 'png'],
-      );
-    } catch (e) {
-      print(e);
-    }
-    File file = File(result!.paths[0]!);
-
+  Future<void> uploadPhoto() async {
     try {
       final storage = FirebaseStorage.instance;
       imageRef = storage.ref().child(imagePathString);
-      await imageRef.putFile(file, SettableMetadata(contentType: "jpeg"));
+      await imageRef.putFile(File(displayImagePath!), SettableMetadata(contentType: "jpeg"));
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> getPan() async {
-    try {
-      final link = await imageRef.getDownloadURL();
-    } on FirebaseException catch (e) {}
-  }
+
 
   @override
   void initState() {
@@ -176,7 +161,7 @@ class _AddComplaintsState extends State<AddComplaints> {
                             onChanged: (value) => value,
                             readOnly: true,
                             onTap: () {
-                              showPlacePicker();
+                              // showPlacePicker();
                             },
                             decoration: InputDecoration(
                               enabledBorder: const UnderlineInputBorder(
@@ -307,7 +292,8 @@ class _AddComplaintsState extends State<AddComplaints> {
                   ),
                   verticalSpaceMedium,
                   GestureDetector(
-                    onTap: () {
+                    onTap: () async{
+                      await uploadPhoto();
                       onContinue();
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text("Complaint Registered"),
