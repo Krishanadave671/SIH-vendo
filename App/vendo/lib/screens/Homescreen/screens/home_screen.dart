@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/place_picker.dart';
@@ -19,6 +20,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<String> imgList = [
+    'https://images.unsplash.com/photo-1525382455947-f319bc05fb35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1576222901803-c062b57925b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1604429868519-8a64cb3b010b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
+    'https://images.unsplash.com/photo-1573751056139-2ab65b6b03be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60'
+  ];
+
   final String uniqueString = "*7%";
   String? vendorImageURL =
       "https://avatars.githubusercontent.com/u/84977709?s=400&u=6061e991de17cb0ba45b5713ee1eceb8d7a16ea4&v=4";
@@ -276,6 +284,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 20,
                         ),
                         AppText.headingThree("Goverment Schemes"),
+                        // carousel slider
+                        // CarouselSlider(
+                        //   items: imgList
+                        //       .map(
+                        //         (item) => Container(
+                        //             child: GestureDetector(
+                        //                 child: ClipRRect(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(20.0),
+                        //                   child: Image.network(
+                        //                     item,
+                        //                     fit: BoxFit.cover,
+                        //                     width: 1000,
+                        //                   ),
+                        //                 ),
+                        //                 onTap: () {
+                        //                   // Navigator.pushNamed(
+                        //                   //     context, '/details_page2');
+                        //                 })),
+                        //       )
+                        //       .toList(),
+                        //   options: CarouselOptions(
+                        //     autoPlay: true,
+                        //     aspectRatio: 2.0,
+                        //     enlargeCenterPage: true,
+                        //   ),
+                        // ),
                       ],
                     )
                     // Gridview

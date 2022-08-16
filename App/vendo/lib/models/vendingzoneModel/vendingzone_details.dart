@@ -10,7 +10,7 @@ class VendingzoneModel {
   final String vendingzoneImageurl;
   final int maximumVendorsallowed;
   final String vendingzoneward;
-  final int vendingzonelocationtax; 
+  final int vendingzonelocationtax;
   VendingzoneModel({
     required this.vendingzoneid,
     required this.vendingzonestreetName,

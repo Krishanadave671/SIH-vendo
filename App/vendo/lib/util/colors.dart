@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class colors {
   colors._();
-  static const Color Primarygreen = Color(0xff4163d3); 
+  static const Color Primarygreen = Color(0xff4163d3);
   static const Color kcPrimaryTextColor = Color(0xff3F414E);
   static const Color kcMediumGreyColor = Color(0xff868686);
   static const Color kcLightGreyColor = Color(0xffAEAEAE);

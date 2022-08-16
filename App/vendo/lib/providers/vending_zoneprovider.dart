@@ -5,4 +5,3 @@ import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 final vendingzonedataProvider = FutureProvider<List<VendingzoneModel?>>((ref) {
   return ref.watch(apiserviceProvider).getvendingZones();
 });
-

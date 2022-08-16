@@ -1,8 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
@@ -44,7 +42,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     var vendordata = ref.read(vendordetailsProvider);
     vendordata.vendorcategory = _dropdownValue!;
     vendordata.shoplocation = _location;
-    log(vendordata.toJson().toString()); 
+    log(vendordata.toJson().toString());
     print(" $_location , $_dropdownValue , $_currentSliderValue ");
   }
 

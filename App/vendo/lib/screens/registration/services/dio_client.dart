@@ -1,11 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/providers/vendor_detailsprovider.dart';
 
 import '../../../models/vendorDetails/vendor_details.dart';
 
@@ -43,22 +39,18 @@ class Apiservice {
   // Future<SendDataResponse> setAWSDrivingFiles(
   //     @Body() SetAWSDrivingFilesBody setAWSDrivingFilesBody);
 
-      
-
- 
-
   Future<Response> registerUser(VendorModel vendordata) async {
     try {
       vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
       log(vendordata.toString());
       log(_baseurl + vendorregistration);
-      
+
       Response response = await _dio.post(
         _baseurl + vendorregistration,
-        data: vendordata.toJson(), 
+        data: vendordata.toJson(),
       );
-      log(response.toString()); 
+      log(response.toString());
       // log(response.data);
       log(vendordata.toJson().toString());
       // log(response.data);

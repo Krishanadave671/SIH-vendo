@@ -20,49 +20,39 @@ class _getStartedState extends State<getStarted> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 12,top: 12),
+              padding: const EdgeInsets.only(left: 12, top: 12),
               child: Row(
-                children: [
-                  AppText.headingOne("Hello Vendors!!")
-                ],
+                children: [AppText.headingOne("Hello Vendors!!")],
               ),
             ),
-
             verticalSpaceMedium,
-
             AppText.headline("Let's start with revolution"),
-
             verticalSpaceMedium,
-
             Container(
               height: 300,
               decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/vendor.png"),
-                  fit: BoxFit.fitHeight,
-                )
-              ),
+                  image: DecorationImage(
+                image: AssetImage("assets/images/vendor.png"),
+                fit: BoxFit.fitHeight,
+              )),
             ),
-
             verticalSpaceMedium,
-
-            Padding(padding: EdgeInsets.only(left: 20,right: 20),
-              child: AppText.body("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "),
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20),
+              child: AppText.body(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "),
             ),
-            
             Expanded(child: Container()),
-            
             Padding(
               padding: const EdgeInsets.only(bottom: 28),
-              child: ElevatedButton(onPressed: ()=> Navigator.of(context).pushNamed(Routes.loginScreen),
+              child: ElevatedButton(
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(Routes.loginScreen),
                   style: ElevatedButton.styleFrom(
-                    primary: colors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30)
-                    )
-                  ),
-                  child: AppText.buttonText("Get Started")
-              ),
+                      primary: colors.primary,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30))),
+                  child: AppText.buttonText("Get Started")),
             )
           ],
         ),
