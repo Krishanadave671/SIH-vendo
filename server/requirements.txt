@@ -34,7 +34,7 @@ collections : vendingzones
 - vendingzonefacilities
 - vendingzonevendors
 - vendingzonecomplaints
-
+- category of vendors not allowed -- array 
 middlewares : vendor , admin 
  weeklybazaars 
 - bazaarid

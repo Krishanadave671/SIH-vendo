@@ -5,6 +5,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:place_picker/entities/location_result.dart';
 import 'package:place_picker/widgets/place_picker.dart';
+import 'package:vendo/Screens/registration/space_allocation_list.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppFonts/styles.dart';
@@ -36,7 +37,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     print(result.city.name.toString());
     setState(() {
       //get whatever data about gmaps you want here
-      _location = result.formattedAddress.toString();
+      _location = result.city.toString();
     });
   }
 
@@ -44,6 +45,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     var vendordata = ref.read(vendordetailsProvider);
     vendordata.vendorcategory = _dropdownValue!;
     vendordata.shoplocation = _location;
+    
     log(vendordata.toJson().toString()); 
     print(" $_location , $_dropdownValue , $_currentSliderValue ");
   }
