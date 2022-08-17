@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
+import '../../routes.dart';
+
 class VendingZoneCard extends StatefulWidget {
-  const VendingZoneCard({Key? key}) : super(key: key);
+  VendingZoneCard({Key? key, required this.vendingZone}) : super(key: key);
+  VendingzoneModel vendingZone;
 
   @override
   State<VendingZoneCard> createState() => _VendingZoneCardState();
@@ -13,13 +17,15 @@ class VendingZoneCard extends StatefulWidget {
 class _VendingZoneCardState extends State<VendingZoneCard> {
   @override
   Widget build(BuildContext context) {
+    final vendingZone = widget.vendingZone;
+
     return Scaffold(
       backgroundColor: Colors.blue[50],
-      body: getBody(),
+      body: getBody(vendingZone),
     );
   }
 
-  Widget getBody() {
+  Widget getBody(VendingzoneModel vendingZone) {
     var size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Stack(
@@ -35,8 +41,7 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                       Colors.black.withOpacity(0.5),
                       BlendMode.dstATop,
                     ),
-                    image: const NetworkImage(
-                        "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png"),
+                    image: NetworkImage(vendingZone.vendingzoneImageurl),
                     fit: BoxFit.fill),
               ),
               child: Padding(
@@ -44,7 +49,7 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png",
+                    vendingZone.vendingzoneImageurl,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -76,7 +81,7 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                     ),
                   ),
                   verticalSpaceMedium,
-                  AppText.headline("Dahisar Market"),
+                  AppText.headline(vendingZone.vendingzonestreetName),
                   verticalSpaceMedium,
                   Row(
                     children: <Widget>[
@@ -86,8 +91,7 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                       ),
                       horizontalSpaceSmall,
                       Expanded(
-                        child: AppText.body(
-                            "A/103, Sortee Somnath, Kanderpada, Dahisar(W), Mumbai - 400068"),
+                        child: AppText.body(vendingZone.vendingzonelocation),
                       )
                     ],
                   ),
@@ -101,7 +105,7 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                         children: [
                           Expanded(
                             child: AppText.body(
-                                "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls"),
+                                vendingZone.vendingzonedescription),
                           ),
                         ],
                       ),
@@ -117,7 +121,8 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                         color: colors.primary,
                       ),
                       horizontalSpaceSmall,
-                      AppText.body("Available slots : 45"),
+                      AppText.body(
+                          "Available slots : ${vendingZone.maximumVendorsallowed}"),
                     ],
                   ),
                   Row(
@@ -127,13 +132,17 @@ class _VendingZoneCardState extends State<VendingZoneCard> {
                         color: colors.primary,
                       ),
                       horizontalSpaceSmall,
-                      AppText.body("Location Fee : 20000"),
+                      AppText.body(
+                          "Location Fee : ${vendingZone.vendingzonelocationtax}"),
                     ],
                   ),
                   verticalSpaceMedium,
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: colors.primary),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          Routes.mainPage, (route) => false);
+                    },
                     child: AppText.body(
                       "Register Now",
                       color: Colors.white,

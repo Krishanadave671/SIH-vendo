@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
+import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
@@ -64,9 +65,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const SpaceAllocation(),
       );
     case Routes.spaceallocationList:
+      final args = settings.arguments as SpaceAllocationListArguments;
       return MaterialPageRoute(
-        builder: (context) => SpaceAllocationListView(),
+        builder: (context) => SpaceAllocationListView(
+          city: args.city,
+        ),
       );
+
     case Routes.documentaryEvidence:
       return MaterialPageRoute(
         builder: (context) => const DocumentaryEvidence(),
@@ -102,8 +107,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         ),
       );
     case Routes.vendingZoneCard:
+      final args = settings.arguments as VendingZoneViewArguments;
       return MaterialPageRoute(
-        builder: (context) => const VendingZoneCard(),
+        builder: (context) => VendingZoneCard(
+          vendingZone: args.model,
+        ),
       );
 
     default:
@@ -124,4 +132,18 @@ class VendorCheckArguments {
   final String vendorLocation;
   final String expiry;
   final String phoneNo;
+}
+
+class SpaceAllocationListArguments {
+  SpaceAllocationListArguments({
+    required this.city,
+  });
+  final String city;
+}
+
+class VendingZoneViewArguments {
+  VendingZoneViewArguments({
+    required this.model,
+  });
+  final VendingzoneModel model;
 }

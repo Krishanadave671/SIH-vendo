@@ -10,6 +10,7 @@ const DB = process.env.MONGO_URI;
 // routers 
 const vendingzonerouter = require("./routes/vendingroutes"); 
 const vendordetailsrouter = require("./routes/auth");
+const complaintsrouter = require("./routes/complaintsroutes");
 // middlewares
 const corsOptions ={
     origin:'http://localhost:3000', 
@@ -20,6 +21,7 @@ app.use(cors(corsOptions));
 app.use(express.json()); 
 app.use(vendingzonerouter);
 app.use(vendordetailsrouter);
+app.use(complaintsrouter);
  
 // connection to mongodb 
 mongoose.connect(DB).then( () => {
