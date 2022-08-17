@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.only(top: 12),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.mainPage);
+                    Navigator.of(context).pushNamed(Routes.bmcNavBar);
                   },
                   child: AppText.buttonText("Login"),
                   style: ElevatedButton.styleFrom(

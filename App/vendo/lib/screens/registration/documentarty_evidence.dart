@@ -51,7 +51,7 @@ class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
     try {
       final storage = FirebaseStorage.instance;
       panCardRef = storage.ref().child(panPathString);
-      await panCardRef.putFile(file, SettableMetadata(contentType: "jpeg"));
+      await panCardRef.putFile(file, SettableMetadata(contentType: "jpeg/png"));
       await getPan();
       setState(() {
         uploadedPan = true;
