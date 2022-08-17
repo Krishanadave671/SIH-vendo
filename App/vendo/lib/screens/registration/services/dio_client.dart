@@ -1,13 +1,20 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import '../../../models/vendorDetails/vendor_details.dart';
+import '../../../util/AppInterface/ui_helpers.dart';
+import '../../../util/error_handling.dart';
 
 class Apiservice {
   final Dio _dio = Dio();
-  static const _baseurl = "http://192.168.1.101:4000";
+  static const _baseurl = "http://192.168.43.223:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -15,8 +22,8 @@ class Apiservice {
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, int taxlocation) async {
     try {
-      Response vendingzonedata =
-          await _dio.get('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
+      Response vendingzonedata = await _dio.get(
+          '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       List vendingzones = vendingzonedata.data;
       List<VendingzoneModel?> list =
           vendingzones.map((e) => VendingzoneModel.fromJson(e)).toList();
@@ -37,34 +44,56 @@ class Apiservice {
     return <VendingzoneModel>[];
   }
 
-
-  Future<Response> registerUser(VendorModel vendordata) async {
+  Future<void> registerUser(
+      VendorModel vendordata, BuildContext context) async {
     try {
       vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
       log(vendordata.toString());
       log(_baseurl + vendorregistration);
-
       Response response = await _dio.post(
         _baseurl + vendorregistration,
         data: vendordata.toJson(),
       );
       log(response.toString());
       log(vendordata.toJson().toString());
-
-      return response.data;
-    } on DioError catch (e) {
-      return e.response!.data;
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Account created! Login with the same credentials!',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
     }
   }
 
-  Future<Response> login(String phoneno, String password) async {
+  Future<void> login(String phoneno, String password, BuildContext context,
+      WidgetRef ref) async {
     try {
       Response response = await _dio.post(_baseurl + vendorlogin,
-          data: {"phone": phoneno, "password": password});
-      return response.data;
-    } on DioError catch (e) {
-      return e.response?.data;
+          data: jsonEncode({'phone': phoneno, 'password': password}));
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('x-Auth-token', jsonDecode(response.data)['token']);
+      final vendordata = ref.read(vendordetailsProvider);
+      vendordata.token = response.data['token']; 
+
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () async {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString(
+              'x-auth-token', jsonDecode(response.data)['token']);
+            showSnackBar(context, 'Login successfully'); 
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
     }
   }
 }
