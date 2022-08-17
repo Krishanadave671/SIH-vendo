@@ -1,6 +1,6 @@
 const express = require('express'); 
 const mongoose = require('mongoose'); 
-const localtunnel = require('localtunnel');
+const cors = require('cors'); 
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config(); 
@@ -10,6 +10,7 @@ const DB = process.env.MONGO_URI;
 const vendingzonerouter = require("./routes/vendingroutes"); 
 const vendordetailsrouter = require("./routes/auth");
 // middlewares
+app.use(cors()); 
 app.use(express.json()); 
 app.use(vendingzonerouter);
 app.use(vendordetailsrouter);
