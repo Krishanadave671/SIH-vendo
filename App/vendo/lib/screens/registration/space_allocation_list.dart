@@ -182,7 +182,7 @@ class _SpaceAllocationListViewState
           },
           error: (e, t) {
             log(e.toString());
-            showSnackBar(context, e.toString());
+            // showSnackBar(context, e.toString());
           },
           loading: () => const Center(
             child: CircularProgressIndicator(),
