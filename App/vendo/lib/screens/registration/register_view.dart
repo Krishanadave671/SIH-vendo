@@ -69,7 +69,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     final vendordata = ref.read(vendordetailsProvider);
     vendordata.gender = _genderType;
     vendordata.dob = _dob;
-    vendordata.address ="jdnkfwskfkf";
+    vendordata.address =_location;
     vendordata.name = _name;
     vendordata.phone = _phoneNo;
     vendordata.password = _password;

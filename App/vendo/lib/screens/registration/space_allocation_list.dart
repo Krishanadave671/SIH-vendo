@@ -1,14 +1,10 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/Screens/registration/services/dio_client.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
-
 import 'package:vendo/util/AppFonts/app_text.dart';
-import 'package:vendo/util/AppInterface/ui_helpers.dart';
-
 import '../../routes.dart';
 
 // @immutable
@@ -87,9 +83,7 @@ import '../../routes.dart';
 class SpaceAllocationListView extends ConsumerStatefulWidget {
   const SpaceAllocationListView({
     Key? key,
-    required this.city,
   }) : super(key: key);
-  final String city;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -100,9 +94,7 @@ class _SpaceAllocationListViewState
     extends ConsumerState<SpaceAllocationListView> {
   @override
   Widget build(BuildContext context) {
-    print("hello ${widget.city}");
-    final vendordata = ref.watch(vendordetailsProvider);
-
+    //get vendingzones that are less than max tax , in the same city , allowed to sell based on type and have slots available
     final vendingzonesdata = ref.watch(vendingzonedataProvider);
     log(vendingzonesdata.toString());
 
@@ -130,9 +122,9 @@ class _SpaceAllocationListViewState
           right: 10,
         ),
         child: vendingzonesdata.when(
-          data: (_vendingzonesdata) {
+          data: (data) {
             List<VendingzoneModel?> vendingzonelist =
-                _vendingzonesdata.map((e) => e).toList();
+                data.map((e) => e).toList();
             log(vendingzonelist.toList().toString());
             return RefreshIndicator(
               onRefresh: () async {
@@ -151,7 +143,7 @@ class _SpaceAllocationListViewState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.network(
-                              vendingzonelist[index]!.vendingzoneImageurl,
+                              vendingzonelist[index]!.vendingZoneImageUrl,
                               width: MediaQuery.of(context).size.width * 0.15,
                               fit: BoxFit.fitWidth,
                             ),
@@ -159,13 +151,13 @@ class _SpaceAllocationListViewState
                         ),
                         title: Expanded(
                             child: AppText.bodyBold(
-                                vendingzonelist[index]!.vendingzonestreetName)),
+                                vendingzonelist[index]!.vendingZoneLocality)),
                         subtitle: Expanded(
                           child: AppText.body(
-                              vendingzonelist[index]!.vendingzonedescription),
+                              vendingzonelist[index]!.vendingZoneDescription),
                         ),
                         trailing: AppText.body(
-                            vendingzonelist[index]!.vendingzoneward),
+                            vendingzonelist[index]!.vendingZoneWard),
                         onTap: () {
                           Navigator.of(context).pushNamed(
                             Routes.vendingZoneCard,
@@ -182,14 +174,17 @@ class _SpaceAllocationListViewState
           },
           error: (e, t) {
             log(e.toString());
-            // showSnackBar(context, e.toString());
           },
           loading: () => const Center(
             child: CircularProgressIndicator(),
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(onPressed: () async {
+    );
+  }
+}
+
+//  floatingActionButton: FloatingActionButton(onPressed: () async {
       //   try {
       //     final _api = ref.watch(apiserviceProvider);
       //     var response = await _api.registerUser(vendordata);
@@ -201,6 +196,3 @@ class _SpaceAllocationListViewState
       //     log(e.toString());
       //   }
       // }),
-    );
-  }
-}

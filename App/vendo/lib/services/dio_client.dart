@@ -13,10 +13,11 @@ class Apiservice {
   static const vendorlogin = "/api/login";
 
   Future<List<VendingzoneModel?>> getvendingZones(
-      String locationcity, String vendorcategory, int taxlocation) async {
+      String locationcity, String vendorcategory, double taxlocation) async {
     try {
-      Response vendingzonedata =
-          await _dio.get('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
+      
+      Response vendingzonedata = await _dio.get(
+          '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       List vendingzones = vendingzonedata.data;
       List<VendingzoneModel?> list =
           vendingzones.map((e) => VendingzoneModel.fromJson(e)).toList();
@@ -36,8 +37,6 @@ class Apiservice {
     }
     return <VendingzoneModel>[];
   }
-
-
 
   Future<Response> registerUser(VendorModel vendordata) async {
     try {
@@ -73,5 +72,3 @@ class Apiservice {
 final apiserviceProvider = Provider<Apiservice>((ref) {
   return Apiservice();
 });
-
-
