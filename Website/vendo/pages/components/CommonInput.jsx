@@ -1,8 +1,8 @@
 import React from 'react';
-const CommonInput = ({ placeholderText = 'Input', value, onChange }) => {
+const CommonInput = ({ placeholderText = 'Input', value, onChange, type = 'text' }) => {
 	return (
 		<input
-			type="text"
+			type={type}
 			placeholder={placeholderText}
 			value={value}
 			onChange={onChange}

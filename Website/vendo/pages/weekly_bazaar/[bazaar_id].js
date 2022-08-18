@@ -7,6 +7,7 @@ import {
   MarkerF,
   Autocomplete,
 } from "@react-google-maps/api";
+import Card from "react-bootstrap/Card";
 
 export default function Bazaar({BazaarID}){
 
@@ -15,7 +16,13 @@ export default function Bazaar({BazaarID}){
     height: "400px",
     marginTop: "20px",
   };
-  
+  let vendorList = [
+    {vendorID:"V134dw4", vendorName:"Kirti College"},
+    {vendorID:"V134dw4", vendorName:"Kirti College"},
+    {vendorID:"V134dw4", vendorName:"Kirti College"},
+    {vendorID:"V134dw4", vendorName:"Kirti College"},
+    {vendorID:"V134dw4", vendorName:"Kirti College"}
+  ]
   const [center, setCenter] = React.useState({
     lat: 19.076,
     lng: 72.8777,
@@ -32,11 +39,12 @@ export default function Bazaar({BazaarID}){
           <div className="bazaar-flex">
             <div>
               <Highlighter Text="Date of the event" fontSize="1.2rem"/>
-              <div className="pending-application-section-desc">16/04/2003</div>
+              <div className="bazaar-section-desc">16/04/2003</div>
               <Highlighter Text="Maximum vendors capacity" fontSize="1.2rem"/>
-              <div className="pending-application-section-desc">12</div>
+              <div className="bazaar-section-desc">12</div>
               <Highlighter Text="Bazaar Description" fontSize="1.2rem"/>
-              <div className="pending-application-section-desc">Best bazaar</div>
+              <div className="bazaar-section-desc">Best bazaar</div>
+              {/* <img src="" alt="" /> */}
             </div>
             <div>
               <Highlighter Text="Location of Event" fontSize="1.2rem"/>
@@ -75,8 +83,43 @@ export default function Bazaar({BazaarID}){
                   </GoogleMap>
                   </LoadScript>
             </div>
+          </div>.
+          <div className="bazaar-list">
+            <ul>
+            {vendorList.map((zone) => {
+              return (
+                <li>
+                  <Card key={zone.vendorID}>
+                    <Card.Body>
+                      <Card.Title>
+                        {/* <div className="pending-application-section-title">
+                          <a href={url}>Zone id - {zone.vendingzoneid}</a>
+                        </div>
+                        <div className="pending-application-section-title">
+                          {zone.vendingzonestreetName}
+                        </div> */}
+                        {zone.vendorID}
+                      </Card.Title>
+                      <Card.Subtitle className="mb-2 text-muted">
+                        {/* <div className="pending-application-section-desc">
+                          {zone.vendingzonecity}
+                        </div>
+                        {zone.vendingzonedescription}
+                        <div>{reviews.custom_officer_date}</div> */}
+                        {zone.vendorName}
+                      </Card.Subtitle>
+                      {/* <Card.Text>{zone.vendingzoneward}</Card.Text>
+                      {/* <Card.Link href={``}>Card Link</Card.Link> */}
+                      {/* <Card.Link href="#" style={{ color: "red" }}>
+                        <FontAwesomeIcon icon={faTrashCan} size="1x" /> Delete
+                      </Card.Link>  */}
+                    </Card.Body>
+                  </Card>
+                </li>
+              );
+            })}
+            </ul>
           </div>
-          
         </div>
     );
 }

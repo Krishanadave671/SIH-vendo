@@ -1,13 +1,16 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import DashboardSidebar from "./components/DashboardSidebar";
-import Navbar2 from "./components/Navbar2.jsx";
+import { storage } from './firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 import CommonInput from "../pages/components/CommonInput";
-import Router, { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router';
+import Highlighter from "./components/Highlighter";
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import {
   GoogleMap,
   LoadScript,
@@ -19,14 +22,40 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function dashboard({ VendingZones }) {
-  
+
+  /*
+  @Params 
+  vendingZoneID
+  vendingZoneLocality
+  vendingZoneLat
+  vendingZoneLong
+  vendingZoneDescription
+  vendingZoneImageURL
+  maximumVendorsAllowed
+  vendingZoneCity
+  vendingZoneWard
+  vendingZoneLocationFee
+  vendingZoneAddress
+  categoryOfVendorsNotAllowed
+  vendorTypeFavourables
+  vendorIDList
+  */ 
   const [address, setAddress] = React.useState("");
-  var location_tax = 0;
-  var maximum_capacity = 0;
-  var ctg_not_allowed = [];
-  var img_url = "";
-  var desc = "";
+  const [vendingZoneLat, setvendingZoneLat] = React.useState(0);
+  const [vendingZoneLong, setvendingZoneLong] = React.useState(0);
+  const [vendingZoneLocality,setvendingZoneLocality] = React.useState("");
+  const [vendingZoneDescription,setvendingZoneDescription] = React.useState("");
+  const [maximumVendorsAllowed,setmaximumVendorsAllowed] = React.useState(0);
+  const [vendingZoneCity, setvendingZoneCity] = React.useState("");
+  const [vendingZoneWard, setvendingZoneWard] = React.useState("");
+  const [vendingZoneLocationFee, setvendingZoneLocationFee] = React.useState(0);
+  var vendingZoneAddress = address;
+  const [categoryOfVendorsNotAllowed, setcategoryOfVendorsNotAllowed] = React.useState([0,0,0,0,0,0]);
+  const [vendorTypeFavourables, setvendorTypeFavourables] = React.useState([0,0,0,0,0,0]);
+  var file;
   
+  
+  // Map params
   const containerStyle = {
     // width: '800px',
     height: "400px",
@@ -37,44 +66,106 @@ export default function dashboard({ VendingZones }) {
     lat: 19.076,
     lng: 72.8777,
   });
+  const [vendingZoneImageURL,setVendorZoneImageURL] = React.useState("");
   
   const [position, setPosition] = React.useState({
     lat: 37.772,
     lng: -122.214,
   });
-
-
-
+  Geocode.setApiKey("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw");
+  Geocode.enableDebug();
 
 
 
   var submitvendorzone = async () => {
-    const res = await axios.post(
-      "http://localhost:4000/api/addvendingzones",
-      {
-        "vendingzonestreetName" : address , 
-        "vendingzonelocation" : "https://goo.gl/maps/fcPz9kC7eApJ7ymz8" , 
-        "vendingzonedescription" : "Hello world how are you ? " , 
-        "maximumVendorsallowed" : 7 , 
-        "vendingzonecity" : "Jaipur", 
-        "vendingzoneward" : "ward-3", 
-        "vendingzonelocationtax" : 100 ,
-        "vendingzoneAddress" : "Maharaj bhavan  , near jogeshwari caves , Dadar (east) Mumbai - 400060" , 
-        "categoryofvendorsNotAllowed" : [
-            "Foodvendor" , "vegetablevendor"
-        ]
-      }
-    ).then((response)=>{
-      console.log("Uploaded successfully");
-      Router.push("/vending_zones");
+    console.log(vendingZoneLocality);
+    console.log(vendingZoneLat);
+    console.log(vendingZoneLong);
+    console.log(vendingZoneDescription);
+    console.log(vendingZoneImageURL);
+    console.log(maximumVendorsAllowed);
+    console.log(vendingZoneCity);
+    console.log(vendingZoneWard);
+    console.log(vendingZoneLocationFee);
+    console.log(vendingZoneAddress);
+    console.log(categoryOfVendorsNotAllowed);
+    console.log(vendorTypeFavourables);
+    // const res = await axios.post(
+    //   "http://localhost:4000/api/addvendingzones",
+    //   {
+    //     "vendingzonestreetName" : address , 
+    //     "vendingzonelocation" : "https://goo.gl/maps/fcPz9kC7eApJ7ymz8" , 
+    //     "vendingzonedescription" : "Hello world how are you ? " , 
+    //     "maximumVendorsallowed" : 7 , 
+    //     "vendingzonecity" : "Jaipur", 
+    //     "vendingzoneward" : "ward-3", 
+    //     "vendingzonelocationtax" : 100 ,
+    //     "vendingzoneAddress" : "Maharaj bhavan  , near jogeshwari caves , Dadar (east) Mumbai - 400060" , 
+    //     "categoryofvendorsNotAllowed" : [
+    //         "Foodvendor" , "vegetablevendor"
+    //     ]
+    //   }
+    // ).then((response)=>{
+    //   console.log("Uploaded successfully");
+    //   Router.push("/vending_zones");
 
-    })
+    // })
     
   }
 
+  // Upload image
+  const UploadImage = () =>{
+    if (!file) {
+      alert("Please upload an image first!");
+    }
+    const d = new Date();
+    let time = d.getTime();
+    const storageRef = ref(storage, `/weekly_zone/${time.toString()}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+            const percent = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            // update progress
+            // setPercent(percent);
+        },
+        (err) => console.log(err),
+        () => {
+            // download url
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                console.log(url);
+                // vendingZoneImageURL = url;
+                setVendorZoneImageURL(url);
+                
+            });
+        }
+    );
+  }
 
-  Geocode.setApiKey("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw");
-  Geocode.enableDebug();
+  const findIdx = (s) =>{
+    if(s == "Foods and vegetables"){
+      return 0;
+    }
+    if(s == "Fast Food Veg"){
+      return 1;
+    }
+    if(s == "Fast Food Non-veg"){
+      return 2;
+    }
+    if(s == "Toys"){
+      return 3;
+    }
+    if(s == "Utensils"){
+      return 4;
+    }
+    if(s == "Flowers"){
+      return 5;
+    }
+  }
+
+  // Search bar 
 
   const SearchBar = () => {
     return (
@@ -119,6 +210,7 @@ export default function dashboard({ VendingZones }) {
     );
   };
 
+  // Main Body 
   console.log(VendingZones);
   return (
     <div>
@@ -136,15 +228,78 @@ export default function dashboard({ VendingZones }) {
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-                <CommonInput placeholderText="Enter vending zone location tax" onChange={(e)=>{
-                  location_tax = e.target.value;
+                <CommonInput placeholderText="Enter vending zone location Fee" onChange={(e)=>{
+                  setvendingZoneLocationFee(parseInt(e.target.value));
                 }}/>
                 <CommonInput placeholderText="Enter vending zone ward number" onChange={(e)=>{
-
+                  setvendingZoneWard(e.target.value);
                 }}/>
                 <CommonInput placeholderText="Enter maximum capacity of vendors" onChange={(e)=>{
-                  maximum_capacity = e.target.value;
+                  setmaximumVendorsAllowed(parseInt(e.target.value));
                 }}/>
+                <FloatingLabel controlId="floatingTextarea2" label="Enter description of vending zone"
+                 
+                >
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Enter description of vending zone"
+                    style={{ height: '100px',borderRadius:"0.9rem",marginTop:"10px",marginBottom:"10px"}}
+                    onChange={(e)=>{
+                      setvendingZoneDescription(e.target.value);
+                      console.log(vendingZoneDescription);
+                    }}
+                  />
+                </FloatingLabel>
+                <div>
+                    <input type="file" onChange={(e)=>{
+                      file = e.target.files[0];
+                    }} accept="/image/*" />
+                    <button onClick={UploadImage}>Upload to Firebase</button>
+                    <p> "% done"</p>
+                </div>
+                <img src={vendingZoneImageURL} alt="" width={"600px"} />
+                
+                <Highlighter Text="Select favourable vendor categories" fontSize="1.2rem"/>
+                <Form>
+                  {['Foods and vegetables', 'Fast Food Veg','Fast Food Non-veg','Toys','Utensils','Flowers'].map((type) => (
+                    <div key={`${type}`} className="mb-3">
+                      <Form.Check 
+                        type={"checkbox"}
+                        id={`${type}`}
+                        label={`${type}`}
+                        
+                        onChange={(e)=>{
+                          // console.log(e.target.value);
+                          var tmpvendorTypeFavourables = vendorTypeFavourables;
+
+                          console.log(findIdx(e.target.id));
+                          tmpvendorTypeFavourables[findIdx(e.target.id)] ^=1;
+                          setvendorTypeFavourables(tmpvendorTypeFavourables);
+                        }}
+                        value="1"
+                        />
+                    </div>
+                  ))}
+                </Form>
+                <Highlighter Text="Select prohibited type of vendors" fontSize="1.2rem"/>
+                <Form>
+                  {['Foods and vegetables', 'Fast Food Veg','Fast Food Non-veg','Toys','Utensils','Flowers'].map((type) => (
+                    <div key={`${type}`} className="mb-3">
+                      <Form.Check 
+                        type={"checkbox"}
+                        id={`${type}`}
+                        label={`${type}`}
+
+                        onChange={(e)=>{
+                          var tmpcategoryOfVendorsNotAllowed = categoryOfVendorsNotAllowed;
+                          tmpcategoryOfVendorsNotAllowed[findIdx(e.target.id)] ^=1;
+                          setcategoryOfVendorsNotAllowed(tmpcategoryOfVendorsNotAllowed);
+                        }}
+                        // value="1"
+                      />
+                    </div>
+                  ))}
+                </Form>
                 <LoadScript
                   googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
                   libraries={["places"]}
@@ -155,13 +310,30 @@ export default function dashboard({ VendingZones }) {
                     center={center}
                     zoom={16}
                     onClick={(e) => {
+                      setvendingZoneLat(e.latLng.lat());
+                      setvendingZoneLong(e.latLng.lng());
                       setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                       Geocode.fromLatLng(
                         position.lat.toString(),
                         position.lng.toString()
                       ).then(
                         (response) => {
+                          var tmpvendingZoneLocality = "";
+                          for (let i = 0; i < response.results[0].address_components.length; i++) {
+                            for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                              switch (response.results[0].address_components[i].types[j]) {
+                                case "locality":
+                                  setvendingZoneCity(response.results[0].address_components[i].long_name);
+                                  break;
+                                case "sublocality":
+                                  tmpvendingZoneLocality +=  response.results[0].address_components[i].long_name + " ";
+                                  break;
+                              }
+                            }
+                          }
+                          setvendingZoneLocality(tmpvendingZoneLocality);
                           console.log(response.results[0].formatted_address);
+                          console.log(vendingZoneLocality);
                           setAddress(response.results[0].formatted_address);
                         },
                         (error) => {
@@ -169,7 +341,7 @@ export default function dashboard({ VendingZones }) {
                         }
                       );
                     }}
-                  >
+                    >
                     <Autocomplete
                     // onLoad={this.onLoad}
                     // onPlaceChanged={this.onPlaceChanged}
@@ -182,6 +354,25 @@ export default function dashboard({ VendingZones }) {
                             (response) => {
                               const { lat, lng } =
                                 response.results[0].geometry.location;
+                                setvendingZoneLat(lat);
+                                setvendingZoneLong(lng);
+                                console.log(response.results[0]);
+                                var tmpvendingZoneLocality = "";
+                          for (let i = 0; i < response.results[0].address_components.length; i++) {
+                            for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                              switch (response.results[0].address_components[i].types[j]) {
+                                case "locality":
+                                  setvendingZoneCity(response.results[0].address_components[i].long_name);
+                                  break;
+                                  case "sublocality":
+                                    tmpvendingZoneLocality +=  response.results[0].address_components[i].long_name + " ";
+                                    break;
+                                  }
+                                }
+                              }
+                              console.log(response.results[0].formatted_address);
+                          setvendingZoneLocality(tmpvendingZoneLocality);
+                          console.log(vendingZoneLocality);
                               setPosition({ lat: lat, lng: lng });
                               setCenter({ lat: lat, lng: lng });
                             },

@@ -1,4 +1,6 @@
 .bazaar-main-container{
+    display: flex;
+    flex-direction: column;
     margin-left: 20px;
     margin-right: 20px;
     height: 100vh;
@@ -9,4 +11,19 @@
 }
 .bazaar-flex div{
     flex: 1;
+}
+.bazaar-list{
+    margin-right: 20px;
+    margin-top: 20px;
+}
+.bazaar-list ul li{
+    margin-bottom: 10px;
+}
+.bazaar-section-desc {
+    margin-left: 16px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: var(--secondary-color);
 }
