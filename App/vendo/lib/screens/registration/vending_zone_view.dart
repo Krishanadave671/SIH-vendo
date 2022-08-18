@@ -9,8 +9,8 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-import '../../Screens/registration/services/dio_client.dart';
 import '../../routes.dart';
+import '../../services/dio_client.dart';
 
 class VendingZoneCard extends ConsumerStatefulWidget {
   VendingZoneCard({Key? key, required this.vendingZone}) : super(key: key);
@@ -148,7 +148,6 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: colors.primary),
                     onPressed: () async {
-                  
                       vendorDetails.vendingZoneIdApplied =
                           vendingZone.vendingZoneId;
                       vendorDetails.shopLocationLat =
@@ -156,9 +155,8 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       vendorDetails.shopLocationLong =
                           vendingZone.vendingZoneLong;
 
-                          //add api to update vendorIdList 
-                          
-                          
+                      //add api to update vendorIdList
+
                       try {
                         //api to register the vendor
                         final _api = ref.watch(apiserviceProvider);
@@ -171,7 +169,6 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                         log(e.toString());
                       }
 
-                      
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           Routes.apporvalPage, (route) => false);
                     },
