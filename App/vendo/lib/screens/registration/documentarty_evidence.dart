@@ -20,7 +20,7 @@ class DocumentaryEvidence extends ConsumerStatefulWidget {
 class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
   @override
   void initState() {
-    uniqueString = 'VX' + DateTime.now().toString().substring(0 , 5);
+    uniqueString = 'VX' + DateTime.now().toString().substring(0, 5);
     panPathString = 'vendor_documents/$uniqueString/pan.jpeg';
     aadharPathString = 'vendor_documents/$uniqueString/aadhar.jpeg';
     super.initState();
@@ -64,6 +64,8 @@ class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
   Future<void> getPan() async {
     try {
       final link = await panCardRef.getDownloadURL();
+      print("hii");
+      print(link);
       setState(() {
         panImage = link;
       });
@@ -92,7 +94,6 @@ class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
     File file = File(result!.paths[0]!);
 
     try {
-
       final storage = FirebaseStorage.instance;
       aadharRef = storage.ref().child(aadharPathString);
       await aadharRef.putFile(file, SettableMetadata(contentType: "jpeg"));
@@ -108,9 +109,9 @@ class _DocumentaryEvidenceState extends ConsumerState<DocumentaryEvidence> {
   void onContinue() {
     //implement api here;
     final vendordata = ref.read(vendordetailsProvider);
-    vendordata.aadharcard = aadharPathString;
-    vendordata.pancard = panPathString; 
-    print("end game : $panPathString , $aadharPathString ");
+    vendordata.aadharcardImageUrl = aadharImage;
+    vendordata.pancardImageUrl = panImage;
+    print("end game : $aadharImage , $panImage ");
   }
 
   @override

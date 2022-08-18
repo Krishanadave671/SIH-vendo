@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import '../../../models/vendorDetails/vendor_details.dart';
@@ -17,7 +14,7 @@ import '../../../util/error_handling.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.1.101:4000";
+  static const _baseurl = "http://192.168.43.223";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -25,7 +22,7 @@ class Apiservice {
   static const getuserdata = "/getuserdata";
 
   Future<List<VendingzoneModel?>> getvendingZones(
-      String locationcity, String vendorcategory, int taxlocation) async {
+      String locationcity, String vendorcategory, double taxlocation) async {
     try {
       Response vendingzonedata = await _dio.get(
           '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
@@ -52,7 +49,7 @@ class Apiservice {
   Future<void> registerUser(
       VendorModel vendordata, BuildContext context) async {
     try {
-      vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
+      vendordata.vendorId = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
       log(_baseurl + vendorregistration);
       Response response = await _dio.post(
@@ -122,7 +119,7 @@ class Apiservice {
         log(vendordata.toJson().toString());
       }
     } catch (e) {
-      showSnackBar(context, e.toString());
+      // showSnackBar(context, e.toString());
       log(e.toString());
     }
   }

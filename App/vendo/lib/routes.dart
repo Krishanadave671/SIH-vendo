@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
+import 'package:vendo/Screens/registration/space_allocation_list.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/Screens/login/login_screen2.dart';
 
@@ -10,11 +11,12 @@ import 'package:vendo/screens/BMCModule/VendorReview/vendor_check.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
+import 'package:vendo/screens/registration/approval_page.dart';
 import 'package:vendo/screens/registration/documentarty_evidence.dart';
 import 'package:vendo/screens/registration/nationality_evidence.dart';
 import 'package:vendo/screens/registration/register_view.dart';
 import 'package:vendo/screens/registration/space_allocation.dart';
-import 'package:vendo/screens/registration/space_allocation_list.dart';
+
 import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
 import 'Screens/calendar_screen/calendar.dart';
@@ -37,6 +39,7 @@ class Routes {
   static const bmcNavBar = '/bmc_nav_bar';
   static const test = '/test';
   static const vendingZoneCard = '/vending_zone_card';
+  static const apporvalPage = '/approval_page_view';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -68,11 +71,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const SpaceAllocation(),
       );
     case Routes.spaceallocationList:
-      final args = settings.arguments as SpaceAllocationListArguments;
       return MaterialPageRoute(
-        builder: (context) => SpaceAllocationListView(
-          city: args.city,
-        ),
+        builder: (context) => const SpaceAllocationListView(),
       );
 
     case Routes.documentaryEvidence:
@@ -120,6 +120,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           vendingZone: args.model,
         ),
       );
+      case Routes.apporvalPage:
+      return MaterialPageRoute(
+        builder: (context) => const ApprovalPage(),
+      );
 
     default:
       return MaterialPageRoute(
@@ -139,13 +143,6 @@ class VendorCheckArguments {
   final String vendorLocation;
   final String expiry;
   final String phoneNo;
-}
-
-class SpaceAllocationListArguments {
-  SpaceAllocationListArguments({
-    required this.city,
-  });
-  final String city;
 }
 
 class VendingZoneViewArguments {
