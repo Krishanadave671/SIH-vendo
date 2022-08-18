@@ -87,7 +87,7 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   // get user data
   authRouter.get("/getuserdata", auth, async (req, res) => {
     const vendor = await Vendor.findById(req.vendor);
-    res.json({ ...vendor._doc, token: req.token });
+    res.json({...vendor._doc ,  token: req.token });
   });
 
   module.exports = authRouter;

@@ -1,23 +1,28 @@
 import 'dart:convert';
-
+import 'dart:ffi';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
+import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+import 'package:vendo/routes.dart';
 import '../../../models/vendorDetails/vendor_details.dart';
 import '../../../util/AppInterface/ui_helpers.dart';
 import '../../../util/error_handling.dart';
 
 class Apiservice {
   final Dio _dio = Dio();
-  static const _baseurl = "http://192.168.43.223:4000";
+
+  static const _baseurl = "http://192.168.1.101:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
+  static const tokenisValid = "/tokenIsValid";
+  static const getuserdata = "/getuserdata";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, int taxlocation) async {
@@ -49,7 +54,6 @@ class Apiservice {
     try {
       vendordata.vendorid = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
-      log(vendordata.toString());
       log(_baseurl + vendorregistration);
       Response response = await _dio.post(
         _baseurl + vendorregistration,
@@ -76,24 +80,50 @@ class Apiservice {
       WidgetRef ref) async {
     try {
       Response response = await _dio.post(_baseurl + vendorlogin,
-          data: jsonEncode({'phone': phoneno, 'password': password}));
+          data: {'phone': phoneno, 'password': password});
+      log(response.toString());
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('x-Auth-token', jsonDecode(response.data)['token']);
-      final vendordata = ref.read(vendordetailsProvider);
-      vendordata.token = response.data['token']; 
-
+      prefs.setString('x-auth-token', response.data['token']);
+      VendorModel vendordata = ref.read(vendordetailsProvider);
+      vendordata = VendorModel.fromJson(response.data);
+      log(vendordata.toJson().toString());
       httpErrorHandle(
         response: response,
         context: context,
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
-          await prefs.setString(
-              'x-auth-token', jsonDecode(response.data)['token']);
-            showSnackBar(context, 'Login successfully'); 
+          await prefs.setString('x-auth-token', vendordata.token);
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(Routes.mainPage, (route) => false);
         },
       );
     } catch (e) {
+      log(e.toString());
       showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<void> getuserData(BuildContext context, WidgetRef ref) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('x-auth-token');
+      if (token == null) {
+        prefs.setString('x-auth-token', '');
+      }
+
+      _dio.options.headers['x-auth-token'] = token;
+      var tokenRes = await _dio.post(_baseurl + tokenisValid);
+      var response = tokenRes.data;
+      if (response == true) {
+        _dio.options.headers['x-auth-token'] = token;
+        Response userRes = await _dio.get(_baseurl + getuserdata);
+        VendorModel vendordata = ref.read(vendordetailsProvider);
+        vendordata = VendorModel.fromJson(userRes.data); 
+        log(vendordata.toJson().toString());
+      }
+    } catch (e) {
+      showSnackBar(context, e.toString());
+      log(e.toString());
     }
   }
 }
