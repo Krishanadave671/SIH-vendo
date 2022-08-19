@@ -40,6 +40,7 @@ export default function dashboard({ VendingZones }) {
   vendorTypeFavourables
   vendorIDList
   */ 
+  const [vendorZoneList,setvendorZoneList] = React.useState(VendingZones);
   const [address, setAddress] = React.useState("");
   const [vendingZoneLat, setvendingZoneLat] = React.useState(0);
   const [vendingZoneLong, setvendingZoneLong] = React.useState(0);
@@ -90,20 +91,24 @@ export default function dashboard({ VendingZones }) {
     console.log(vendingZoneAddress);
     console.log(categoryOfVendorsNotAllowed);
     console.log(vendorTypeFavourables);
+    var notfavList = [];
+    for(var i = 0; i < 6; i++){
+      if(categoryOfVendorsNotAllowed[i]==1){
+        notfavList.push(getType(i));
+      }
+    }
     // const res = await axios.post(
     //   "http://localhost:4000/api/addvendingzones",
     //   {
     //     "vendingzonestreetName" : address , 
     //     "vendingzonelocation" : "https://goo.gl/maps/fcPz9kC7eApJ7ymz8" , 
-    //     "vendingzonedescription" : "Hello world how are you ? " , 
-    //     "maximumVendorsallowed" : 7 , 
-    //     "vendingzonecity" : "Jaipur", 
-    //     "vendingzoneward" : "ward-3", 
-    //     "vendingzonelocationtax" : 100 ,
-    //     "vendingzoneAddress" : "Maharaj bhavan  , near jogeshwari caves , Dadar (east) Mumbai - 400060" , 
-    //     "categoryofvendorsNotAllowed" : [
-    //         "Foodvendor" , "vegetablevendor"
-    //     ]
+    //     "vendingzonedescription" : vendingZoneDescription, 
+    //     "maximumVendorsallowed" : maximumVendorsAllowed , 
+    //     "vendingzonecity" : vendingZoneCity, 
+    //     "vendingzoneward" : vendingZoneWard, 
+    //     "vendingzonelocationtax" : vendingZoneLocationFee ,
+    //     "vendingzoneAddress" : vendingZoneAddress , 
+    //     "categoryofvendorsNotAllowed" : notfavList,
     //   }
     // ).then((response)=>{
     //   console.log("Uploaded successfully");
@@ -120,7 +125,7 @@ export default function dashboard({ VendingZones }) {
     }
     const d = new Date();
     let time = d.getTime();
-    const storageRef = ref(storage, `/weekly_zone/${time.toString()}`);
+    const storageRef = ref(storage, `/vendor_zone/${time.toString()}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
     uploadTask.on(
         "state_changed",
@@ -164,9 +169,30 @@ export default function dashboard({ VendingZones }) {
       return 5;
     }
   }
+  const getType = (s) =>{
+    if(s == 0){
+      return "Foods and vegetables";
+    }
+    if(s == 1){
+      return "Fast Food Veg";
+    }
+    if(s == 2){
+      return "Fast Food Non-veg";
+    }
+    if(s == 3){
+      return "Toys";
+    }
+    if(s == 4){
+      return "Utensils";
+    }
+      return "Flowers";
+  }
 
   // Search bar 
-
+  const [searchCity, setsearchCity] = React.useState("");
+  const [searchTax, setsearchTax] = React.useState("");
+  const [searchLocality, setsearchLocality] = React.useState("");
+  const [searchVendorCategory, setsearchVendorCategory] = React.useState("");
   const SearchBar = () => {
     return (
       <div className="vendor-registration-search-bar">
@@ -175,8 +201,8 @@ export default function dashboard({ VendingZones }) {
             <Form.Control
               type="text"
               placeholder="Enter city"
-              onChange={(text) => {
-                city = text.target.value;
+              onChange={(e) => {
+                setsearchCity(e.target.value);
               }}
             />
           </Form.Group>
@@ -187,8 +213,8 @@ export default function dashboard({ VendingZones }) {
             <Form.Control
               type="locality"
               placeholder="Enter ward number"
-              onChange={(text) => {
-                locality = text.target.value;
+              onChange={(e) => {
+                setsearchLocality(e.target.value);
               }}
             />
           </Form.Group>
@@ -197,10 +223,13 @@ export default function dashboard({ VendingZones }) {
           <Button
             variant="primary"
             onClick={() => {
-              console.log(city);
-              console.log(locality);
-              changeCity(city);
-              changeLocality(locality);
+              axios.get(
+                "http://localhost:4000/api/getvendingzones/search"
+              ).then((res)=>{
+                 JSON.parse(JSON.stringify(res.data)).then((data)=>{})
+
+              })
+              // console.log(res);
             }}
           >
             Search
@@ -220,7 +249,7 @@ export default function dashboard({ VendingZones }) {
       />
       <div className="vending-zone-main-container">
         <div className="add-vending-zones">
-          <Accordion defaultActiveKey="0">
+          <Accordion defaultActiveKey="1">
             <Accordion.Item eventKey="0">
               <Accordion.Header>
                 <div className="pending-application-section-title">
@@ -310,6 +339,7 @@ export default function dashboard({ VendingZones }) {
                     center={center}
                     zoom={16}
                     onClick={(e) => {
+                      
                       setvendingZoneLat(e.latLng.lat());
                       setvendingZoneLong(e.latLng.lng());
                       setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
@@ -429,7 +459,7 @@ export default function dashboard({ VendingZones }) {
         <SearchBar />
         <div className="vendor-zone-list">
           <ul>
-            {VendingZones.map((zone) => {
+            {vendorZoneList.map((zone) => {
               let url = "/approved_application/" + zone.vendingzoneid;
               return (
                 <li>

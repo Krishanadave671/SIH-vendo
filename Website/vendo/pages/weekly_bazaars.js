@@ -28,7 +28,19 @@ export default function dashboard({ VendingZones }) {
     height: '400px',
     marginTop: '20px',
   };
-   const [address,setAddress] =React.useState("");
+
+  const [address,setAddress] =React.useState("");
+  const [vendorTypeFavourable, setvendorTypeFavourable] = React.useState([0,0,0,0,0,0]);
+  const [bazaarName, setbazaarName] = React.useState("");
+  const [bazaarImageUrl, setbazaarImageUrl] = React.useState("");
+  const [bazaarLat, setbazaarLat] = React.useState(0);
+  const [bazaarLong, setbazaarLong] = React.useState(0);
+  var bazaarAddress = address;
+  const [bazaarMaximumCapacity, setbazaarMaximumCapacity] = React.useState(0);
+  const [bazaarDate, setbazaarDate] = React.useState("");
+  const [bazaarDescription, setbazaarDescription] = React.useState("");
+  const [bazaarCity,setbazaarCity] = React.useState("");
+
   const [center,setCenter] = React.useState({
     lat:  19.0760,
     lng: 72.8777
@@ -38,11 +50,74 @@ export default function dashboard({ VendingZones }) {
     lat: 37.772,
     lng: -122.214
   })
-
-  const onLoad = marker => {
-    console.log('marker: ', marker)
+   // Upload image
+   const UploadImage = () =>{
+    if (!file) {
+      alert("Please upload an image first!");
+    }
+    const d = new Date();
+    let time = d.getTime();
+    const storageRef = ref(storage, `/weekly_bazaars/${time.toString()}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+            const percent = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            );
+            // update progress
+            // setPercent(percent);
+        },
+        (err) => console.log(err),
+        () => {
+            // download url
+            getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+                console.log(url);
+                // vendingZoneImageURL = url;
+                setbazaarImageURL(url);
+                
+            });
+        }
+    );
   }
-
+  const findIdx = (s) =>{
+    if(s == "Foods and vegetables"){
+      return 0;
+    }
+    if(s == "Fast Food Veg"){
+      return 1;
+    }
+    if(s == "Fast Food Non-veg"){
+      return 2;
+    }
+    if(s == "Toys"){
+      return 3;
+    }
+    if(s == "Utensils"){
+      return 4;
+    }
+    if(s == "Flowers"){
+      return 5;
+    }
+  }
+  const getType = (s) =>{
+    if(s == 0){
+      return "Foods and vegetables";
+    }
+    if(s == 1){
+      return "Fast Food Veg";
+    }
+    if(s == 2){
+      return "Fast Food Non-veg";
+    }
+    if(s == 3){
+      return "Toys";
+    }
+    if(s == 4){
+      return "Utensils";
+    }
+      return "Flowers";
+  }
   const [date, setDate] = React.useState(new Date('December 17, 1995 03:24:00'));
 
   const SearchBar = () =>{
@@ -88,9 +163,42 @@ export default function dashboard({ VendingZones }) {
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-              {/* <DatePicker selected={date} onChange={(date) => setDate(date)} /> */}
-                <CommonInput placeholderText="Enter date of the event" />
-                <CommonInput placeholderText="Enter maximum capacity of vendors" />
+
+                <CommonInput placeholderText="Enter bazaar name" onChange={(e)=>{
+                  setbazaarName(e.target.value);
+                }} />
+                <CommonInput placeholderText="Enter date of the event" onChange={(e)=>{
+                  setbazaarDate(e.target.text);
+                }}/>
+                <CommonInput placeholderText="Enter maximum capacity of vendors" onChange={(e)=>{
+                  setbazaarMaximumCapacity(parseInt(e.target.value));
+                }} />
+                <div>
+                    <input type="file" onChange={(e)=>{
+                      file = e.target.files[0];
+                    }} accept="/image/*" />
+                    <button onClick={UploadImage}>Upload to Firebase</button>
+                    <p> "% done"</p>
+                </div>
+                <img src={bazaarImageUrl} alt="" width={"600px"} />
+                <Form>
+                  {['Foods and vegetables', 'Fast Food Veg','Fast Food Non-veg','Toys','Utensils','Flowers'].map((type) => (
+                    <div key={`${type}`} className="mb-3">
+                      <Form.Check 
+                        type={"checkbox"}
+                        id={`${type}`}
+                        label={`${type}`}
+                        
+                        onChange={(e)=>{
+                          var tmpvendorTypeFavourable = vendorTypeFavourable;
+                          tmpvendorTypeFavourable[findIdx(e.target.id)] ^=1;
+                          setvendorTypeFavourable(tmpvendorTypeFavourable);
+                        }}
+                        value="1"
+                        />
+                    </div>
+                  ))}
+                </Form>
                 <LoadScript
                   googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
                   libraries={["places"]}
@@ -101,6 +209,8 @@ export default function dashboard({ VendingZones }) {
                     center={center}
                     zoom={16}
                     onClick={(e) => {
+                      setbazaarLat(e.latLng.lat());
+                      setbazaarLong(e.latLng.long());
                       setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                       Geocode.fromLatLng(
                         position.lat.toString(),
@@ -122,10 +232,23 @@ export default function dashboard({ VendingZones }) {
                         onChange={(e) => {
                           Geocode.fromAddress(e.target.value).then(
                             (response) => {
+                              
+                              for (let i = 0; i < response.results[0].address_components.length; i++) {
+                                for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                                  switch (response.results[0].address_components[i].types[j]) {
+                                    case "locality":
+                                      setbazaarCity(response.results[0].address_components[i].long_name);
+                                      break;
+                                  }
+                                }
+                              }
+                              
                               const { lat, lng } =
                                 response.results[0].geometry.location;
-                              setPosition({ lat: lat, lng: lng });
-                              setCenter({ lat: lat, lng: lng });
+                                setbazaarLat(e.latLng.lat());
+                                setbazaarLong(e.latLng.long());
+                                setPosition({ lat: lat, lng: lng });
+                                setCenter({ lat: lat, lng: lng });
                             },
                             (error) => {
                               console.log(error);
