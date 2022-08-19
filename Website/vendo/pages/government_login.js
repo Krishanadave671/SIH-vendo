@@ -15,15 +15,22 @@ export default function government_login() {
   return (
     <div className='govt-login-container'>
       <div style={{height:"40px"}}/>
-      <div className={styles.headline}>Vendo</div>
-      <div className={styles.subheadline}>Government Login</div>
+      <div className='ContainerForLogin'>
+      <div className='VendoTitle'>Vendo</div>
+      <div className='VendoTitle2'>Government Login</div>
+      <div className='InputForLogin'>
       <CommonInput placeholderText='Enter Govt official ID' onChange={(e)=>{
         govtID = e.target.value;
       }}/>
       <CommonInput placeholderText='Enter password'onChange={(e)=>{
         password = e.target.value;
       }}/>
-      <Button variant="primary" className='pending-application-banner' onClick={login}>Login</Button>
+      </div>
+      <div className='containerforbutton'>
+      <Button  className='button' onClick={login}>Login</Button>
+      </div>
+      </div>
+      
     </div>
   )
 
