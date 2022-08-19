@@ -43,6 +43,6 @@ class _MyAppState extends ConsumerState<MyApp> {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
-        initialRoute: Routes.LoginScreen1);
+        initialRoute: Routes.mainPage);
   }
 }
