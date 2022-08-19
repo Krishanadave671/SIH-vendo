@@ -9,6 +9,7 @@ import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+
 import '../../routes.dart';
 import '../../services/dio_client.dart';
 
