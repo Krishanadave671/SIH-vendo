@@ -1,18 +1,42 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:passwordfield/passwordfield.dart';
+
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../../services/dio_client.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final TextEditingController _phonenoController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    super.dispose();
+    _phonenoController.dispose();
+    _passwordController.dispose();
+  }
+
+  void signInUser(BuildContext context) async {
+    final _api = ref.watch(apiserviceProvider);
+    log(_phonenoController.text);
+    log(_passwordController.text);
+    await _api.login(_phonenoController.text, _passwordController.text, context, ref);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +73,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, right: 24),
                 child: TextFormField(
+                  controller: _phonenoController,
                   cursorColor: colors.primary,
-                  initialValue: 'Enter your number',
                   maxLength: 20,
                   decoration: const InputDecoration(
                     labelText: 'Contact',
@@ -66,6 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 24, right: 24, top: 12),
                 child: PasswordField(
+                  controller: _passwordController,
                   color: colors.primary,
                   passwordConstraint: r'.*[@$#.*].*',
                   inputDecoration: PasswordDecoration(),
@@ -97,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: const EdgeInsets.only(top: 12),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pushNamed(Routes.mainPage);
+                    signInUser(context);
                   },
                   child: AppText.buttonText("Login"),
                   style: ElevatedButton.styleFrom(

@@ -8,8 +8,12 @@ const auth = require("../middlewares/auth");
 //Sign Up
 authRouter.post("/api/signup", async (req, res) => {
     try {
-        const {vendorid , vendorcategory , name, address, dob, gender, phone, aadharno, pancardno,password ,  
-                passport, electionid, mcgmlicense, aadharcard, pancard, shoplocation, isapproved} = req.body;
+        const {vendorId , vendorCategory , name, address, dob, gender, phone, aadharNo, panCardNo,password ,  
+          isPassport, isElectionid, isMcgmLicense, aadharcardImageUrl, pancardImageUrl, shopLocationAddress, 
+          shopLocationLat,
+          shopLocationLong,
+          vendingZoneIdApplied,
+          shopCity, isApproved} = req.body;
         
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
@@ -21,23 +25,27 @@ authRouter.post("/api/signup", async (req, res) => {
         const hashedPassword = await bcryptjs.hash(password, 8);
        
         let vendor = new Vendor({
-          vendorid , 
+          vendorId , 
             name,
             dob,
             gender,
             address,
             password: hashedPassword,
             phone,
-            aadharno,
-            pancardno,
-            passport,
-            electionid,
-            mcgmlicense,
-            aadharcard,
-            pancard,
-            shoplocation, 
-            vendorcategory, 
-            isapproved
+            aadharNo,
+            panCardNo,
+            isPassport,
+            isElectionid,
+            isMcgmLicense,
+            aadharcardImageUrl,
+            pancardImageUrl,
+            shopLocationAddress, 
+            shopLocationLat,
+            shopLocationLong,
+            vendingZoneIdApplied,
+            shopCity,
+            vendorCategory, 
+            isApproved
         });
         vendor = await vendor.save();
         res.json(vendor);
@@ -50,7 +58,6 @@ authRouter.post("/api/signup", async (req, res) => {
 authRouter.post("/api/login", async (req, res) =>{
     try {
         const { phone, password } = req.body;
-    
         const vendor = await Vendor.findOne({ phone });
         if (!vendor) {
           return res
@@ -58,7 +65,7 @@ authRouter.post("/api/login", async (req, res) =>{
             .json({ msg: "User with this phone number does not exist!" });
         }
     
-        const isMatch = await bcryptjs.compare(password, user.password);
+        const isMatch = await bcryptjs.compare(password, vendor.password);
         if (!isMatch) {
           return res.status(400).json({ msg: "Incorrect password." });
         }
@@ -70,7 +77,7 @@ authRouter.post("/api/login", async (req, res) =>{
     }
 });
 
-authRouter.post("/tokenIsValid", async (req, res) => {
+authRouter.post("/api/tokenIsValid", async (req, res) => {
     try {
       const token = req.header("x-auth-token");
       if (!token) return res.json(false);
@@ -86,9 +93,9 @@ authRouter.post("/tokenIsValid", async (req, res) => {
   });
 
   // get user data
-  // authRouter.get("/", auth, async (req, res) => {
-  //   const vendor = await Vendor.findById(req.vendor);
-  //   res.json({ ...vendor._doc, token: req.token });
-  // });
+  authRouter.get("/getuserdata", auth, async (req, res) => {
+    const vendor = await Vendor.findById(req.vendor);
+    res.json({...vendor._doc ,  token: req.token });
+  });
 
   module.exports = authRouter;

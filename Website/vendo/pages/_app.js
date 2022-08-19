@@ -10,6 +10,7 @@ import "../styles/Content.css";
 import "../styles/GovernmentLogin.css";
 import "../styles/weekly_bazaar.css";
 import "../styles/VendingZones.css";
+import  "../styles/bazaar.css";
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }

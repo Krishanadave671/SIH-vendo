@@ -20,10 +20,22 @@ class SpaceAllocation extends ConsumerStatefulWidget {
       _SpaceAllocationState();
 }
 
+String vendorCategory = "fastFoodVeg";
+
+final dropDownProvider = StateProvider<String>((ref) {
+  return vendorCategory;
+});
+
+String location = '';
+
+final locationProvider = StateProvider((ref) {
+  return location;
+});
+
 class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
-  String? _dropdownValue;
-  double _currentSliderValue = 20;
-  String _location = '';
+  double _sliderTaxValue = 20;
+
+  String shopCity = '';
 
   void showPlacePicker() async {
     LocationResult result = await Navigator.of(context).push(
@@ -32,24 +44,29 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
             PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
       ),
     );
-    print(result.city.name.toString());
-    setState(() {
-      //get whatever data about gmaps you want here
-      _location = result.city.name;
-    });
+    print("wowow34oow ${result.subLocalityLevel1.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel2.name.toString()}");
+
+    shopCity = result.city.name.toString();
+    print(shopCity);
+    ref.watch(locationProvider.notifier).state =
+        result.formattedAddress.toString();
   }
 
   void onContinue() {
     var vendordata = ref.read(vendordetailsProvider);
-    vendordata.vendorcategory = _dropdownValue!;
-    vendordata.shoplocation = _location;
-    vendordata.taxlocation = 10000;
+    vendordata.vendorCategory = vendorCategory;
+    vendordata.shopCity = shopCity;
+    vendordata.creditScore = _sliderTaxValue;
+
     log(vendordata.toJson().toString());
-    print(" $_location , $_dropdownValue , $_currentSliderValue ");
+    print(" $vendorCategory , $_sliderTaxValue ");
   }
 
   @override
   Widget build(BuildContext context) {
+    String _location = ref.watch(locationProvider);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -126,7 +143,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                           decoration: InputDecoration(
                               border: InputBorder.none,
                               labelText: 'Location of Shop',
-                              hintText: _location,
+                              hintText: ref.watch(locationProvider),
                               hintStyle: body1Style),
                         ),
                       ),
@@ -140,7 +157,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                           padding: const EdgeInsets.only(left: 20),
                           child: DropdownButton<String>(
                             hint: AppText.body("Category of shop"),
-                            value: _dropdownValue,
+                            value: ref.read(dropDownProvider.notifier).state,
                             icon: const Icon(Icons.arrow_drop_down),
                             elevation: 16,
                             style: const TextStyle(
@@ -149,14 +166,16 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                               fontWeight: FontWeight.w400,
                             ),
                             onChanged: (String? newValue) {
-                              setState(() {
-                                _dropdownValue = newValue!;
-                              });
+                              ref.read(dropDownProvider.notifier).state =
+                                  newValue!;
                             },
                             items: <String>[
-                              'FoodVendor',
-                              'ElectronicsVendor',
-                              'UtensilsVendor'
+                              'fruitsVegetable',
+                              'fastFoodVeg',
+                              'fastFoodNonVeg',
+                              'toy',
+                              'utensils',
+                              'flower',
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -174,16 +193,15 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                     ),
                     verticalSpaceSmall,
                     Slider(
-                      divisions: 10,
                       activeColor: colors.primary,
                       inactiveColor: colors.primary,
                       thumbColor: colors.primary,
-                      value: _currentSliderValue,
-                      max: 100,
-                      label: _currentSliderValue.round().toString(),
+                      value: _sliderTaxValue,
+                      max: 100000,
+                      label: _sliderTaxValue.round().toString(),
                       onChanged: (double value) {
                         setState(() {
-                          _currentSliderValue = value;
+                          _sliderTaxValue = value;
                         });
                       },
                     ),
@@ -191,8 +209,9 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                     GestureDetector(
                       onTap: () {
                         onContinue();
-                        Navigator.of(context)
-                            .pushNamed(Routes.spaceallocationList);
+                        Navigator.of(context).pushNamed(
+                          Routes.spaceallocationList,
+                        );
                       },
                       child: Center(
                         child: SizedBox(
@@ -230,9 +249,4 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
       ),
     );
   }
-}
-
-enum BasicOptions {
-  yes,
-  no,
 }

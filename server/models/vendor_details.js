@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const complaintSchema = require("./complaints")
+const {complaints} = require("./complaints");
 
 const vendorDetails = mongoose.Schema({
-    vendorid: {
+    vendorId: {
         type: String,  
         trim: true, 
         unique: true 
@@ -39,7 +39,7 @@ const vendorDetails = mongoose.Schema({
         message: '{VALUE} is not a valid 10 digit phone number!'
       }
     },
-    aadharno: {
+    aadharNo: {
       type: String,
       required: true,
       trim: true,
@@ -50,7 +50,7 @@ const vendorDetails = mongoose.Schema({
         message: '{VALUE} is not a valid Aadhar number!'
       }
     },
-    pancardno: {
+    panCardNo: {
       type: String,
       required: true,
       trim: true,
@@ -61,46 +61,71 @@ const vendorDetails = mongoose.Schema({
         message: '{VALUE} is not a valid Pancard number!'
       }
     },
-    passport: {
+    isPassport: {
       type: Boolean, 
       required : true
     },
-    electionid: {
+    isElectionid: {
       type: Boolean, 
       required : true 
     },
-    mcgmlicense: {
+    isMcgmLicense: {
       type: Boolean, 
       required : true 
     },
-    aadharcard: {
+    aadharcardImageUrl: {
       type: String, 
       required : true 
     },
-    pancard: {
+    pancardImageUrl: {
       type: String, 
       required : true 
     },
-    shoplocation: {
+    shopLocationAddress: {
       type: String, 
       required : true 
     },
-    creditscore: {
+    shopLocationLat: {
+      type: String, 
+      required : true 
+    },
+    shopLocationLong: {
+      type: String, 
+      required : true 
+    },
+    vendingZoneIdApplied: {
+      type: String, 
+      required : true 
+    },
+    shopCity: {
+      type: String, 
+      required : true 
+    },
+    creditScore: {
       type: Number
     },
     vendorImageurl : {
       type : String , 
       default : "https://avatars.githubusercontent.com/u/84977709?v=4" 
     } , 
-    isapproved : {
+    isApproved : {
       type : String  , 
       default : "pending" 
     }, 
-    complaints: [complaintSchema], 
-    vendorcategory : {
+    complaintsList: {
+      type: [complaints],
+    }, 
+    reviewList: {
+      type: [complaints]
+    }, 
+    weeklyBazzarList: {
+      type: [complaints]
+    },
+    vendorCategory : {
       type : String , 
       required : true 
-    }
+    }, 
+ 
 });
 
 const Vendor = mongoose.model("Vendor", vendorDetails);

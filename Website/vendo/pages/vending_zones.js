@@ -7,6 +7,7 @@ import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 import CommonInput from "../pages/components/CommonInput";
+import Router, { useRouter } from 'next/router'
 import {
   GoogleMap,
   LoadScript,
@@ -18,8 +19,63 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
 export default function dashboard({ VendingZones }) {
+  
+  const [address, setAddress] = React.useState("");
+  var location_tax = 0;
+  var maximum_capacity = 0;
+  var ctg_not_allowed = [];
+  var img_url = "";
+  var desc = "";
+  
+  const containerStyle = {
+    // width: '800px',
+    height: "400px",
+    marginTop: "20px",
+  };
+  
+  const [center, setCenter] = React.useState({
+    lat: 19.076,
+    lng: 72.8777,
+  });
+  
+  const [position, setPosition] = React.useState({
+    lat: 37.772,
+    lng: -122.214,
+  });
+
+
+
+
+
+
+  var submitvendorzone = async () => {
+    const res = await axios.post(
+      "http://localhost:4000/api/addvendingzones",
+      {
+        "vendingzonestreetName" : address , 
+        "vendingzonelocation" : "https://goo.gl/maps/fcPz9kC7eApJ7ymz8" , 
+        "vendingzonedescription" : "Hello world how are you ? " , 
+        "maximumVendorsallowed" : 7 , 
+        "vendingzonecity" : "Jaipur", 
+        "vendingzoneward" : "ward-3", 
+        "vendingzonelocationtax" : 100 ,
+        "vendingzoneAddress" : "Maharaj bhavan  , near jogeshwari caves , Dadar (east) Mumbai - 400060" , 
+        "categoryofvendorsNotAllowed" : [
+            "Foodvendor" , "vegetablevendor"
+        ]
+      }
+    ).then((response)=>{
+      console.log("Uploaded successfully");
+      Router.push("/vending_zones");
+
+    })
+    
+  }
+
+
   Geocode.setApiKey("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw");
   Geocode.enableDebug();
+
   const SearchBar = () => {
     return (
       <div className="vendor-registration-search-bar">
@@ -46,14 +102,6 @@ export default function dashboard({ VendingZones }) {
             />
           </Form.Group>
         </div>
-        {/* <div className="vendor-registration-search-bar-items">
-                <Button variant="outline-primary" className='outline-btn'
-                onClick={()=>{
-                    changeCity(""),
-                    changeLocality("")
-                }}
-                >Clear</Button>{' '}
-            </div> */}
         <div className="vendor-registration-search-bar-items">
           <Button
             variant="primary"
@@ -70,22 +118,6 @@ export default function dashboard({ VendingZones }) {
       </div>
     );
   };
-  const [address, setAddress] = React.useState("");
-  const containerStyle = {
-    // width: '800px',
-    height: "400px",
-    marginTop: "20px",
-  };
-
-  const [center, setCenter] = React.useState({
-    lat: 19.076,
-    lng: 72.8777,
-  });
-
-  const [position, setPosition] = React.useState({
-    lat: 37.772,
-    lng: -122.214,
-  });
 
   console.log(VendingZones);
   return (
@@ -104,9 +136,15 @@ export default function dashboard({ VendingZones }) {
                 </div>
               </Accordion.Header>
               <Accordion.Body>
-                <CommonInput placeholderText="Enter vending zone location tax" />
-                <CommonInput placeholderText="Enter vending zone ward number" />
-                <CommonInput placeholderText="Enter maximum capacity of vendors" />
+                <CommonInput placeholderText="Enter vending zone location tax" onChange={(e)=>{
+                  location_tax = e.target.value;
+                }}/>
+                <CommonInput placeholderText="Enter vending zone ward number" onChange={(e)=>{
+
+                }}/>
+                <CommonInput placeholderText="Enter maximum capacity of vendors" onChange={(e)=>{
+                  maximum_capacity = e.target.value;
+                }}/>
                 <LoadScript
                   googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
                   libraries={["places"]}
@@ -139,7 +177,6 @@ export default function dashboard({ VendingZones }) {
                       <input
                         type="text"
                         placeholder="Enter zone address"
-                        defaultValue={address}
                         onChange={(e) => {
                           Geocode.fromAddress(e.target.value).then(
                             (response) => {
@@ -152,6 +189,7 @@ export default function dashboard({ VendingZones }) {
                               console.log(error);
                             }
                           );
+                          setAddress(e.target.value);
                         }}
                         style={{
                           boxSizing: `border-box`,
@@ -179,7 +217,20 @@ export default function dashboard({ VendingZones }) {
                     <MarkerF />
                   </GoogleMap>
                 </LoadScript>
-                <Button style={{ marginTop: "20px" }}>Submit</Button>
+                <div
+                style={{
+                  marginTop:"20px",
+                  fontWeight:"normal",
+                  fontSize:"1.2rem"
+                }}
+                >
+                  Selected address - 
+                  {address} 
+                </div>
+                <Button style={{ marginTop: "20px" }}
+                onClick={submitvendorzone}
+                
+                >Submit</Button>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
