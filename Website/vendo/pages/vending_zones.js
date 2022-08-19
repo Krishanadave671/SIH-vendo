@@ -492,24 +492,24 @@ export default function dashboard({ VendingZones }) {
               let url = "/approved_application/" + zone.vendingzoneid;
               return (
                 <li>
-                  <Card key={zone.vendingzoneid}>
+                  <Card key={zone.vendingZoneId}>
                     <Card.Body>
                       <Card.Title>
                         <div className="pending-application-section-title">
-                          <a href={url}>Zone id - {zone.vendingzoneid}</a>
+                          <a href={url}>Zone id - {zone.vendingZoneId}</a>
                         </div>
                         <div className="pending-application-section-title">
-                          {zone.vendingzonestreetName}
+                          {zone.vendingZoneAddress}
                         </div>
                       </Card.Title>
                       <Card.Subtitle className="mb-2 text-muted">
                         <div className="pending-application-section-desc">
-                          {zone.vendingzonecity}
+                          {zone.vendingZoneCity}
                         </div>
-                        {zone.vendingzonedescription}
+                        {zone.vendingZoneDescription}
                         {/* <div>{reviews.custom_officer_date}</div> */}
                       </Card.Subtitle>
-                      <Card.Text>{zone.vendingzoneward}</Card.Text>
+                      <Card.Text>{zone.vendingZoneWard}</Card.Text>
                       {/* <Card.Link href={``}>Card Link</Card.Link> */}
                       <Card.Link href="#" style={{ color: "red" }}>
                         <FontAwesomeIcon icon={faTrashCan} size="1x" /> Delete
