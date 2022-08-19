@@ -50,7 +50,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       Colors.black.withOpacity(0.5),
                       BlendMode.dstATop,
                     ),
-                    image: NetworkImage(vendingZone.vendingZoneImageUrl),
+                    image: NetworkImage(vendingZone.vendingZoneImageurl),
                     fit: BoxFit.fill),
               ),
               child: Padding(
@@ -58,7 +58,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    vendingZone.vendingZoneImageUrl,
+                    vendingZone.vendingZoneImageurl,
                     fit: BoxFit.contain,
                   ),
                 ),

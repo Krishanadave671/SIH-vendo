@@ -143,7 +143,7 @@ class _SpaceAllocationListViewState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.network(
-                              vendingzonelist[index]!.vendingZoneImageUrl,
+                              vendingzonelist[index]!.vendingZoneImageurl,
                               width: MediaQuery.of(context).size.width * 0.15,
                               fit: BoxFit.fitWidth,
                             ),
