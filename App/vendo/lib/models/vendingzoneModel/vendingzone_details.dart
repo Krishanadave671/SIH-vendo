@@ -8,7 +8,7 @@ class VendingzoneModel {
   double vendingZoneLat;
   double vendingZoneLong;
   String vendingZoneDescription;
-  String vendingZoneImageUrl;
+  String vendingZoneImageurl;
   double maximumVendorsAllowed;
   String vendingZoneCity;
   String vendingZoneWard;
@@ -23,7 +23,7 @@ class VendingzoneModel {
     required this.vendingZoneLat,
     required this.vendingZoneLong,
     required this.vendingZoneDescription,
-    required this.vendingZoneImageUrl,
+    required this.vendingZoneImageurl,
     required this.maximumVendorsAllowed,
     required this.vendingZoneCity,
     required this.vendingZoneWard,
