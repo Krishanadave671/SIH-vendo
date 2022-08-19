@@ -66,8 +66,12 @@ const vendingzoneSchema = new mongoose.Schema({
             type: String,
             default: "pending"
         }
-    }]
+    }],
+    pendingRegistrations: {
+        type: Number,
+        default: 0
+    }
 }) 
 
-const vendingzones = mongoose.model('vendingzones', vendingzoneSchema);
-module.exports = {vendingzones , vendingzoneSchema}; 
+const VendingZones = mongoose.model('vendingzones', vendingzoneSchema);
+module.exports = VendingZones; 
