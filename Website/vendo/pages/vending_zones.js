@@ -41,7 +41,6 @@ export default function dashboard({ VendingZones }) {
   vendorIDList
   */ 
   const [vendorZoneList,setvendorZoneList] = React.useState(VendingZones);
-  const [address, setAddress] = React.useState("");
   const [vendingZoneLat, setvendingZoneLat] = React.useState(0);
   const [vendingZoneLong, setvendingZoneLong] = React.useState(0);
   const [vendingZoneLocality,setvendingZoneLocality] = React.useState("");
@@ -50,9 +49,9 @@ export default function dashboard({ VendingZones }) {
   const [vendingZoneCity, setvendingZoneCity] = React.useState("");
   const [vendingZoneWard, setvendingZoneWard] = React.useState("");
   const [vendingZoneLocationFee, setvendingZoneLocationFee] = React.useState(0);
-  var vendingZoneAddress = address;
-  const [categoryOfVendorsNotAllowed, setcategoryOfVendorsNotAllowed] = React.useState([0,0,0,0,0,0]);
-  const [vendorTypeFavourables, setvendorTypeFavourables] = React.useState([0,0,0,0,0,0]);
+  const [vendingZoneAddress,setvendingZoneAddress] = React.useState("");
+  const [_categoryOfVendorsNotAllowed, setcategoryOfVendorsNotAllowed] = React.useState([0,0,0,0,0,0]);
+  const [_vendorTypeFavourables, setvendorTypeFavourables] = React.useState([0,0,0,0,0,0]);
   var file;
   
   
@@ -67,7 +66,7 @@ export default function dashboard({ VendingZones }) {
     lat: 19.076,
     lng: 72.8777,
   });
-  const [vendingZoneImageURL,setVendorZoneImageURL] = React.useState("");
+  const [vendingZoneImageurl,setVendorZoneImageURL] = React.useState("");
   
   const [position, setPosition] = React.useState({
     lat: 37.772,
@@ -83,38 +82,68 @@ export default function dashboard({ VendingZones }) {
     console.log(vendingZoneLat);
     console.log(vendingZoneLong);
     console.log(vendingZoneDescription);
-    console.log(vendingZoneImageURL);
+    console.log(vendingZoneImageurl);
     console.log(maximumVendorsAllowed);
     console.log(vendingZoneCity);
     console.log(vendingZoneWard);
     console.log(vendingZoneLocationFee);
     console.log(vendingZoneAddress);
-    console.log(categoryOfVendorsNotAllowed);
-    console.log(vendorTypeFavourables);
-    var notfavList = [];
+    console.log(_categoryOfVendorsNotAllowed);
+    console.log(_vendorTypeFavourables);
+    var vendingZoneId = 'VZ00' + Date.now().toString();
+    // console.log(VendorID);
+    var categoryOfVendorsNotAllowed = [];
     for(var i = 0; i < 6; i++){
-      if(categoryOfVendorsNotAllowed[i]==1){
-        notfavList.push(getType(i));
+      if(_categoryOfVendorsNotAllowed[i]==1){
+        categoryOfVendorsNotAllowed.push(getType(i));
       }
     }
-    // const res = await axios.post(
-    //   "http://localhost:4000/api/addvendingzones",
-    //   {
-    //     "vendingzonestreetName" : address , 
-    //     "vendingzonelocation" : "https://goo.gl/maps/fcPz9kC7eApJ7ymz8" , 
-    //     "vendingzonedescription" : vendingZoneDescription, 
-    //     "maximumVendorsallowed" : maximumVendorsAllowed , 
-    //     "vendingzonecity" : vendingZoneCity, 
-    //     "vendingzoneward" : vendingZoneWard, 
-    //     "vendingzonelocationtax" : vendingZoneLocationFee ,
-    //     "vendingzoneAddress" : vendingZoneAddress , 
-    //     "categoryofvendorsNotAllowed" : notfavList,
-    //   }
-    // ).then((response)=>{
-    //   console.log("Uploaded successfully");
-    //   Router.push("/vending_zones");
+    var vendorTypeFavourables = [];
+    for(var i = 0; i < 6; i++){
+      if(_vendorTypeFavourables[i]==1){
+        vendorTypeFavourables.push(getType(i));
+      }
+    }
+    var data =  {
+      "vendingZoneId":vendingZoneId,
+      "vendingZoneLocality":vendingZoneLocality, 
+      "vendingZoneLat":vendingZoneLat,
+      "vendingZoneLong":vendingZoneLong,
+      "vendingZoneDescription":vendingZoneDescription,
+      "vendingZoneImageurl":vendingZoneImageurl,
+      "maximumVendorsAllowed":maximumVendorsAllowed,
+      "vendingZoneCity":vendingZoneCity,
+      "vendingZoneWard":vendingZoneWard,
+      "vendingZoneLocationFee":vendingZoneLocationFee,
+      "vendingZoneAddress":vendingZoneAddress,
+      "categoryOfVendorsNotAllowed":categoryOfVendorsNotAllowed,
+      "vendorTypeFavorable":vendorTypeFavourables,
+      "vendorIdList":[],
+    };
+    console.log(data);
+    const res = await axios.post(
+      "http://localhost:4000/api/addvendingzones",
+      {
+        "vendingZoneId":vendingZoneId,
+        "vendingZoneLocality":vendingZoneLocality, 
+        "vendingZoneLat":vendingZoneLat,
+        "vendingZoneLong":vendingZoneLong,
+        "vendingZoneDescription":vendingZoneDescription,
+        "vendingZoneImageurl":vendingZoneImageurl,
+        "maximumVendorsAllowed":maximumVendorsAllowed,
+        "vendingZoneCity":vendingZoneCity,
+        "vendingZoneWard":vendingZoneWard,
+        "vendingZoneLocationFee":vendingZoneLocationFee,
+        "vendingZoneAddress":vendingZoneAddress,
+        "categoryOfVendorsNotAllowed":categoryOfVendorsNotAllowed,
+        "vendorTypeFavorable":vendorTypeFavourables,
+        "vendorIdList":[],
+      }
+    ).then((response)=>{
+      console.log("Uploaded successfully");
+      Router.push("/vending_zones");
 
-    // })
+    })
     
   }
 
@@ -286,7 +315,7 @@ export default function dashboard({ VendingZones }) {
                     <button onClick={UploadImage}>Upload to Firebase</button>
                     <p> "% done"</p>
                 </div>
-                <img src={vendingZoneImageURL} alt="" width={"600px"} />
+                <img src={vendingZoneImageurl} alt="" width={"600px"} />
                 
                 <Highlighter Text="Select favourable vendor categories" fontSize="1.2rem"/>
                 <Form>
@@ -299,7 +328,7 @@ export default function dashboard({ VendingZones }) {
                         
                         onChange={(e)=>{
                           // console.log(e.target.value);
-                          var tmpvendorTypeFavourables = vendorTypeFavourables;
+                          var tmpvendorTypeFavourables = _vendorTypeFavourables;
 
                           console.log(findIdx(e.target.id));
                           tmpvendorTypeFavourables[findIdx(e.target.id)] ^=1;
@@ -320,7 +349,7 @@ export default function dashboard({ VendingZones }) {
                         label={`${type}`}
 
                         onChange={(e)=>{
-                          var tmpcategoryOfVendorsNotAllowed = categoryOfVendorsNotAllowed;
+                          var tmpcategoryOfVendorsNotAllowed = _categoryOfVendorsNotAllowed;
                           tmpcategoryOfVendorsNotAllowed[findIdx(e.target.id)] ^=1;
                           setcategoryOfVendorsNotAllowed(tmpcategoryOfVendorsNotAllowed);
                         }}
@@ -364,7 +393,7 @@ export default function dashboard({ VendingZones }) {
                           setvendingZoneLocality(tmpvendingZoneLocality);
                           console.log(response.results[0].formatted_address);
                           console.log(vendingZoneLocality);
-                          setAddress(response.results[0].formatted_address);
+                          setvendingZoneAddress(response.results[0].formatted_address);
                         },
                         (error) => {
                           console.log(error);
@@ -410,7 +439,7 @@ export default function dashboard({ VendingZones }) {
                               console.log(error);
                             }
                           );
-                          setAddress(e.target.value);
+                          setvendingZoneAddress(e.target.value);
                         }}
                         style={{
                           boxSizing: `border-box`,
@@ -446,7 +475,7 @@ export default function dashboard({ VendingZones }) {
                 }}
                 >
                   Selected address - 
-                  {address} 
+                  {vendingZoneAddress} 
                 </div>
                 <Button style={{ marginTop: "20px" }}
                 onClick={submitvendorzone}
