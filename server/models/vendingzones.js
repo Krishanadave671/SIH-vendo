@@ -58,9 +58,15 @@ const vendingzoneSchema = new mongoose.Schema({
         type: [String],
         required: true
     },
-    vendorIdList: {
-        type: [String]
-    }
+    vendorIdList: [{
+        vendorId: {
+            type: String
+        },
+        status: {
+            type: String,
+            default: "pending"
+        }
+    }]
 }) 
 
 const vendingzones = mongoose.model('vendingzones', vendingzoneSchema);
