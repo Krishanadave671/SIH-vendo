@@ -1,7 +1,6 @@
 const cors = require('cors');
 const express = require('express'); 
 const mongoose = require('mongoose'); 
-const localtunnel = require('localtunnel');
 const app = express();
 const dotenv = require('dotenv');
 dotenv.config(); 
@@ -11,17 +10,13 @@ const DB = process.env.MONGO_URI;
 const vendingzonerouter = require("./routes/vendingroutes"); 
 const vendordetailsrouter = require("./routes/auth");
 const complaintsrouter = require("./routes/complaintsroutes");
+const authRouter = require('./routes/auth');
 // middlewares
-const corsOptions ={
-    origin:'http://localhost:3000', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
-}
-app.use(cors(corsOptions));
+app.use(cors()); 
 app.use(express.json()); 
 app.use(vendingzonerouter);
 app.use(vendordetailsrouter);
-app.use(complaintsrouter);
+app.use(complaintsrouter); 
  
 // connection to mongodb 
 mongoose.connect(DB).then( () => {

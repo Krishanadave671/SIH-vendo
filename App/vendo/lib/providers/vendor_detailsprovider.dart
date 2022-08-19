@@ -3,24 +3,24 @@ import 'package:vendo/models/vendorDetails/vendor_details.dart';
 
 final vendordetailsProvider = Provider<VendorModel>((ref) {
   VendorModel vendor = VendorModel(
-    vendorid: '',
+    vendorId: '',
     name: '',
     dob: '',
     gender: "",
     address: "",
     password: "",
     phone: '',
-    aadharno: '',
+    aadharNo: '',
     token: '',
     aadharcardImageUrl: '',
     complaintsList: [],
     creditScore: 0,
     isApproved: 'pending',
     isElectionid: true,
-    isMcgmlicense: true,
+    isMcgmLicense: true,
     isPassport: true,
     pancardImageUrl: '',
-    panCardno: '',
+    panCardNo: '',
     shopCity: '',
     reviewList: [],
     shopLocationAddress: '',
@@ -28,7 +28,7 @@ final vendordetailsProvider = Provider<VendorModel>((ref) {
     shopLocationLong: 0,
     vendingZoneIdApplied: '',
     vendorCategory: '',
-    vendorImageUrl: '',
+    vendorImageUrl: '', weeklyBazzarList: [],
   );
   return vendor;
 });
