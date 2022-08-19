@@ -1,20 +1,23 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 part 'vendor_details.g.dart';
 
 @JsonSerializable()
 class VendorModel {
-  String vendorid;
+  String vendorId;
   String name;
   String dob;
   String gender;
   String address;
   String password;
   String phone;
-  String aadharno;
-  String panCardno;
+  String aadharNo;
+  String panCardNo;
   bool isPassport;
   bool isElectionid;
-  bool isMcgmlicense;
+  bool isMcgmLicense;
   String aadharcardImageUrl;
   String pancardImageUrl;
   String shopLocationAddress;
@@ -22,6 +25,7 @@ class VendorModel {
   String vendingZoneIdApplied;
   List<dynamic> reviewList;
   List<dynamic> complaintsList;
+  List<dynamic> weeklyBazzarList;
   double creditScore;
   String vendorImageUrl;
   String isApproved;
@@ -29,20 +33,19 @@ class VendorModel {
   double shopLocationLong;
   String vendorCategory;
   String shopCity;
-  
   VendorModel({
-    required this.vendorid,
+    required this.vendorId,
     required this.name,
     required this.dob,
     required this.gender,
     required this.address,
     required this.password,
     required this.phone,
-    required this.aadharno,
-    required this.panCardno,
+    required this.aadharNo,
+    required this.panCardNo,
     required this.isPassport,
     required this.isElectionid,
-    required this.isMcgmlicense,
+    required this.isMcgmLicense,
     required this.aadharcardImageUrl,
     required this.pancardImageUrl,
     required this.shopLocationAddress,
@@ -50,6 +53,7 @@ class VendorModel {
     required this.vendingZoneIdApplied,
     required this.reviewList,
     required this.complaintsList,
+    required this.weeklyBazzarList,
     required this.creditScore,
     required this.vendorImageUrl,
     required this.isApproved,

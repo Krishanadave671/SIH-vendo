@@ -58,7 +58,6 @@ authRouter.post("/api/signup", async (req, res) => {
 authRouter.post("/api/login", async (req, res) =>{
     try {
         const { phone, password } = req.body;
-    
         const vendor = await Vendor.findOne({ phone });
         if (!vendor) {
           return res
@@ -66,7 +65,7 @@ authRouter.post("/api/login", async (req, res) =>{
             .json({ msg: "User with this phone number does not exist!" });
         }
     
-        const isMatch = await bcryptjs.compare(password, user.password);
+        const isMatch = await bcryptjs.compare(password, vendor.password);
         if (!isMatch) {
           return res.status(400).json({ msg: "Incorrect password." });
         }
@@ -94,9 +93,9 @@ authRouter.post("/api/tokenIsValid", async (req, res) => {
   });
 
   // get user data
-  authRouter.get("/api/getuserdata", auth, async (req, res) => {
+  authRouter.get("/getuserdata", auth, async (req, res) => {
     const vendor = await Vendor.findById(req.vendor);
-    res.json({ ...vendor._doc, token: req.token });
+    res.json({...vendor._doc ,  token: req.token });
   });
 
   module.exports = authRouter;

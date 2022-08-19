@@ -124,7 +124,8 @@ const vendorDetails = mongoose.Schema({
     vendorCategory : {
       type : String , 
       required : true 
-    }
+    }, 
+ 
 });
 
 const Vendor = mongoose.model("Vendor", vendorDetails);

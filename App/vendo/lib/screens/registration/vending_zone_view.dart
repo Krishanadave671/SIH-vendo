@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/models/vendorDetails/vendor_details.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
@@ -159,12 +160,8 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
 
                       try {
                         //api to register the vendor
-                        final _api = ref.watch(apiserviceProvider);
-                        var response = await _api.registerUser(vendorDetails);
-                        if (response.statusCode == 200) {
-                          showSnackBar(context, "Successfully registered");
-                          log(response.data);
-                        }
+                        final _api = ref.watch(apiserviceProvider); 
+                        var response = await _api.registerUser(vendorDetails, context);
                       } on Exception catch (e) {
                         log(e.toString());
                       }
