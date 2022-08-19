@@ -98,4 +98,24 @@ authRouter.post("/api/tokenIsValid", async (req, res) => {
     res.json({...vendor._doc ,  token: req.token });
   });
 
+  //get approved vendors
+  authRouter.get("/api/getvendors/approved" , async (req, res) =>  { 
+    try {
+        let vendors = await Vendor.find({isApproved: "approved"}); 
+        res.status(200).json(vendors); 
+    }catch(e){
+        res.status(500).json({e : e.message}); 
+    }
+})
+
+//get pending vendors
+authRouter.get("/api/getvendors/pending" , async (req, res) =>  { 
+  try {
+      let vendors = await Vendor.find({isApproved: "pending"}); 
+      res.status(200).json(vendors); 
+  }catch(e){
+      res.status(500).json({e : e.message}); 
+  }
+})
+
   module.exports = authRouter;
