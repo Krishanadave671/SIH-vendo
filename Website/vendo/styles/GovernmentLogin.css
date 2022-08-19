@@ -5,14 +5,14 @@
   left: 0;
   bottom: 0;
   right: 0;
-  overflow: auto;
+  height: 100vh;
   background-image: linear-gradient( 112.1deg,  rgba(63,76,119,1)11.4%  ,rgba(32,38,57,1) 70.2%);
 }
 
 
 
 .InputForLogin{
-    width: 50%;
+    width: 50vh;
     height: 20%;
     margin-left: 3%;
     margin-top: 5%;
@@ -24,30 +24,31 @@
  
   
   .containerforbutton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    flex-wrap: wrap;
-    width: 80vw;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* align-content: center; */
+    /* flex-wrap: wrap; */
+    /* width: 80vw; */
     margin: 0 auto;
-    min-height: 100vh;
-    margin-top: -70%;
+    /* min-height: 100vh; */
+    /* margin-top: -70%; */
     
     width: 340px;
     height: 50px;
     color: black;
-    margin-left: 2%;
+    /* margin-left: 8px; */
     font-style: bold;
+    margin-top: 20px;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     
   }
 
   .button {
-    flex: 1 1 auto;
-    margin: 10px;
-    padding: 20px;
-    margin-top: -10px;
+    /* flex: 1 1 auto; */
+    /* margin: 10px; */
+    /* padding: 20px; */
+    /* margin-top: -10px; */
     align-content: center;
     text-align: center;
     text-transform: uppercase;
@@ -55,14 +56,14 @@
     background-size: 200% auto;
     color: rgb(0, 0, 0);
     font-size: x-large;
-    padding-bottom: 40px;
-    margin-bottom: 20px;
+    /* padding-bottom: 40px; */
+    /* margin-bottom: 20px; */
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
     box-shadow: 0 0 20px rgb(109, 105, 105);
     border-radius: 10px;
     background-image: linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%);
-    width: 700px;
-    height: 50px;
+    /* width: 700px; */
+    /* height: 50px; */
    }
   
   /* Demo Stuff End -> */
@@ -74,16 +75,16 @@
   }
 
   .VendoTitle{
-    margin-left: -72%;
+    text-align: start;
     font-size: 60px;
-    margin-top: 20%;
-    padding-top: 20%;
+    /* margin-top: 20%; */
+    padding-top: 20px;
     font-style: bold;
     color: aliceblue;
   }
 
   .VendoTitle2{
-    margin-left: -67%;
+    text-align: start;
     font-size: 25px;
     color: aliceblue;
     font-weight:lighter;
@@ -93,11 +94,13 @@
     padding-left: 70px;
     margin-left: 70px;
     margin-top: 6%;
-    width: 700px;
-    height: 700px;
-    background-color: black;
-    opacity: 40%;
+    width: 70vh;
+    height: 80vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    /* opacity: 40% ; */
     border-radius: 25px;
     align-items: left;
+    display: flex;
+    flex-direction: column;
   }
   
