@@ -25,9 +25,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: generateRoute,
-      initialRoute: Routes.vendingZoneCard,
-    );
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: generateRoute,
+        initialRoute: Routes.mainPage);
   }
 }

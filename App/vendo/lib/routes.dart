@@ -4,6 +4,7 @@ import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_check.dart';
+import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -13,6 +14,8 @@ import 'package:vendo/screens/registration/register_view.dart';
 import 'package:vendo/screens/registration/space_allocation.dart';
 import 'package:vendo/screens/registration/space_allocation_list.dart';
 import 'package:vendo/screens/registration/vending_zone_view.dart';
+import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
+import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
 import 'Screens/calendar_screen/calendar.dart';
 
@@ -33,19 +36,34 @@ class Routes {
   static const bmcNavBar = '/bmc_nav_bar';
   static const test = '/test';
   static const vendingZoneCard = '/vending_zone_card';
+  static const notificationScreen = '/notification_screen';
+  static const splashScreen = '/splash_screen';
+  static const schemeDetails = '/scheme_details';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case Routes.calendarScreen:
       return MaterialPageRoute(
-        builder: (context) => Calendar(
+        builder: (context) => const Calendar(
           title: "Krishana",
         ),
+      );
+    case Routes.schemeDetails:
+      return MaterialPageRoute(
+        builder: (context) => const SchemeDetails(),
+      );
+    case Routes.splashScreen:
+      return MaterialPageRoute(
+        builder: (context) => const SplashScreen(),
       );
     case Routes.loginScreen:
       return MaterialPageRoute(
         builder: (context) => const LoginScreen(),
+      );
+    case Routes.notificationScreen:
+      return MaterialPageRoute(
+        builder: (context) => const NotificationScreen(),
       );
     case Routes.mainPage:
       return MaterialPageRoute(
@@ -65,7 +83,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.spaceallocationList:
       return MaterialPageRoute(
-        builder: (context) => SpaceAllocationListView(),
+        builder: (context) => const SpaceAllocationListView(),
       );
     case Routes.documentaryEvidence:
       return MaterialPageRoute(
