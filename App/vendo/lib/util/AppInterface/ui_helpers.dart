@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 import 'package:vendo/util/colors.dart';
 
 const Widget horizontalSpaceTiny = SizedBox(width: 5.0);
@@ -67,6 +68,7 @@ Widget spacedDividerSmall = Column(
     verticalSpaceSmall,
   ],
 );
+
 
 Widget spacedDividerTiny = Column(
   children: const <Widget>[

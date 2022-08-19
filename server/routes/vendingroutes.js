@@ -11,6 +11,7 @@ vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  
             vendingzonelocationtax : { $lte : tax}, 
             categoryofvendorsNotAllowed : { $nin : vendorcategory} 
         }); 
+        console.log("Hello world "); 
         res.status(200).json(vendingzone); 
     }catch(e) {
         res.status(500).json({e : e.message}); 
@@ -43,5 +44,14 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
     }
     
 }); 
+
+//add to vendorIdList
+// vendingzonerouter.patch("/api/addToVendorIdList", async(req, res) =>{
+//     try{
+//         const {vendorId, }
+//     }catch(e){
+//         res.status(500).json({e : e.message}); 
+//     }
+// })
 
 module.exports = vendingzonerouter; 

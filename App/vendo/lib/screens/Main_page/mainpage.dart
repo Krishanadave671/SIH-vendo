@@ -69,7 +69,7 @@ class _MainPageState extends State<MainPage> {
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           currentIndex: currentindex,
-          selectedItemColor: colors.primary,
+          selectedItemColor: colors.orangedarkshade,
           unselectedItemColor: Colors.grey,
           showSelectedLabels: false,
           showUnselectedLabels: false,

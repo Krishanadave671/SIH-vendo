@@ -3,23 +3,35 @@ part 'vendingzone_details.g.dart';
 
 @JsonSerializable()
 class VendingzoneModel {
-  final String  vendingzoneid;
-  final String vendingzonestreetName;
-  final String vendingzonelocation;
-  final String vendingzonedescription;
-  final String vendingzoneImageurl;
-  final int maximumVendorsallowed;
-  final String vendingzoneward;
-  final int vendingzonelocationtax;
+  String vendingZoneId;
+  String vendingZoneLocality;
+  double vendingZoneLat;
+  double vendingZoneLong;
+  String vendingZoneDescription;
+  String vendingZoneImageUrl;
+  double maximumVendorsAllowed;
+  String vendingZoneCity;
+  String vendingZoneWard;
+  double vendingZoneLocationFee;
+  String vendingZoneAddress;
+  List<String> categoryOfVendorsNotAllowed;
+  List<String> vendorTypeFavourable;
+  List<String> vendorIdList;
   VendingzoneModel({
-    required this.vendingzoneid,
-    required this.vendingzonestreetName,
-    required this.vendingzonelocation,
-    required this.vendingzonedescription,
-    required this.vendingzoneImageurl,
-    required this.maximumVendorsallowed,
-    required this.vendingzoneward,
-    required this.vendingzonelocationtax,
+    required this.vendingZoneId,
+    required this.vendingZoneLocality,
+    required this.vendingZoneLat,
+    required this.vendingZoneLong,
+    required this.vendingZoneDescription,
+    required this.vendingZoneImageUrl,
+    required this.maximumVendorsAllowed,
+    required this.vendingZoneCity,
+    required this.vendingZoneWard,
+    required this.vendingZoneLocationFee,
+    required this.vendingZoneAddress,
+    required this.categoryOfVendorsNotAllowed,
+    required this.vendorTypeFavourable,
+    required this.vendorIdList,
   });
 
   factory VendingzoneModel.fromJson(Map<String, dynamic> json) =>

@@ -20,10 +20,10 @@ class SpaceAllocation extends ConsumerStatefulWidget {
       _SpaceAllocationState();
 }
 
-String dropDownValue = "FoodVendor";
+String vendorCategory = "fastFoodVeg";
 
 final dropDownProvider = StateProvider<String>((ref) {
-  return dropDownValue;
+  return vendorCategory;
 });
 
 String location = '';
@@ -33,9 +33,9 @@ final locationProvider = StateProvider((ref) {
 });
 
 class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
-  double _currentSliderValue = 20;
+  double _sliderTaxValue = 20;
 
-  String locationSend = '';
+  String shopCity = '';
 
   void showPlacePicker() async {
     LocationResult result = await Navigator.of(context).push(
@@ -44,22 +44,23 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
             PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
       ),
     );
-    print("wowow34oow ${result.city.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel1.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel2.name.toString()}");
 
-    locationSend = result.city.name.toString();
-    print(locationSend);
+    shopCity = result.city.name.toString();
+    print(shopCity);
     ref.watch(locationProvider.notifier).state =
         result.formattedAddress.toString();
   }
 
   void onContinue() {
     var vendordata = ref.read(vendordetailsProvider);
-    vendordata.vendorcategory = dropDownValue;
-    print("hii ${ref.read(locationProvider)}");
-    vendordata.shoplocation = locationSend;
-    vendordata.taxlocation = 10000;
+    vendordata.vendorCategory = vendorCategory;
+    vendordata.shopCity = shopCity;
+    vendordata.creditScore = _sliderTaxValue;
+
     log(vendordata.toJson().toString());
-    print(" $dropDownValue , $_currentSliderValue ");
+    print(" $vendorCategory , $_sliderTaxValue ");
   }
 
   @override
@@ -169,9 +170,12 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                                   newValue!;
                             },
                             items: <String>[
-                              'FoodVendor',
-                              'ElectronicsVendor',
-                              'UtensilsVendor'
+                              'fruitsVegetable',
+                              'fastFoodVeg',
+                              'fastFoodNonVeg',
+                              'toy',
+                              'utensils',
+                              'flower',
                             ].map<DropdownMenuItem<String>>((String value) {
                               return DropdownMenuItem<String>(
                                 value: value,
@@ -189,16 +193,15 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                     ),
                     verticalSpaceSmall,
                     Slider(
-                      divisions: 10,
                       activeColor: colors.primary,
                       inactiveColor: colors.primary,
                       thumbColor: colors.primary,
-                      value: _currentSliderValue,
-                      max: 100,
-                      label: _currentSliderValue.round().toString(),
+                      value: _sliderTaxValue,
+                      max: 100000,
+                      label: _sliderTaxValue.round().toString(),
                       onChanged: (double value) {
                         setState(() {
-                          _currentSliderValue = value;
+                          _sliderTaxValue = value;
                         });
                       },
                     ),
@@ -208,9 +211,6 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                         onContinue();
                         Navigator.of(context).pushNamed(
                           Routes.spaceallocationList,
-                          arguments: SpaceAllocationListArguments(
-                            city: locationSend,
-                          ),
                         );
                       },
                       child: Center(
