@@ -25,7 +25,7 @@ class Routes {
   static const calendarScreen = '/calendar_screen';
   static const loginScreen = '/login_screen';
   static const mainPage = '/main_page';
-  static const LoginScreen1 = "/login_screen1"; 
+
   static const languageSelect = '/languageSelect_screen';
   static const welcomeScreen = '/welcome_screen';
   static const spaceallocation = '/space_allocation_screen';
@@ -99,10 +99,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const BMCHomePage(),
       );
-     case Routes.LoginScreen1 : 
-       return MaterialPageRoute(
-        builder: (context) => LoginScreen1(), 
-       ); 
+
     case Routes.vendorCheck:
       final args = settings.arguments as VendorCheckArguments;
       return MaterialPageRoute(
@@ -120,7 +117,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           vendingZone: args.model,
         ),
       );
-      case Routes.apporvalPage:
+    case Routes.apporvalPage:
       return MaterialPageRoute(
         builder: (context) => const ApprovalPage(),
       );

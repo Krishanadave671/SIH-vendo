@@ -14,7 +14,7 @@ import '../../../util/error_handling.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.43.223";
+  static const _baseurl = "http://192.168.0.102:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";

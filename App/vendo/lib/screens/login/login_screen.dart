@@ -10,6 +10,7 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
+
 import '../../services/dio_client.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -34,7 +35,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final _api = ref.watch(apiserviceProvider);
     log(_phonenoController.text);
     log(_passwordController.text);
-    await _api.login(_phonenoController.text, _passwordController.text, context, ref);
+    await _api.login(
+        _phonenoController.text, _passwordController.text, context, ref);
   }
 
   @override
