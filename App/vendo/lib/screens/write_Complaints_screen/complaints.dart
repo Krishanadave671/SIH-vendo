@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -78,7 +79,6 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
   }
 
   void onContinue() async {
-  
     var imageUrl = await imageRef.getDownloadURL();
     final complaintDetails = ref.watch(vendorComplaintProvider);
     complaintDetails.complaintLocationLat = vendorDetails!.shopLocationLat;
@@ -87,10 +87,11 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     complaintDetails.complaintDescription = description!;
     complaintDetails.complaintImageUrl = imageUrl;
     complaintDetails.complaintDate = DateTime.now().toString();
+    log(complaintDetails.complaintDate);
     complaintDetails.complaintType = _complaintType!;
 
     //put complaint api here to post it
-    
+    //also add complaint id in api same as vendor id
   }
 
   Future<void> uploadPhoto() async {
