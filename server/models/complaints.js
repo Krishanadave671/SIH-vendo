@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 
 const complaintDetails = mongoose.Schema({
+    vendorId: {
+        type: String,
+        trim: true,
+        required : true 
+    }, 
     complaintId: {
         type: String,  
         trim: true, 

@@ -9,18 +9,22 @@ complaintsrouter.post("/api/addcomplaint", async (req, res) =>{
         const {vendorId, complaintId, complaintDate, complaintStatus, complaintType, complaintImageUrl, complaintDescription, complaintLocationLat, complaintLocationLong, complaintCity} = req.body;
         let vendor = await Vendor.findOne({ vendorId });
         let complaint = new Complaints({
-            complaintId, complaintDate, complaintStatus, complaintType, complaintImageUrl, complaintDescription, complaintLocationLat, complaintLocationLong, complaintCity
+           vendorId , complaintId, complaintDate, complaintStatus, complaintType, complaintImageUrl, complaintDescription, complaintLocationLat, complaintLocationLong, complaintCity
         });
-        vendor.complaints.push(complaint);
-        vendor = await vendor.save();
+         console.log(complaint); 
         complaint = await complaint.save();
+        console.log(complaint); 
+        vendor.complaintsList.push(complaint);
+        vendor = await vendor.save();
         res.status(200).json(complaint);
     }catch(e){
         res.status(500).json({e : e.message}); 
     }
 })
 
-// fetch all complaints 
+
+
+//get complaints by lo// fetch all complaints 
 complaintsrouter.get("/api/getcomplaints/all" , async (req, res) =>  { 
     try {
         let complaints = await Complaints.find({}); 
@@ -29,8 +33,6 @@ complaintsrouter.get("/api/getcomplaints/all" , async (req, res) =>  {
         res.status(500).json({e : e.message}); 
     }
 })
-
-//get complaints by location
 // complaintsrouter.get("/api/getcomplaints/:location", async(req, res) => {
 //     try{
 //         const {location} = req.params;
