@@ -49,7 +49,7 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
 vendingzonerouter.get("/api/getvendorbyvendingzone/pending", async(req, res) => {
     try{
         const {vendingZoneId} = req.body;
-        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending"}); 
+        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending"}).sort({pendingRegistrations:-1}); 
         res.status(200).json(pendingApplications);
     }catch (e) {
         res.status(500).json({ error: e.message });
@@ -67,4 +67,15 @@ vendingzonerouter.get("/api/getvendorbyvendingzone/approved", async(req, res) =>
     }
 })
 
+//update status to approved
+vendingzonerouter.patch("/api/approvevendor", async(req, res) => {
+    try{
+        const {vendingZoneId, vendorId} = req.body;
+        let vendor = await Vendor.findOneAndUpdate({vendorId: vendorId}, {isApproved: "approved"}, {new: true});
+        await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneId}, {$inc: {pendingRegistrations: -1}, "$push": {vendorIdList: {vendorId: vendorId}}}, {new: true});
+        res.status(200).json(vendor);
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+})
 module.exports = vendingzonerouter; 

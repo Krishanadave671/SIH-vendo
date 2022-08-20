@@ -34,17 +34,15 @@ const weeklyBazzarDetails = mongoose.Schema({
         required: true
     },
     vendorRegisteredList: [{
-       vendorID : {
-              type : String ,
-                unique : true, 
-                required : true 
+       vendorId : {
+              type : String , 
+              required : true
        } , 
        vendorstatus : {
               type : String ,
               default : "pending", 
-              required : true 
+       
          }, 
-         required : false 
  }],
     bazzarDate: {
         type: String,
