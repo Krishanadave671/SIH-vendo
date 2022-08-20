@@ -33,14 +33,45 @@ complaintsrouter.get("/api/getcomplaints/all" , async (req, res) =>  {
         res.status(500).json({e : e.message}); 
     }
 })
-// complaintsrouter.get("/api/getcomplaints/:location", async(req, res) => {
-//     try{
-//         const {location} = req.params;
-//         let vendor = await Vendor.find({shoplocation: location}).select('complaints'); 
-//         res.status(200).json(vendor); 
-//     }catch(e) {
-//         res.status(500).json({e : e.message}); 
-//     }
-// })
+complaintsrouter.get("/api/getcomplaints/:city", async(req, res) => {
+    try{
+        const {city} = req.params;
+        let complaints = await Complaints.find({complaintCity : city }); 
+        res.status(200).json(complaints); 
+    }catch(e) {
+        res.status(500).json({e : e.message}); 
+    }
+})
+complaintsrouter.get("/api/getcomplaints/:city/:tags", async(req, res) => {
+    try{
+        const {city, tags} = req.params;
+        let complaints = await Complaints.find({complaintCity : city , complaintType : {$in : tags} }); 
+        res.status(200).json(complaints); 
+    }catch(e) {
+        res.status(500).json({e : e.message}); 
+    }
+})
+
+
+// get all pending complaints
+complaintsrouter.get("/api/getpendingcomplaints" , async (req, res) =>  {
+    try {
+        let complaints = await Complaints.find({complaintStatus : "pending"});
+        res.status(200).json(complaints);
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+} ); 
+
+
+complaintsrouter.get("/api/getpendingcomplaints/:city/:tags/:status", async(req, res) => {
+    try{
+        const {city, tags, status} = req.params;
+        let complaints = await Complaints.find({complaintCity : city , complaintType : {$in : tags}, complaintStatus : status }); 
+        res.status(200).json(complaints); 
+    }catch(e) {
+        res.status(500).json({e : e.message});
+    }
+} )
 
 module.exports = complaintsrouter; 

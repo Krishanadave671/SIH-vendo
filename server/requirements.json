@@ -18,6 +18,22 @@
         "complaintLocationLong" : 204 , 
         "complaintCity" : "Pune"
 
+    }, 
+    {
+       "bazzarId" : "BZ123", 
+       "vendorTypeFavourable" : [
+        "foodvendor", "vegetablevendor"
+       ] , 
+       "bazzarImageUrl" : "2wCEAAoGCBUTExcTFRUYGBUZGRsbGhoZGyMfIB0hHyEcIR8fHSAjISsjHB8oHxoZJDUlKCwuMjIyHCE3PDcxOysxMi4BCwsLDw4PHRERHTEoIykxMjExMTMxMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMf", 
+       "bazzarLat" : 123 , 
+       "bazzarLong": 340, 
+       "bazzarName" : "Krsahfha afh", 
+       "bazzarAddress" : " afjafjajf", 
+       "bazzarMaximumCapacity": 45 , 
+       "bazzarDate" : "22/05/2002", 
+       "bazzarDescription" : "hafiahf gahgg  fafaigkag gagka ", 
+       "bazzarCity" : "Mumbai"
+
     }
 
 ]

@@ -11,6 +11,7 @@ const vendingzonerouter = require("./routes/vendingroutes");
 const vendordetailsrouter = require("./routes/auth");
 const complaintsrouter = require("./routes/complaintsroutes");
 const schemesRouter = require("./routes/schemes");
+const WeeklyBazzarRouter = require('./routes/weeklybazaars');
 
 // middlewares
 app.use(cors()); 
@@ -19,6 +20,7 @@ app.use(vendingzonerouter);
 app.use(vendordetailsrouter);
 app.use(complaintsrouter);
 app.use(schemesRouter); 
+app.use(WeeklyBazzarRouter); 
  
 mongoose.connect(DB).then( () => {
     console.log("Connection successful "); 

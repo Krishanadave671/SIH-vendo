@@ -14,11 +14,11 @@ const weeklyBazzarDetails = mongoose.Schema({
         required: true
     },
     bazzarLat: {
-        type: String,
+        type: Number,
         required: true
     },
     bazzarLong: {
-        type: String,
+        type: Number,
         required: true
     },
     bazzarName: {
@@ -33,9 +33,19 @@ const weeklyBazzarDetails = mongoose.Schema({
         type: Number,
         required: true
     },
-    vendorRegisteredList: {
-        type: [String]
-    },
+    vendorRegisteredList: [{
+       vendorID : {
+              type : String ,
+                unique : true, 
+                required : true 
+       } , 
+       vendorstatus : {
+              type : String ,
+              default : "pending", 
+              required : true 
+         }, 
+         required : false 
+ }],
     bazzarDate: {
         type: String,
         required: true
