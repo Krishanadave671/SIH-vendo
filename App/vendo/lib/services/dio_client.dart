@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/models/vendorComplains/vendor_complaints.dart';
@@ -17,7 +18,7 @@ import '../../../util/error_handling.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.43.223:4000";
+  static const _baseurl = "http://192.168.1.104:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -25,6 +26,7 @@ class Apiservice {
   static const getuserdata = "/getuserdata";
   static const addcomplaint = "/api/addcomplaint";
   static const addreview = "/";
+  static const getSchema = "/api/getschemes/all";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -209,6 +211,31 @@ class Apiservice {
       }
     }
     return <WeeklyBazzarModel>[];
+  }
+
+  Future<List<GovernmentSchemeModel?>> getGovernmentSchema() async {
+    try {
+      log('${_baseurl + getSchema}');
+      Response governmentSchemeData = await _dio.get('${_baseurl + getSchema}');
+      List governmentSchemes = governmentSchemeData.data;
+      List<GovernmentSchemeModel?> list = governmentSchemes
+          .map((e) => GovernmentSchemeModel.fromJson(e))
+          .toList();
+      log(list[0].toString());
+      return list;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('Dio error!');
+        log('STATUS: ${e.response?.statusCode}');
+        log('DATA: ${e.response?.data}');
+        log('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        log('Error sending request!');
+        log(e.message);
+      }
+    }
+    return <GovernmentSchemeModel>[];
   }
 }
 

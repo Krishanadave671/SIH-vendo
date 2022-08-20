@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/Screens/registration/space_allocation_list.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/Screens/login/login_screen2.dart';
 
@@ -57,9 +58,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           title: "Krishana",
         ),
       );
-    case Routes.schemeDetails:
+   case Routes.schemeDetails:
+      final args = settings.arguments as SchemeArguments;
       return MaterialPageRoute(
-        builder: (context) => const SchemeDetails(),
+        builder: (context) => SchemeDetails(
+          governmentSchemeModel: args.model,
+        ),
       );
     case Routes.splashScreen:
       return MaterialPageRoute(
@@ -166,4 +170,11 @@ class VendingZoneViewArguments {
     required this.model,
   });
   final VendingzoneModel model;
+}
+
+class SchemeArguments {
+  SchemeArguments({
+    required this.model,
+  });
+  final GovernmentSchemeModel model;
 }
