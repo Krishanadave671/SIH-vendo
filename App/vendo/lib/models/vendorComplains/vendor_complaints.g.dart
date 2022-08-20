@@ -18,6 +18,7 @@ VendorComplaintModel _$VendorComplaintModelFromJson(
       complaintLocationLat: (json['complaintLocationLat'] as num).toDouble(),
       complaintLocationLong: (json['complaintLocationLong'] as num).toDouble(),
       complaintCity: json['complaintCity'] as String,
+      vendorId: json['vendorId'] as String,
     );
 
 Map<String, dynamic> _$VendorComplaintModelToJson(
@@ -32,4 +33,5 @@ Map<String, dynamic> _$VendorComplaintModelToJson(
       'complaintLocationLat': instance.complaintLocationLat,
       'complaintLocationLong': instance.complaintLocationLong,
       'complaintCity': instance.complaintCity,
+      'vendorId': instance.vendorId,
     };

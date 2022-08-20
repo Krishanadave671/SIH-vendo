@@ -8,7 +8,7 @@ class AppText extends StatelessWidget {
   final String text;
   final TextStyle style;
   final TextAlign? textAlign;
-  late final bool? isSingleLined;
+  late final int? isSingleLined;
 
   AppText.headingOne(this.text,
       {this.textAlign,
@@ -97,8 +97,10 @@ class AppText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late TextOverflow overflow;
-    if (isSingleLined == null || !isSingleLined!) {
+    if (isSingleLined == null || 0 == isSingleLined!) {
       overflow = TextOverflow.clip;
+    } else if (isSingleLined == 1) {
+      overflow = TextOverflow.fade;
     } else {
       overflow = TextOverflow.ellipsis;
     }
