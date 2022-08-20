@@ -10,7 +10,7 @@ const DB = process.env.MONGO_URI;
 const vendingzonerouter = require("./routes/vendingroutes"); 
 const vendordetailsrouter = require("./routes/auth");
 const complaintsrouter = require("./routes/complaintsroutes");
-const schemesRouter = require("./routes/schemes");
+const schemesRouter = require("./routes/schemesroutes");
 const WeeklyBazzarRouter = require('./routes/weeklybazaars');
 
 // middlewares

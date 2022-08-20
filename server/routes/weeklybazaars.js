@@ -47,27 +47,14 @@ bazzarsrouter.get("/api/getbazzar/:bazzarId", async (req, res) => {
 // 3. if registered then return error message
 bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
     try {
+        
        const {bazzarId , vendorId} = req.body;
-         let bazzar = await Bazzars.find({bazzarId: bazzarId});
-         let vendors = await Vendors.find({vendorId: vendorId});   
-          let bazzarregisteredcount = bazzar.vendorRegisteredList.length; 
-          for(let i = 0 ; i < bazzarregisteredcount ; i++){
-                if(bazzar.vendorRegisteredList[i].vendorID == vendorId){
-                    res.status(200).json({message: "You are already registered for this bazzar"});
-                    return;
-                }
-          }
-            vendors.weeklyBazzarList.push({bazzarId: bazzarId});
-            bazzar.vendorRegisteredList.push({vendorID: vendorId});
-            
-            bazzar = await bazzar.save();
-            res.status(200).json(bazzar);
+       let bazzars  = await Bazzars.findOneAndUpdate({bazzarId : bazzarId},{ "$push": {vendorRegisteredList: {vendorId: vendorId}}}, {new: true});
+       await Vendors.findOneAndUpdate({vendorId : vendorId},{ "$push": {weeklyBazzarList: {bazzarId: bazzarId}}}, {new: true});
+         res.status(200).json(bazzars);
     }catch(e){
         res.status(500).json({e : e.message});
     }
-});
-
-
-
+} );
 
 module.exports = bazzarsrouter ; 

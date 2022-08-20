@@ -27,7 +27,7 @@ complaintsrouter.post("/api/addcomplaint", async (req, res) =>{
 //get complaints by lo// fetch all complaints 
 complaintsrouter.get("/api/getcomplaints/all" , async (req, res) =>  { 
     try {
-        let complaints = await Complaints.find({}); 
+        let complaints = await Complaints.find({complaintStatus : "pending"});
         res.status(200).json(complaints); 
     }catch(e){
         res.status(500).json({e : e.message}); 
