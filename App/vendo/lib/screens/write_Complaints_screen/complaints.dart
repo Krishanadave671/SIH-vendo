@@ -84,7 +84,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     final complaintDetails = ref.watch(vendorComplaintProvider);
     complaintDetails.complaintLocationLat = vendorDetails!.shopLocationLat;
     complaintDetails.complaintLocationLong = vendorDetails!.shopLocationLong;
-    complaintDetails.complaintCity = vendorDetails!.shopCity;
+
     complaintDetails.complaintDescription = description!;
     complaintDetails.complaintImageUrl = imageUrl;
     complaintDetails.complaintDate = DateTime.now().toString();

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const schemeSchema = new mongoose.Schema({
     schemeId: {
-        type: Number,
+        type: String,
         trim: true,
         unique: true
     },
@@ -11,7 +11,12 @@ const schemeSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
-    schemeDescription: {
+    schemeBenefits: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    schemeReq: {
         type: String,
         required: true,
         trim: true
