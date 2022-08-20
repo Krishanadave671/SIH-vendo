@@ -11,11 +11,11 @@ body {
 }
 
 :root{
-  --primary-color: #FF6B62;
-  --primary-color-dark: #c20a00;
-  --secondary-color: #2C3333;
-  --shade-color: #395B64;
-  --box-color: #FFBC80;
+  --primary-color: #646FD4;
+  --primary-color-dark: #242F9B;
+  --secondary-color: #9BA3EB;
+  --shade-color:#DBDFFD ;
+  --box-color: #745ebdea;
   --gradient-text: linear-gradient(270deg,#FFBC80  0.08%, #FF6B62 94.04%);
 	--gradient-bg: linear-gradient(90deg,#ffd8b5  0.08%, #ffa29e 94.04%);
 }
@@ -170,6 +170,7 @@ input:placeholder {
   text-align: center;
   cursor: pointer;
   margin-top: 20px;
+  
 }
 .download-btn div{
   margin-left: 12px;
@@ -177,11 +178,13 @@ input:placeholder {
   padding-right: 8px;
   align-items: center;
   
+  
 }
 .google-play{
   color: #f8f9fa;
   /* background-color: white; */
   border: 2px solid #f8f9fa;
+  
 }
 .google-play:hover{
   background-color: #f8f9fa;
@@ -203,6 +206,7 @@ input:placeholder {
   text-align: left;
   margin-top: 50px;
   margin-bottom: -64px;
+ 
   
 
 }
@@ -211,7 +215,7 @@ input:placeholder {
 margin-right: 80px;
 background-color: #0b0c14dc;
 opacity: 80%;
-width: 50%;
+width: 60%;
 height: 30%;
 
 

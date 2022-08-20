@@ -1,25 +1,41 @@
+.card{
+    border-radius: 10%, 10%, 10%, 10%;
+    background-image: linear-gradient(to right, #bdd7e7 0%, #54647f 100%);
+   
+}
+.card:hover{
+    background-position: right center;
+}
+
+
 .vendor-registration-navbar{
     display: flex;
     justify-content:space-evenly;
-    align-items: center;
+    align-items: left;
     margin-top: 20px;
+    row-gap: 10px;
+    
+    
 }
 
 .vendor-registration-navbar-items{
     display: inline-block;
     background-color: var(--primary-color);
     text-align: center;
-    color: #ffb6b6;
+    color: #ffffff;
     font-size: 1rem;
 	font-weight: 600;
     padding: 1.1rem 2.75rem;
 	border-radius: 0.9rem;
+    row-gap: 10px;
+    background-image: linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%)
 }
 .vendor-registration-navbar-items:hover{
     cursor: pointer;
 }
 .vendor-registration-navbar-items-active{
     color: white;
+    background-image: linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%)
 }
 .vendor-registration-search-bar{
     display: flex;
@@ -27,9 +43,13 @@
     /* align-items: center; */
     margin-right: 64px ;
     margin-top: 40px;
+    margin-left: 50px;
+    background-image: url(../Images/vendorcollage.png);
+    
 }
 .vendor-registration-search-bar-items{
     margin: 10px;
+    
 }
 .vendor-registration-main-container{
     /* margin-left: 250px ; */
@@ -37,9 +57,16 @@
     flex: 1;
     overflow: hidden;
     overflow-y: scroll;
+    
+    
 }
+   
+
 .vendor-registration-main-container ul li{
     margin-top: 20px;
     margin-bottom: 20px;
     margin-right: 8px;
+    background-image: linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%);
+    border-radius: 30%;
+    
 }
