@@ -40,11 +40,7 @@ bazzarsrouter.get("/api/getbazzar/:bazzarId", async (req, res) => {
     }
 });
 
-// register for weekly bazzars
-// on click of register 
-// 1. check if user is already registered for the bazzar
-// 2. if not registered then register the user for the bazzar
-// 3. if registered then return error message
+// register for weekly bazaars 
 bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
     try {
         
@@ -55,6 +51,30 @@ bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
     }catch(e){
         res.status(500).json({e : e.message});
     }
-} );
+});
+
+// approved bazzar by admin
+bazzarsrouter.post("/api/approvebazzar", async (req, res) => {
+    try {
+        const {bazzarId , vendorId} = req.body;
+        let bazzars  = await Bazzars.findOneAndUpdate({bazzarId : bazzarId}, {vendorApprovedList: {vendorId: vendorId , vendorstatus: "approved"}}, {new: true});
+        await Vendors.findOneAndUpdate({vendorId : vendorId},{weeklyBazzarList: {bazzarId: bazzarId, status : "approved" }}, {new: true});
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+});
+
+// reject bazzar by admin
+bazzarsrouter.post("/api/approvebazzar", async (req, res) => {
+    try {
+        const {bazzarId , vendorId} = req.body;
+        let bazzars  = await Bazzars.findOneAndUpdate({bazzarId : bazzarId}, {vendorApprovedList: {vendorId: vendorId , vendorstatus: "approved"}}, {new: true});
+        await Vendors.findOneAndUpdate({vendorId : vendorId},{weeklyBazzarList: {bazzarId: bazzarId, status : "rejected" }}, {new: true});
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+});
+
+
 
 module.exports = bazzarsrouter ; 
