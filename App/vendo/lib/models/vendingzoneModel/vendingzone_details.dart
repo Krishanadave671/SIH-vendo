@@ -15,8 +15,9 @@ class VendingzoneModel {
   double vendingZoneLocationFee;
   String vendingZoneAddress;
   List<String> categoryOfVendorsNotAllowed;
-  List<String> vendorTypeFavourable;
-  List<String> vendorIdList;
+  List<String> vendorTypeFavorable;
+  List<Map<String,String>> vendorIdList;
+  double pendingRegistration;
   VendingzoneModel({
     required this.vendingZoneId,
     required this.vendingZoneLocality,
@@ -30,8 +31,9 @@ class VendingzoneModel {
     required this.vendingZoneLocationFee,
     required this.vendingZoneAddress,
     required this.categoryOfVendorsNotAllowed,
-    required this.vendorTypeFavourable,
+    required this.vendorTypeFavorable,
     required this.vendorIdList,
+    this.pendingRegistration = 0,
   });
 
   factory VendingzoneModel.fromJson(Map<String, dynamic> json) =>

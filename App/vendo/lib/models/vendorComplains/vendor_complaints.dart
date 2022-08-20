@@ -12,6 +12,8 @@ class VendorComplaintModel {
   double complaintLocationLat;
   double complaintLocationLong;
   String complaintCity;
+  String vendorId;
+
   VendorComplaintModel({
     required this.complaintId,
     required this.complaintDate,
@@ -22,6 +24,7 @@ class VendorComplaintModel {
     required this.complaintLocationLat,
     required this.complaintLocationLong,
     required this.complaintCity,
+    required this.vendorId,
   });
 
   factory VendorComplaintModel.fromJson(Map<String, dynamic> json) =>
