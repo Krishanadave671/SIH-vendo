@@ -28,7 +28,7 @@
 .pending-application-section-title{
     font-weight: 600;
     font-size: 1.6rem;
-    margin-left: 10%;
+    /* margin-left: 10%; */
 }
 .pending-application-section-desc{
     font-weight: 400;
@@ -36,7 +36,6 @@
     padding-top: 10px;
     padding-bottom: 10px;
     color: var(--secondary-color);
-    margin-left: 10%;
 }
 .pending-application-banner{
     height: 50px;

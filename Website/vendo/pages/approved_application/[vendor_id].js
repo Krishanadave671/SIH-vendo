@@ -3,8 +3,9 @@ import Navbar2 from "../components/Navbar2.jsx";
 import React, { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
 import Card from "react-bootstrap/Card";
+import axios from 'axios'
 
-function VendorApplicationDetails({ VendorId }) {
+function VendorApplicationDetails({ VendorDetails }) {
   let [state, changeState] = useState(0);
 
   const MainContainer = () => {
@@ -62,7 +63,7 @@ function VendorApplicationDetails({ VendorId }) {
       return (
         <div className="approved-application-main-container">
           <Button variant="primary" className="pending-application-banner">
-            Application ID - {VendorId}
+            {/* Application ID - {VendorId} */}
           </Button>{" "}
           <div className="pending-application-section-title">Vendor Name </div>
           <div className="pending-application-section-desc">

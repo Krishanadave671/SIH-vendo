@@ -192,7 +192,7 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
           pageWrapId={"page-wrap"}
           outerContainerId={"outer-container"}
         />
-        <div className="dashboard-main-container">
+        <div className="dashboard-main-container" style={{width:"100%"}}>
           {/* <Navbar2 /> */}
           <Navbar />
           <SearchBar />
