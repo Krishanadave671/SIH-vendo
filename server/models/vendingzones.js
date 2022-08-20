@@ -61,10 +61,6 @@ const vendingzoneSchema = new mongoose.Schema({
     vendorIdList: [{
         vendorId: {
             type: String
-        },
-        status: {
-            type: String,
-            default: "pending"
         }
     }],
     pendingRegistrations: {
