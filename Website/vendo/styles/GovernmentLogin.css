@@ -1,47 +1,35 @@
 .govt-login-container{
-    text-align: center;
-    position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
+
   height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  place-items: center;
+  overflow: hidden;
+
   background-image: linear-gradient( 112.1deg,  rgba(63,76,119,1)11.4%  ,rgba(32,38,57,1) 70.2%);
 }
 
-
-
 .InputForLogin{
+
     width: 50vh;
-    height: 20%;
-    margin-left: 3%;
-    margin-top: 5%;
-   
-    
+    height: 100%;
+
 }
-
-
- 
-  
+   
   .containerforbutton {
-    /* display: flex; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* align-content: center; */
-    /* flex-wrap: wrap; */
-    /* width: 80vw; */
-    margin: 0 auto;
-    /* min-height: 100vh; */
-    /* margin-top: -70%; */
-    
-    width: 340px;
-    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 70%;
     color: black;
-    /* margin-left: 8px; */
+
     font-style: bold;
     margin-top: 20px;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-    
   }
 
   .button {
@@ -66,41 +54,49 @@
     /* height: 50px; */
    }
   
-  /* Demo Stuff End -> */
-  
-  /* <- Magic Stuff Start */
-  
   .button:hover {
-    background-position: right center; /* change the direction of the change here */
+    background-position: right center;
   }
 
-  .VendoTitle{
-    text-align: start;
+
+  .vendoHeaderLoginScreen {
     font-size: 60px;
-    /* margin-top: 20%; */
-    padding-top: 20px;
+
     font-style: bold;
     color: aliceblue;
   }
 
-  .VendoTitle2{
-    text-align: start;
+
+  .vendoTextLoginScreen {
     font-size: 25px;
     color: aliceblue;
     font-weight:lighter;
   }
 
   .ContainerForLogin{
-    padding-left: 70px;
-    margin-left: 70px;
-    margin-top: 6%;
-    width: 70vh;
-    height: 80vh;
-    background-color: rgba(0, 0, 0, 0.7);
-    /* opacity: 40% ; */
+
+    background-color: rgb(0, 0, 0, 0.4);
+    display: grid;
+    place-items: center;
+    height: 800px;
     border-radius: 25px;
-    align-items: left;
+    padding-top: 5em;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .closeGridVerticalHeaderContainer {
+    height: fit-content;
+    display: grid;
+    place-items: center;
+    grid-gap: 1em;
+  }
+
+  .ImageForLogin{
+    background-image: url(../Images/Mannew.png);
+    width: 80%;
+    height: 80%;
     display: flex;
-    flex-direction: column;
+    margin-top: -30%;
+
   }
   
