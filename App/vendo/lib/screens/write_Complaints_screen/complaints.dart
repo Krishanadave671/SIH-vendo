@@ -15,6 +15,7 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
+import '../../services/dio_client.dart';
 import '../../util/AppFonts/styles.dart';
 
 class AddComplaints extends ConsumerStatefulWidget {
@@ -83,15 +84,20 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     final complaintDetails = ref.watch(vendorComplaintProvider);
     complaintDetails.complaintLocationLat = vendorDetails!.shopLocationLat;
     complaintDetails.complaintLocationLong = vendorDetails!.shopLocationLong;
-    complaintDetails.complaintCity = vendorDetails!.shopCity;
+
     complaintDetails.complaintDescription = description!;
     complaintDetails.complaintImageUrl = imageUrl;
     complaintDetails.complaintDate = DateTime.now().toString();
     log(complaintDetails.complaintDate);
     complaintDetails.complaintType = _complaintType!;
 
-    //put complaint api here to post it
-    //also add complaint id in api same as vendor id
+    try {
+      //api to register the complaint
+      final _api = ref.watch(apiserviceProvider);
+      var response = await _api.addComplaint(complaintDetails, context);
+    } on Exception catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> uploadPhoto() async {
@@ -107,15 +113,17 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
 
   @override
   void initState() {
-    uniqueString = 'yash';
+    vendorDetails = ref.read(vendordetailsProvider);
+    uniqueString = vendorDetails!.vendorId;
     imagePathString = 'vendor_complaints/$uniqueString/photo.jpeg';
     cameraSettings();
-    vendorDetails = ref.read(vendordetailsProvider);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    vendorDetails = ref.watch(vendordetailsProvider);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 232, 231, 231),
       appBar: AppBar(

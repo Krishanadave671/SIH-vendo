@@ -1,29 +1,34 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vendo/Screens/Homescreen/screens/widgets/services_card.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
+import 'package:vendo/providers/government_scheme_provider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 import '../../../routes.dart';
 import 'dart:ui' as ui;
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final List<String> imgList = [
-    'https://i1.wp.com/www.forwardpress.in/wp-content/uploads/2018/02/narega-1.jpg?resize=745%2C398&ssl=1',
-    'https://sarkariyojanas.com/wp-content/uploads/2019/11/Samagra-Shiksha-Abhiyan.jpg',
-    'https://theindianfreepress.com/wp-content/uploads/2020/09/Poshan-Abhiyan-e1599499040576.jpeg',
-    'https://th.bing.com/th/id/R.861ac8a40b36204c15e1e4facc795ea6?rik=WArgFFKNNq9DlA&riu=http%3a%2f%2fwww.bhubaneswarbuzz.com%2fwp-content%2fuploads%2f2015%2f11%2fAMRUT-Logo.png&ehk=bwOvyjWP8TiHEbQlrkvoCtDLD4O7Zu2xrLJzMy9O5zY%3d&risl=&pid=ImgRaw&r=0',
-  ];
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // final List<String> imgList = [
+  //   'https://i1.wp.com/www.forwardpress.in/wp-content/uploads/2018/02/narega-1.jpg?resize=745%2C398&ssl=1',
+  //   'https://sarkariyojanas.com/wp-content/uploads/2019/11/Samagra-Shiksha-Abhiyan.jpg',
+  //   'https://theindianfreepress.com/wp-content/uploads/2020/09/Poshan-Abhiyan-e1599499040576.jpeg',
+  //   'https://th.bing.com/th/id/R.861ac8a40b36204c15e1e4facc795ea6?rik=WArgFFKNNq9DlA&riu=http%3a%2f%2fwww.bhubaneswarbuzz.com%2fwp-content%2fuploads%2f2015%2f11%2fAMRUT-Logo.png&ehk=bwOvyjWP8TiHEbQlrkvoCtDLD4O7Zu2xrLJzMy9O5zY%3d&risl=&pid=ImgRaw&r=0',
+  // ];
 
   final String uniqueString = "*7%";
   String? vendorImageURL =
@@ -66,6 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final governmentSchemesData = ref.watch(governmentSchemeProvider);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -288,28 +295,46 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           AppText.headingThree("Goverment Schemes"),
                           //carousel slider
-                          CarouselSlider(
-                            items: imgList
-                                .map(
-                                  (item) => GestureDetector(
-                                    child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  child: Image.network(
-                                    item,
-                                    fit: BoxFit.cover,
-                                    width: 1000,
-                                  ),
-                                    ),
-                                    onTap: () => Navigator.of(context)
-                                    .pushNamed(Routes.schemeDetails),
-                                  ),
-                                )
-                                .toList(),
-                            options: CarouselOptions(
-                              autoPlay: true,
-                              viewportFraction: 1,
-                              aspectRatio: 2.0,
-                              enlargeCenterPage: true,
+
+                          governmentSchemesData.when(
+                            data: (data) {
+                              List<GovernmentSchemeModel?>
+                                  governmentSchemeList =
+                                  data.map((e) => e).toList();
+
+                              return CarouselSlider(
+                                items: governmentSchemeList
+                                    .map(
+                                      (item) => GestureDetector(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          child: Image.network(
+                                            item!.schemeImageUrl,
+                                            fit: BoxFit.cover,
+                                            width: 1000,
+                                          ),
+                                        ),
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed(Routes.schemeDetails,arguments: SchemeArguments(model: item)),
+                                      ),
+                                    )
+                                    .toList(),
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  viewportFraction: 1,
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: true,
+                                ),
+                              );
+                            },
+                            error: (e, t) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
                             ),
                           ),
                         ],
@@ -340,7 +365,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                   child: Center(
                     child: Container(
-                      decoration: const BoxDecoration(color: Colors.transparent),
+                      decoration:
+                          const BoxDecoration(color: Colors.transparent),
                       width: MediaQuery.of(context).size.width * 0.95,
                       height: MediaQuery.of(context).size.height * 0.95,
                       child: Center(
