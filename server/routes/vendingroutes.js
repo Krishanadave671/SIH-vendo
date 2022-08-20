@@ -2,6 +2,7 @@ const express = require('express');
 const vendingzonerouter = express.Router(); 
 const  vendingzones  = require("../models/vendingzones"); 
 const Vendor = require("../models/vendor_details");
+
 // find vendingzones according to location search bar for vendors app
 vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  , async (req , res) => { 
     try {
@@ -28,7 +29,6 @@ vendingzonerouter.get("/api/getvendingzones/search" , async (req, res) =>  {
     }
 })
 
-
 // post request to add vendingzones in location 
 vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
 
@@ -45,14 +45,26 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
     
 }); 
 
-//add to vendorIdList
-// vendingzonerouter.patch("/api/addToVendorIdList", async(req, res) =>{
-//     try{
-//         const vendorId = req.body;
+//get pending vendors
+vendingzonerouter.get("/api/getvendorbyvendingzone/pending", async(req, res) => {
+    try{
+        const {vendingZoneId} = req.body;
+        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending"}); 
+        res.status(200).json(pendingApplications);
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+})
 
-//     }catch(e){
-//         res.status(500).json({e : e.message}); 
-//     }
-// })
+//get approved vendors
+vendingzonerouter.get("/api/getvendorbyvendingzone/approved", async(req, res) => {
+    try{
+        const {vendingZoneId} = req.body;
+        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "approved"}); 
+        res.status(200).json(pendingApplications);
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+})
 
 module.exports = vendingzonerouter; 
