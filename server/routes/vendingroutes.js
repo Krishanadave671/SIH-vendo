@@ -22,7 +22,7 @@ vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  
 // find all vendingzones.. 
 vendingzonerouter.get("/api/getvendingzones/search" , async (req, res) =>  { 
     try {
-        let vendingzone = await vendingzones.find({}); 
+        let vendingzone = await vendingzones.find({}).sort({pendingRegistrations:-1}); 
         res.status(200).json(vendingzone); 
     }catch(e){
         res.status(500).json({e : e.message}); 
@@ -49,7 +49,7 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
 vendingzonerouter.get("/api/getvendorbyvendingzone/pending", async(req, res) => {
     try{
         const {vendingZoneId} = req.body;
-        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending"}).sort({pendingRegistrations:-1}); 
+        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending"}); 
         res.status(200).json(pendingApplications);
     }catch (e) {
         res.status(500).json({ error: e.message });
@@ -68,12 +68,36 @@ vendingzonerouter.get("/api/getvendorbyvendingzone/approved", async(req, res) =>
 })
 
 //update status to approved
-vendingzonerouter.patch("/api/approvevendor", async(req, res) => {
+vendingzonerouter.post("/api/approvevendor", async(req, res) => {
     try{
         const {vendingZoneId, vendorId} = req.body;
         let vendor = await Vendor.findOneAndUpdate({vendorId: vendorId}, {isApproved: "approved"}, {new: true});
         await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneId}, {$inc: {pendingRegistrations: -1}, "$push": {vendorIdList: {vendorId: vendorId}}}, {new: true});
         res.status(200).json(vendor);
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+})
+
+//update status to rejected
+vendingzonerouter.post("/api/rejectvendor", async(req, res) => {
+    try{
+        const {vendingZoneId, vendorId} = req.body;
+        let vendor = await Vendor.findOneAndUpdate({vendorId: vendorId}, {isApproved: "rejected"}, {new: true});
+        await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneId}, {$inc: {pendingRegistrations: -1}, "$push": {vendorIdList: {vendorId: vendorId}}}, {new: true});
+        res.status(200).json(vendor);
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+})
+
+//get pending vendors by city, vendingzone
+vendingzonerouter.get("/api/getvendorbyvendingzone/pending/:location", async(req, res) => {
+    try{
+        const {location} = req.params;
+        const {vendingZoneId} = req.body;
+        let pendingApplications = await Vendor.find({vendingZoneIdApplied: vendingZoneId, isApproved: "pending", vendingZoneCity: location}); 
+        res.status(200).json(pendingApplications);
     }catch (e) {
         res.status(500).json({ error: e.message });
     }
