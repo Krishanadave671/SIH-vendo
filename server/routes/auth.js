@@ -49,7 +49,7 @@ authRouter.post("/api/signup", async (req, res) => {
             isApproved
         });
         vendor = await vendor.save();
-        await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
+        // await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
         res.json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });

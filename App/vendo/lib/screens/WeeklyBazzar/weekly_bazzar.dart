@@ -1,12 +1,15 @@
+import 'dart:developer';
+
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'DisplayList.dart';
 
 var today = DateUtils.dateOnly(DateTime.now());
 var fetchedDate = DateUtils.dateOnly(DateTime.now()).toString();
 
-class Calendar extends StatefulWidget {
+class Calendar extends ConsumerStatefulWidget {
   const Calendar({
     Key? key,
     required this.title,
@@ -14,14 +17,18 @@ class Calendar extends StatefulWidget {
   final String title;
 
   @override
-  State<Calendar> createState() => _CalendarState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _CalendarState();
 }
 
-class _CalendarState extends State<Calendar> {
-  List<DateTime?> _singleDatePickerValueWithDefaultValue = [
-    DateTime.now(),
-  ];
+List<DateTime?> _singleDatePickerValueWithDefaultValue = [
+  DateTime.now(),
+];
 
+final selectedDateProvider = StateProvider<List<DateTime?>>((ref) {
+  return _singleDatePickerValueWithDefaultValue;
+});
+
+class _CalendarState extends ConsumerState<Calendar> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -44,16 +51,7 @@ class _CalendarState extends State<Calendar> {
     );
   }
 
-  String _getValueText(
-    CalendarDatePicker2Type datePickerType,
-    List<DateTime?> values,
-  ) {
-    var valueText = (values.isNotEmpty ? values[0] : null)
-        .toString()
-        .replaceAll('00:00:00.000', '');
 
-    return valueText;
-  }
 
   Widget _getDateDetail() {
     return const DisplayList();
@@ -89,9 +87,12 @@ class _CalendarState extends State<Calendar> {
           //const Text('Single Date Picker (With default value)'),
           CalendarDatePicker2(
             config: config,
-            initialValue: _singleDatePickerValueWithDefaultValue,
-            onValueChanged: (values) =>
-                setState(() => _singleDatePickerValueWithDefaultValue = values),
+            initialValue: ref.watch(selectedDateProvider),
+            onValueChanged: (values) {
+              print("hi");
+              ref.watch(selectedDateProvider.notifier).state = values;
+              print(_singleDatePickerValueWithDefaultValue.toString());
+            },
             selectableDayPredicate: (day) => !day
                 .difference(DateTime.now().subtract(const Duration(days: 3)))
                 .isNegative,
@@ -105,19 +106,6 @@ class _CalendarState extends State<Calendar> {
               color: Colors.blueGrey,
             ),
           ),
-          // Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   children: [
-          //     const Text('Selection(s):  '),
-          //     const SizedBox(width: 10),
-          //     Text(
-          //       _getValueText(
-          //         config.calendarType,
-          //         _singleDatePickerValueWithDefaultValue,
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );

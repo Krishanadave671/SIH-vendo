@@ -5,10 +5,11 @@ import 'package:vendo/util/colors.dart';
 import '../../util/AppInterface/ui_helpers.dart';
 
 class DisplayCard extends StatelessWidget {
-  const DisplayCard({Key? key, required this.Location, required this.Time})
+  const DisplayCard(
+      {Key? key, required this.Location, required this.favourableType})
       : super(key: key);
   final String Location;
-  final String Time;
+  final List<String> favourableType;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class DisplayCard extends StatelessWidget {
                   const SizedBox(
                     width: 20,
                   ),
-                  AppText.containerText(Time),
+                  AppText.containerText(favourableType.toString()),
                 ],
               ),
             ],

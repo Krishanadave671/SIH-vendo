@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 
 class SchemeDetails extends StatefulWidget {
-  const SchemeDetails({Key? key}) : super(key: key);
+  const SchemeDetails({Key? key,required this.governmentSchemeModel}) : super(key: key);
+  final GovernmentSchemeModel governmentSchemeModel;
 
   @override
   State<SchemeDetails> createState() => _SchemeDetailsState();
@@ -26,28 +28,19 @@ class _SchemeDetailsState extends State<SchemeDetails> {
               floating: true,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                /*titlePadding: const EdgeInsetsDirectional.only(
-                        start: 16.0, bottom: 16.0),*/
                 centerTitle: true,
-                /*title: const Text(
-                     'Test Title',
-                     textScaleFactor: 1.0,
-                     style: TextStyle(
-                         color: Colors.black,),
-                   ),*/
                 stretchModes: const <StretchMode>[
                   StretchMode.zoomBackground,
                   StretchMode.blurBackground,
                   StretchMode.fadeTitle,
                 ],
-                // ClipRRect added here for rounded corners
                 background: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20.0),
                     bottomRight: Radius.circular(20.0),
                   ),
                   child: Image.network(
-                    "https://image2.slideserve.com/4961758/national-rural-employment-guarantee-act-nrega-2005-n.jpg",
+                    widget.governmentSchemeModel.schemeImageUrl,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -75,16 +68,16 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                     height: 20,
                   ),
                   Text(
-                    "NREGA",
+                   widget.governmentSchemeModel.schemeName,
                     style: TextStyle(fontSize: 20, height: 1.2),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 20),
-                    child: Text(
-                      "National Rural Employment Gaurantee Act",
-                      style: TextStyle(fontSize: 18, height: 1.2),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(left: 16.0, right: 20),
+                  //   child: Text(
+                  //     "National Rural Employment Gaurantee Act",
+                  //     style: TextStyle(fontSize: 18, height: 1.2),
+                  //   ),
+                  // ),
                   SizedBox(
                     height: 20,
                   ),
@@ -102,7 +95,7 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
+                   widget.governmentSchemeModel.schemeReq,
                     style: TextStyle(height: 1.6),
                   ),
                   SizedBox(
@@ -116,13 +109,13 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    "Nobody wants to stare at a blank wall all day long, which is why wall art is such a crucial step in the decorating process. And once you start brainstorming, the rest is easy. From gallery walls to DIY pieces like framing your accessories and large-scale photography, we've got plenty of wall art ideas to spark your creativity. And where better to look for inspiration that interior designer-decorated walls",
+                   widget.governmentSchemeModel.schemeBenefits,
                     style: TextStyle(height: 1.6),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text("Visit website"))
+                  ElevatedButton(onPressed: () {}, child: Text("Apply Now!!"))
                 ],
               ),
             ),

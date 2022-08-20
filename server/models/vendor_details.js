@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {complaints} = require("./complaints");
+const {reviews} = require("./reviews");
 
 const vendorDetails = mongoose.Schema({
     vendorId: {
@@ -115,10 +116,10 @@ const vendorDetails = mongoose.Schema({
       default : "pending" 
     }, 
     complaintsList: {
-      type: [complaints],
+      type: [complaints]
     }, 
     reviewList: {
-      type: [complaints]
+      type: [reviews]
     }, 
     weeklyBazzarList: {
       type: [complaints]

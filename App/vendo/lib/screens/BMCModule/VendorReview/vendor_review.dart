@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -6,13 +7,17 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/models/vendorReviewModel/vendor_review_model.dart';
+import 'package:vendo/providers/vendor_review_provider.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/colors.dart';
+import '../../../services/dio_client.dart';
 import '../../../util/AppInterface/ui_helpers.dart';
 import '../../Write_complaints_screen/take_picture.dart';
 
-class VendorCheck extends StatefulWidget {
+class VendorCheck extends ConsumerStatefulWidget {
   const VendorCheck({
     Key? key,
     required this.shopName,
@@ -26,10 +31,10 @@ class VendorCheck extends StatefulWidget {
   final String phoneNo;
 
   @override
-  State<VendorCheck> createState() => _VendorCheckState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _VendorCheckState();
 }
 
-class _VendorCheckState extends State<VendorCheck> {
+class _VendorCheckState extends ConsumerState<VendorCheck> {
   Choices? q1 = Choices.yes;
 
   Choices? q2 = Choices.yes;
@@ -41,15 +46,81 @@ class _VendorCheckState extends State<VendorCheck> {
   String description = '';
   late final String uniqueString;
   late final String imagePathString;
-  late final imageRef;
+  late final Reference imageRef;
   late final CameraController cameraController;
   late CameraDescription cameraDescription;
   bool isInitialized = false;
   XFile? image;
   String? displayImagePath;
+  late VendorReviewModel vendorReview;
+  late String imageUrl;
 
   Future<void> onContinue() async {
     await uploadPhoto();
+    vendorReview.bmcOfficerId = "yash";
+    vendorReview.waterClogging = q1.toString().substring(8);
+    vendorReview.foodCover = q2.toString().substring(8);
+    vendorReview.cleanDrinkingWater = q3.toString().substring(8);
+    vendorReview.vendorWearingGloves = q4.toString().substring(8);
+    vendorReview.isApprovedLocation = q5;
+    vendorReview.isFootTraffic = q6;
+    vendorReview.isLegalAge = q7;
+    vendorReview.shortDescription = description;
+    vendorReview.reviewImageUrl = imageUrl;
+    double creditScore = 0;
+    if (q1 == Choices.yes) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q2 == Choices.yes) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q3 == Choices.yes) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q4 == Choices.yes) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q5 == true) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q6 == true) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    if (q7 == true) {
+      creditScore++;
+    } else if (q1 == Choices.no) {
+      creditScore--;
+    }
+
+    vendorReview.creditScoreAbsolute = creditScore;
+    log(vendorReview.toJson().toString());
+    //implement api here to put the review
+
+    try {
+      //api to submit the review
+      final _api = ref.watch(apiserviceProvider);
+      var response = await _api.addReview(vendorReview, context);
+    } on Exception catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> uploadPhoto() async {
@@ -58,6 +129,7 @@ class _VendorCheckState extends State<VendorCheck> {
       imageRef = storage.ref().child(imagePathString);
       await imageRef.putFile(
           File(displayImagePath!), SettableMetadata(contentType: "jpeg"));
+      imageUrl = await imageRef.getDownloadURL();
     } catch (e) {
       print(e);
     }
@@ -114,6 +186,7 @@ class _VendorCheckState extends State<VendorCheck> {
 
   @override
   Widget build(BuildContext context) {
+    vendorReview = ref.watch(vendorReviewProvider);
     return Scaffold(
       backgroundColor: colors.primary,
       body: ListView(
