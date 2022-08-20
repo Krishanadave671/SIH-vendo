@@ -1,6 +1,6 @@
 const express = require('express'); 
 const vendingzonerouter = express.Router(); 
-const { vendingzones } = require("../models/vendingzones"); 
+const  vendingzones  = require("../models/vendingzones"); 
 const Vendor = require("../models/vendor_details");
 // find vendingzones according to location search bar for vendors app
 vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  , async (req , res) => { 
@@ -34,8 +34,8 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
 
     try{ 
          let vendingZone = new vendingzones(req.body);
-         const {vendingzonecity} = vendingZone; 
-         vendingZone.vendingzoneid = "V" + vendingzonecity + Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 50-vendingzonecity.length); 
+         const {vendingZoneCity} = vendingZone; 
+         vendingZone.vendingZoneId = "V" + vendingZoneCity + Math.random().toString(36).replace(/[^a-z]+/g, '').substring(0, 50-vendingZoneCity.length); 
          vendingZone = await vendingZone.save(); 
          res.json(vendingZone.json); 
     }catch (error){
@@ -44,5 +44,15 @@ vendingzonerouter.post("/api/addvendingzones", async (req, res) => {
     }
     
 }); 
+
+//add to vendorIdList
+// vendingzonerouter.patch("/api/addToVendorIdList", async(req, res) =>{
+//     try{
+//         const vendorId = req.body;
+
+//     }catch(e){
+//         res.status(500).json({e : e.message}); 
+//     }
+// })
 
 module.exports = vendingzonerouter; 

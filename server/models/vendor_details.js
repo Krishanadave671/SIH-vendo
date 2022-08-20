@@ -86,11 +86,11 @@ const vendorDetails = mongoose.Schema({
       required : true 
     },
     shopLocationLat: {
-      type: String, 
+      type: Number, 
       required : true 
     },
     shopLocationLong: {
-      type: String, 
+      type: Number, 
       required : true 
     },
     vendingZoneIdApplied: {
@@ -102,7 +102,9 @@ const vendorDetails = mongoose.Schema({
       required : true 
     },
     creditScore: {
-      type: Number
+      type: Number,
+      required: true,
+      default: 0
     },
     vendorImageurl : {
       type : String , 

@@ -4,6 +4,7 @@ const bcryptjs = require("bcryptjs");
 const authRouter = express.Router();
 const jwt = require("jsonwebtoken");
 const auth = require("../middlewares/auth");
+const vendingzones = require("../models/vendingzones");
 
 //Sign Up
 authRouter.post("/api/signup", async (req, res) => {
@@ -48,6 +49,7 @@ authRouter.post("/api/signup", async (req, res) => {
             isApproved
         });
         vendor = await vendor.save();
+        await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
         res.json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });
@@ -97,5 +99,25 @@ authRouter.post("/api/tokenIsValid", async (req, res) => {
     const vendor = await Vendor.findById(req.vendor);
     res.json({...vendor._doc ,  token: req.token });
   });
+
+  //get approved vendors
+  authRouter.get("/api/getvendors/approved" , async (req, res) =>  { 
+    try {
+        let vendors = await Vendor.find({isApproved: "approved"}); 
+        res.status(200).json(vendors); 
+    }catch(e){
+        res.status(500).json({e : e.message}); 
+    }
+})
+
+//get pending vendors
+authRouter.get("/api/getvendors/pending" , async (req, res) =>  { 
+  try {
+      let vendors = await Vendor.find({isApproved: "pending"}); 
+      res.status(200).json(vendors); 
+  }catch(e){
+      res.status(500).json({e : e.message}); 
+  }
+})
 
   module.exports = authRouter;

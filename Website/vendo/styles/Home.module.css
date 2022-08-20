@@ -1,6 +1,6 @@
 .container {
   /* padding: 0 2rem; */
-  background-image: var(--gradient-bg);
+  background-image: url(../Images/vendorcollage.png);
   height: 100vh;
   color: white;
   text-align: center;
@@ -143,10 +143,16 @@
 }
 .features{
   background-color: white;
+  
   color: black;
   padding-top: 64px;
-  margin-top: 64px;
-  margin-bottom: 64px;
+  margin-top: 50px;
+  margin-bottom: 100px;
+  height: 500px;
+  border-radius: 30px;
+box-shadow: 2px 2px 5px rgba(0,0,0,0.5),
+            inset 5px 5px 8px rgba(0,0,0,0.5);
+            
 }
 .featurelist{
   display: flex;
@@ -157,6 +163,7 @@
 .featurelist div{
   flex: 1;
   align-items: center;
+  padding-top: 20px;
 }
 .featurelist div div{
   display: block;
@@ -165,8 +172,13 @@
   margin-bottom: 64px;
 }
 
+.featurelist div:hover{
+  background-color: rgb(210, 210, 210);
+}
+
 .stories{
   margin-bottom: 64px;
+ 
 }
 
 
@@ -174,4 +186,20 @@
   background-color: white;
   color: black;
   
+  
 }
+
+.subheadline{
+  font-size: 50px;
+}
+
+.aunty{
+  background-color: aliceblue;
+  height: 500px;
+  width: 500px;
+  position: absolute;
+}
+
+
+
+

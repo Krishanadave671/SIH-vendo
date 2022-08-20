@@ -14,6 +14,7 @@ import {
   faChartLine,
   faMobile,
   faEnvelope,
+  faLanguage,
 } from "@fortawesome/fontawesome-free-solid";
 import vendorImg from "./../Images/vendorphoto.png";
 import Image from "next/image";
@@ -27,9 +28,11 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <Navbar />
+      <div className="HomeWrapper">
       <div className="flex">
-        <Image src={vendorImg} alt="Vendor img" />
-        <div style={{ flex: 1 }}>
+        <div className="aunty">
+        <Image  src={vendorImg} alt="Vendor img" /></div>
+        <div className="TextWrapper">
           <div className={styles.headline}>
             “Impacting” the lives of 10 million vendors. <br />
             Govertment initiative to improve vendors life without compromising
@@ -38,19 +41,22 @@ export default function Home() {
             <br />
             Vendor? Download the app now
           </div>
+
           <div className="download-btn app-store">
-            <div className="flex">
+           
               <FontAwesomeIcon icon={faApple} size="2x" />
-              <div> Download</div>
-            </div>
+              <div>Download</div>
+              
+            
           </div>
           <div className="download-btn google-play">
-            <div className="flex">
+           
               <FontAwesomeIcon icon={faGooglePlay} size="2x" />
-              <div> Download</div>
-            </div>
+              <div>Download</div> 
+          </div>
           </div>
         </div>
+
       </div>
       <div className={styles.features}>
         <div className={styles.subheadline}>Features</div>
@@ -73,7 +79,16 @@ export default function Home() {
               className="font-awesome-icons"
             />
             <div> Accessible to all </div>
-          </div>
+            </div>
+            <div>
+              <FontAwesomeIcon
+              icon={faLanguage}
+              size="4x"
+              className="font-awesome-icons"
+              />
+              <div>Multilingual</div>
+            </div>
+          
           <div>
             <FontAwesomeIcon
               icon={faChartLine}
@@ -86,13 +101,14 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className={styles.stories}>
+      
+      <div className={styles.stories }>
         <div className={styles.headline}> Inspiring stories</div>
         <Carousel activeIndex={index} onSelect={handleSelect}>
           <Carousel.Item>
             <img
               // className="d-block w-100"
-              src="https://topofthelist.net/wp-content/uploads/2016/01/Hydrangeas.jpg"
+              src="https://www.sundaynews.co.zw/wp-content/uploads/sites/16/2018/11/vendor1.jpg"
               alt="First slide"
             />
             <Carousel.Caption>
@@ -103,7 +119,7 @@ export default function Home() {
           <Carousel.Item>
             <img
               // className="d-block w-100"
-              src="https://topofthelist.net/wp-content/uploads/2016/01/Hydrangeas.jpg"
+              src="image.png"
               // src="holder.js/800x400?text=Second slide&bg=282c34"
               alt="Second slide"
             />
@@ -116,7 +132,7 @@ export default function Home() {
           <Carousel.Item>
             <img
               // className="d-block w-100"
-              src="https://topofthelist.net/wp-content/uploads/2016/01/Hydrangeas.jpg"
+              src="image.png"
               // src="holder.js/800x400?text=Third slide&bg=20232a"
               alt="Third slide"
             />
@@ -130,6 +146,7 @@ export default function Home() {
           </Carousel.Item>
         </Carousel>
       </div>
+      
       <div className={styles.footer}>
         <div className="social-media-icons">
           <a href="">
@@ -148,5 +165,6 @@ export default function Home() {
         <div>© Copyright 2022 Vendo</div>
       </div>
     </div>
+    
   );
 }

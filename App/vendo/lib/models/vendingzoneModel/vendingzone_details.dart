@@ -3,27 +3,27 @@ part 'vendingzone_details.g.dart';
 
 @JsonSerializable()
 class VendingzoneModel {
-  final String vendingZoneId;
-  final String vendingZoneLocality;
-  final double vendingZoneLat;
-  final double vendingZoneLong;
-  final String vendingZoneDescription;
-  final String vendingZoneImageUrl;
-  final double maximumVendorsAllowed;
-  final String vendingZoneCity;
-  final String vendingZoneWard;
-  final double vendingZoneLocationFee;
-  final String vendingZoneAddress;
-  final List<String> categoryOfVendorsNotAllowed;
-  final List<String> vendorTypeFavourable;
-  final List<String> vendorIdList;
+  String vendingZoneId;
+  String vendingZoneLocality;
+  double vendingZoneLat;
+  double vendingZoneLong;
+  String vendingZoneDescription;
+  String vendingZoneImageurl;
+  double maximumVendorsAllowed;
+  String vendingZoneCity;
+  String vendingZoneWard;
+  double vendingZoneLocationFee;
+  String vendingZoneAddress;
+  List<String> categoryOfVendorsNotAllowed;
+  List<String> vendorTypeFavourable;
+  List<String> vendorIdList;
   VendingzoneModel({
     required this.vendingZoneId,
     required this.vendingZoneLocality,
     required this.vendingZoneLat,
     required this.vendingZoneLong,
     required this.vendingZoneDescription,
-    required this.vendingZoneImageUrl,
+    required this.vendingZoneImageurl,
     required this.maximumVendorsAllowed,
     required this.vendingZoneCity,
     required this.vendingZoneWard,
