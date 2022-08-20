@@ -121,9 +121,22 @@ const vendorDetails = mongoose.Schema({
     reviewList: {
       type: [reviews]
     }, 
-    weeklyBazzarList: {
-      type: [complaints]
-    },
+    weeklyBazzarList: [{
+      "bazzarId" : {
+        type: String, 
+        required : true , 
+        unique : true 
+      },
+      "status" : {
+        type: String,
+        required : true ,
+        default : "pending"
+      } 
+    }
+
+    ]
+
+    ,
     vendorCategory : {
       type : String , 
       required : true 
