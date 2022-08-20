@@ -110,6 +110,16 @@ authRouter.post("/api/tokenIsValid", async (req, res) => {
     }
 })
 
+// get vendors by id
+authRouter.get("/api/getvendors/:id" , async (req, res) =>  {
+    try {
+        const {id} = req.params ; 
+        let vendor = await Vendor.find({vendorId: id});
+        res.status(200).json(vendor[0]);
+    }catch(e){
+        res.status(500).json({e : e.message});
+    } 
+} )
 //get pending vendors
 authRouter.get("/api/getvendors/pending" , async (req, res) =>  { 
   try {
