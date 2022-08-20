@@ -112,7 +112,7 @@ div::-webkit-scrollbar-thumb {
 }
 
 
-/* Form */
+/*Form */
 
 .form-control:focus{
   box-shadow: 0 0 0 0.25rem var(--box-color) !important;
@@ -137,6 +137,23 @@ input:focus {
 input:placeholder {
 	color: var(--primary-color);
 }
+
+/* React form */
+.form-check-input:focus{
+  border-color: var(--box-color);
+  box-shadow: none;
+}
+.form-check-input{
+  height: 20px;
+  padding: 8px 16px 8px 16px;
+  margin-right: 12px;
+}
+.form-check-input:checked{
+  background-color: var(--primary-color);
+  border-color: #ffa29e;
+}
+
+
 
 
 /* Landing page */

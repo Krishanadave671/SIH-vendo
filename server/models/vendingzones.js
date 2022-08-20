@@ -1,53 +1,73 @@
 const mongoose = require('mongoose');
 
 const vendingzoneSchema = new mongoose.Schema({
-    vendingzoneid : {
+    vendingZoneId : {
         type : String  , 
         required : true , 
         unique : true 
-    }, 
-    vendingzonestreetName : {
-        type : String, 
-        required : true , 
-    }, 
-    vendingzonelocation : {
+    },  
+    vendingZoneLocality : {
         type : String , 
         required : true 
+    },
+    vendingZoneLat : {
+        type : Number , 
+        required : true 
     }, 
-    vendingzonedescription : {
+    vendingZoneLong : {
+        type : Number , 
+        required : true 
+    }, 
+    vendingZoneDescription : {
         type : String , 
         required : true , 
     },
-    vendingzoneImageurl : { 
+    vendingZoneImageurl : { 
         type : String , 
         default : "https://lh5.googleusercontent.com/p/AF1QipM8YeTMOC9DfdD7GmXMnGN9OuG9MrQYOn24eHta=w408-h306-k-no"
     }, 
-    maximumVendorsallowed : { 
+    maximumVendorsAllowed : { 
         type : Number, 
         required : true 
     }, 
-    vendingzonecity : { 
+    vendingZoneCity : { 
         type : String , 
         required : true , 
         trim : true 
     }, 
-    vendingzoneward : {
+    vendingZoneWard : {
         type : String ,  
         required : true , 
         trim : true 
     },
-    vendingzonelocationtax : { 
+    vendingZoneLocationFee : { 
         type : Number , 
         required : true , 
         trim : true 
     },
-    vendingzoneAddress : { 
+    vendingZoneAddress : { 
         type : String , 
         required : true , 
         trim : true 
-    } , 
-    categoryofvendorsNotAllowed : [String]
+    }, 
+    categoryOfVendorsNotAllowed : {
+        type: [String],
+        required: true
+    },
+    vendorTypeFavorable: {
+        type: [String],
+        required: true
+    },
+    vendorIdList: [{
+        vendorId: {
+            type: String
+        }
+    }],
+    pendingRegistrations: {
+        type: Number,
+        default: 0
+    }
 }) 
 
-const vendingzones = mongoose.model('vendingzones', vendingzoneSchema);
-module.exports = {vendingzones , vendingzoneSchema}; 
+const VendingZones = mongoose.model('vendingzones', vendingzoneSchema);
+module.exports = VendingZones; 

@@ -10,6 +10,12 @@ class colors {
   static const Color kcGreyBackground = Color(0xffe5e5e5);
   static const Color kcLightGreyBackground = Color(0xffEEF2F9);
   static const Color kcCaptionGreyColor = Color(0xff999999);
+  static Color get orangelightshade => Colors.orange.shade600; 
+  static Color get orangedarkshade => Colors.orange.shade800; 
+ static  LinearGradient primaryorangecolor = LinearGradient(colors: [
+   orangedarkshade , 
+   orangelightshade
+]);
 
   //static const Color primary = Color(0xffF696B1);
   static const Color primary = Color(0xFFFF6B62);

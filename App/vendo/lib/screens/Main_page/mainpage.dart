@@ -3,9 +3,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Homescreen/screens/home_screen.dart';
 import 'package:vendo/Screens/Resources_page/resources_page.dart';
-import 'package:vendo/Screens/calendar_screen/calendar.dart';
+
 import 'package:vendo/Screens/write_Complaints_screen/complaints.dart';
 import 'package:vendo/screens/Main_page/scroll_to_hide.dart';
+import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/util/colors.dart';
 
 class MainPage extends StatefulWidget {
@@ -69,7 +70,7 @@ class _MainPageState extends State<MainPage> {
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           currentIndex: currentindex,
-          selectedItemColor: colors.primary,
+          selectedItemColor: colors.orangedarkshade,
           unselectedItemColor: Colors.grey,
           showSelectedLabels: false,
           showUnselectedLabels: false,

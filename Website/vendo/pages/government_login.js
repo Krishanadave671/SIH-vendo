@@ -16,6 +16,7 @@ export default function government_login() {
   };
 
   return (
+
     <div className="govt-login-container">
       <div className="ContainerForLogin">
         <div className="closeGridVerticalHeaderContainer">
@@ -45,6 +46,7 @@ export default function government_login() {
       <div classname="ImageForLogin">
         <Image src={loginimage} ></Image>
       </div>
+
     </div>
   );
 }

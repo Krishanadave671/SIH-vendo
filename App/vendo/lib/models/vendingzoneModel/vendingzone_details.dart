@@ -3,23 +3,37 @@ part 'vendingzone_details.g.dart';
 
 @JsonSerializable()
 class VendingzoneModel {
-  final String  vendingzoneid;
-  final String vendingzonestreetName;
-  final String vendingzonelocation;
-  final String vendingzonedescription;
-  final String vendingzoneImageurl;
-  final int maximumVendorsallowed;
-  final String vendingzoneward;
-  final int vendingzonelocationtax;
+  String vendingZoneId;
+  String vendingZoneLocality;
+  double vendingZoneLat;
+  double vendingZoneLong;
+  String vendingZoneDescription;
+  String vendingZoneImageurl;
+  double maximumVendorsAllowed;
+  String vendingZoneCity;
+  String vendingZoneWard;
+  double vendingZoneLocationFee;
+  String vendingZoneAddress;
+  List<String> categoryOfVendorsNotAllowed;
+  List<String> vendorTypeFavorable;
+  List<Map<String,String>> vendorIdList;
+  double pendingRegistration;
   VendingzoneModel({
-    required this.vendingzoneid,
-    required this.vendingzonestreetName,
-    required this.vendingzonelocation,
-    required this.vendingzonedescription,
-    required this.vendingzoneImageurl,
-    required this.maximumVendorsallowed,
-    required this.vendingzoneward,
-    required this.vendingzonelocationtax,
+    required this.vendingZoneId,
+    required this.vendingZoneLocality,
+    required this.vendingZoneLat,
+    required this.vendingZoneLong,
+    required this.vendingZoneDescription,
+    required this.vendingZoneImageurl,
+    required this.maximumVendorsAllowed,
+    required this.vendingZoneCity,
+    required this.vendingZoneWard,
+    required this.vendingZoneLocationFee,
+    required this.vendingZoneAddress,
+    required this.categoryOfVendorsNotAllowed,
+    required this.vendorTypeFavorable,
+    required this.vendorIdList,
+    this.pendingRegistration = 0,
   });
 
   factory VendingzoneModel.fromJson(Map<String, dynamic> json) =>

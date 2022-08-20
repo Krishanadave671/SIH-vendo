@@ -1,31 +1,34 @@
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:place_picker/entities/location_result.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:place_picker/place_picker.dart';
-import 'package:place_picker/widgets/place_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vendo/Screens/Homescreen/screens/widgets/services_card.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
+import 'package:vendo/providers/government_scheme_provider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
-import 'widgets/myCard.dart';
+import '../../../routes.dart';
 import 'dart:ui' as ui;
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  final List<String> imgList = [
-    'https://images.unsplash.com/photo-1525382455947-f319bc05fb35?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1576222901803-c062b57925b4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1604429868519-8a64cb3b010b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OHx8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60',
-    'https://images.unsplash.com/photo-1573751056139-2ab65b6b03be?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8YW5pbWFsc3xlbnwwfDJ8MHx8&auto=format&fit=crop&w=500&q=60'
-  ];
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  // final List<String> imgList = [
+  //   'https://i1.wp.com/www.forwardpress.in/wp-content/uploads/2018/02/narega-1.jpg?resize=745%2C398&ssl=1',
+  //   'https://sarkariyojanas.com/wp-content/uploads/2019/11/Samagra-Shiksha-Abhiyan.jpg',
+  //   'https://theindianfreepress.com/wp-content/uploads/2020/09/Poshan-Abhiyan-e1599499040576.jpeg',
+  //   'https://th.bing.com/th/id/R.861ac8a40b36204c15e1e4facc795ea6?rik=WArgFFKNNq9DlA&riu=http%3a%2f%2fwww.bhubaneswarbuzz.com%2fwp-content%2fuploads%2f2015%2f11%2fAMRUT-Logo.png&ehk=bwOvyjWP8TiHEbQlrkvoCtDLD4O7Zu2xrLJzMy9O5zY%3d&risl=&pid=ImgRaw&r=0',
+  // ];
 
   final String uniqueString = "*7%";
   String? vendorImageURL =
@@ -35,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? vendorShopName = "Kirti Vadapav Center";
   String? expiryDate = "05/27";
   String? vendorPhoneNo = "8104875867";
-  LatLng? vendorLocation = LatLng(23, 100);
+  LatLng? vendorLocation = const LatLng(23, 100);
   IconData iconData = Icons.clean_hands;
   bool isQRVisible = false;
 
@@ -62,11 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
             )));
 
     // Handle the result in your way
+    // ignore: avoid_print
     print(result.latLng);
   }
 
   @override
   Widget build(BuildContext context) {
+    final governmentSchemesData = ref.watch(governmentSchemeProvider);
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -75,287 +81,309 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             AppText.headingThree("Hi Krishana Dave !!"),
             horizontalSpaceLarge,
-            Icon(
-              Icons.notifications,
-              color: colors.primary,
+            GestureDetector(
+              child: const Icon(
+                Icons.notifications,
+                color: colors.primary,
+              ),
+              onTap: () =>
+                  Navigator.of(context).pushNamed(Routes.notificationScreen),
             ),
           ],
         ),
       ),
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Container(
-              color: Color.fromARGB(255, 232, 231, 231),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(
               child: Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    verticalSpaceMedium,
-                    PhysicalModel(
-                      color: Colors.white,
-                      elevation: 8,
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: Container(
-                        height: 210,
-                        margin: const EdgeInsets.only(bottom: 6.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ListTile(
-                              leading: Container(
-                                child: CircleAvatar(
+                color: const Color.fromARGB(255, 232, 231, 231),
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpaceMedium,
+                      PhysicalModel(
+                        color: Colors.white,
+                        elevation: 8,
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: Container(
+                          height: 210,
+                          margin: const EdgeInsets.only(bottom: 6.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ListTile(
+                                leading: CircleAvatar(
                                   radius: 30,
                                   backgroundImage:
                                       NetworkImage(vendorImageURL!),
                                 ),
+                                title: AppText.headingThree(vendorName!),
+                                subtitle: AppText.body('Vendorid : $vendorID'),
+                                hoverColor: Colors.red,
+                                trailing: Icon(
+                                  iconData,
+                                  size: 40,
+                                  color: Colors.green,
+                                ),
                               ),
-                              title: AppText.headingThree(vendorName!),
-                              subtitle: AppText.body('Vendorid : $vendorID'),
-                              hoverColor: Colors.red,
-                              trailing: Icon(
-                                iconData,
-                                size: 40,
-                                color: Colors.green,
+                              Center(
+                                  child: Text(
+                                vendorShopName!,
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange,
+                                ),
+                              )),
+                              const SizedBox(
+                                height: 20,
                               ),
-                            ),
-                            Center(
-                                child: Text(
-                              vendorShopName!,
-                              style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
+                              Padding(
+                                padding: const EdgeInsets.only(left: 16),
+                                child:
+                                    AppText.body1("Expiry date : $expiryDate"),
                               ),
-                            )),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 16),
-                              child: AppText.body1("Expiry date : $expiryDate"),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      showPlacePicker();
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.location_on,
-                                          color: Colors.blue,
-                                        ),
-                                        Text(
-                                          "Location",
-                                          style: TextStyle(
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        showPlacePicker();
+                                      },
+                                      child: Row(
+                                        children: const [
+                                          Icon(
+                                            Icons.location_on,
                                             color: Colors.blue,
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            "Location",
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
 
-                                  SizedBox(
-                                    width: 30,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      _makingPhoneCall();
-                                    },
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.call,
-                                          color: Colors.green,
-                                        ),
-                                        Text(
-                                          vendorPhoneNo!,
-                                          style: TextStyle(
+                                    const SizedBox(
+                                      width: 30,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        _makingPhoneCall();
+                                      },
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.call,
                                             color: Colors.green,
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            vendorPhoneNo!,
+                                            style: const TextStyle(
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
 
-                                  SizedBox(
-                                    width: 80,
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      qrPressed();
-                                    },
-                                    child: Icon(
-                                      Icons.qr_code_scanner,
-                                      size: 30,
+                                    const SizedBox(
+                                      width: 80,
                                     ),
-                                  ),
-                                  // contact us
-                                  //
-                                ],
+                                    GestureDetector(
+                                      onTap: () {
+                                        qrPressed();
+                                      },
+                                      child: const Icon(
+                                        Icons.qr_code_scanner,
+                                        size: 30,
+                                      ),
+                                    ),
+                                    // contact us
+                                    //
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    AppText.headingThree("Services"),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Servicescard(
-                              icon: Icons.document_scanner_sharp,
-                              serviceName: "My Schemes",
-                              color: Colors.red,
-                            ),
-                            Servicescard(
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      AppText.headingThree("Services"),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Servicescard(
+                                icon: Icons.document_scanner_sharp,
+                                serviceName: "My Schemes",
+                                color: Colors.red,
+                              ),
+                              Servicescard(
+                                  color: Colors.green,
+                                  icon: Icons.health_and_safety,
+                                  serviceName: "Health and safety"),
+                              Servicescard(
+                                  color: Colors.blue,
+                                  icon: Icons.search,
+                                  serviceName: "Search Locations"),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Servicescard(
+                                icon: Icons.location_city,
+                                serviceName: "New shops",
+                                color: Colors.yellow,
+                              ),
+                              Servicescard(
+                                color: Colors.lightGreen,
+                                icon: Icons.phone_in_talk,
+                                serviceName: "Contact TVC's",
+                              ),
+                              Servicescard(
+                                  color: Colors.lightBlue,
+                                  icon: Icons.map_sharp,
+                                  serviceName: "Vending Maps"),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: const [
+                              Servicescard(
+                                color: Colors.purple,
+                                icon: Icons.online_prediction_rounded,
+                                serviceName: "Take Permissions",
+                              ),
+                              Servicescard(
+                                  color: Colors.teal,
+                                  icon: Icons.shop,
+                                  serviceName: "License renewal"),
+                              Servicescard(
                                 color: Colors.green,
-                                icon: Icons.health_and_safety,
-                                serviceName: "Health and safety"),
-                            Servicescard(
-                                color: Colors.blue,
-                                icon: Icons.search,
-                                serviceName: "Search Locations"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Servicescard(
-                              icon: Icons.location_city,
-                              serviceName: "New shops",
-                              color: Colors.yellow,
-                            ),
-                            Servicescard(
-                              color: Colors.lightGreen,
-                              icon: Icons.phone_in_talk,
-                              serviceName: "Contact TVC's",
-                            ),
-                            Servicescard(
-                                color: Colors.lightBlue,
-                                icon: Icons.map_sharp,
-                                serviceName: "Vending Maps"),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Servicescard(
-                              color: Colors.purple,
-                              icon: Icons.online_prediction_rounded,
-                              serviceName: "Take Permissions",
-                            ),
-                            Servicescard(
-                                color: Colors.teal,
-                                icon: Icons.shop,
-                                serviceName: "License renewal"),
-                            Servicescard(
-                              color: Colors.green,
-                              icon: Icons.money,
-                              serviceName: "Loan Facilities",
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        AppText.headingThree("Goverment Schemes"),
-                        // carousel slider
-                        // CarouselSlider(
-                        //   items: imgList
-                        //       .map(
-                        //         (item) => Container(
-                        //             child: GestureDetector(
-                        //                 child: ClipRRect(
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(20.0),
-                        //                   child: Image.network(
-                        //                     item,
-                        //                     fit: BoxFit.cover,
-                        //                     width: 1000,
-                        //                   ),
-                        //                 ),
-                        //                 onTap: () {
-                        //                   // Navigator.pushNamed(
-                        //                   //     context, '/details_page2');
-                        //                 })),
-                        //       )
-                        //       .toList(),
-                        //   options: CarouselOptions(
-                        //     autoPlay: true,
-                        //     aspectRatio: 2.0,
-                        //     enlargeCenterPage: true,
-                        //   ),
-                        // ),
-                      ],
-                    )
-                    // Gridview
-                    // MySchemes ,
-                    // pay taxes ,
-                    // my complaints ,
-                    // weather updates ,
-                    // ward Details ,
-                    // Emergency contacts  ,
-                    // full profile ,
-                    // my Complaints
-                  ],
+                                icon: Icons.money,
+                                serviceName: "Loan Facilities",
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          AppText.headingThree("Goverment Schemes"),
+                          //carousel slider
 
-                  // horizontal scrollview schemes available by goverment
+                          governmentSchemesData.when(
+                            data: (data) {
+                              List<GovernmentSchemeModel?>
+                                  governmentSchemeList =
+                                  data.map((e) => e).toList();
+
+                              return CarouselSlider(
+                                items: governmentSchemeList
+                                    .map(
+                                      (item) => GestureDetector(
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          child: Image.network(
+                                            item!.schemeImageUrl,
+                                            fit: BoxFit.cover,
+                                            width: 1000,
+                                          ),
+                                        ),
+                                        onTap: () => Navigator.of(context)
+                                            .pushNamed(Routes.schemeDetails,arguments: SchemeArguments(model: item)),
+                                      ),
+                                    )
+                                    .toList(),
+                                options: CarouselOptions(
+                                  autoPlay: true,
+                                  viewportFraction: 1,
+                                  aspectRatio: 2.0,
+                                  enlargeCenterPage: true,
+                                ),
+                              );
+                            },
+                            error: (e, t) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                            loading: () => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        ],
+                      )
+                      // Gridview
+                      // MySchemes ,
+                      // pay taxes ,
+                      // my complaints ,
+                      // weather updates ,
+                      // ward Details ,
+                      // Emergency contacts  ,
+                      // full profile ,
+                      // my Complaints
+                    ],
+
+                    // horizontal scrollview schemes available by goverment
+                  ),
                 ),
               ),
             ),
-          ),
-          Visibility(
-            visible: isQRVisible,
-            child: GestureDetector(
-              onTap: () {
-                qrPressed();
-              },
-              child: BackdropFilter(
-                filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.transparent),
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: MediaQuery.of(context).size.height * 0.95,
-                    child: Center(
-                      child: QrImage(
-                        data:
-                            "SN:$vendorShopName \nVL: \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
-                        version: QrVersions.auto,
-                        size: 300.0,
+            Visibility(
+              visible: isQRVisible,
+              child: GestureDetector(
+                onTap: () {
+                  qrPressed();
+                },
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                  child: Center(
+                    child: Container(
+                      decoration:
+                          const BoxDecoration(color: Colors.transparent),
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.95,
+                      child: Center(
+                        child: QrImage(
+                          data:
+                              "SN:$vendorShopName \nVL: \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
+                          version: QrVersions.auto,
+                          size: 300.0,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
