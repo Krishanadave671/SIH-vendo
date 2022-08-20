@@ -5,6 +5,7 @@ import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/providers/vending_zoneprovider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
+import 'package:vendo/util/colors.dart';
 import '../../routes.dart';
 
 // @immutable
@@ -138,6 +139,7 @@ class _SpaceAllocationListViewState
                     child: Padding(
                       padding: const EdgeInsets.only(top: 15, bottom: 15),
                       child: ListTile(
+                        
                         isThreeLine: true,
                         leading: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -151,14 +153,22 @@ class _SpaceAllocationListViewState
                         ),
                         title: Expanded(
                             child: AppText.bodyBold(
-                                vendingzonelist[index]!.vendingZoneLocality)),
+                          vendingzonelist[index]!.vendingZoneLocality,
+                          isSingleLined: 2,
+                        )),
                         subtitle: Expanded(
-                          child: AppText.body(
-                              vendingzonelist[index]!.vendingZoneDescription),
+                          child: Container(
+                            height: 60,
+                            child: AppText.body(
+                              vendingzonelist[index]!.vendingZoneDescription,
+                              isSingleLined: 1,
+                            ),
+                          ),
                         ),
                         trailing: AppText.body(
                             vendingzonelist[index]!.vendingZoneWard),
                         onTap: () {
+                          
                           Navigator.of(context).pushNamed(
                             Routes.vendingZoneCard,
                             arguments: VendingZoneViewArguments(

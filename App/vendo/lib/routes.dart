@@ -7,8 +7,9 @@ import 'package:vendo/Screens/login/login_screen2.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
-import 'package:vendo/screens/BMCModule/VendorReview/vendor_check.dart';
+import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
+import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -22,7 +23,7 @@ import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
 import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
-import 'Screens/calendar_screen/calendar.dart';
+
 
 class Routes {
   static const calendarScreen = '/calendar_screen';
