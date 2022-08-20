@@ -111,7 +111,7 @@ authRouter.post("/api/tokenIsValid", async (req, res) => {
 })
 
 // get vendors by id
-authRouter.get("/api/getvendors/:id" , async (req, res) =>  {
+authRouter.get("/api/getvendorsfromID/:id" , async (req, res) =>  {
     try {
         const {id} = req.params ; 
         let vendor = await Vendor.find({vendorId: id});

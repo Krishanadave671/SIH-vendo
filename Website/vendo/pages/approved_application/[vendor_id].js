@@ -233,10 +233,15 @@ export default VendorApplicationDetails;
 
 export async function getServerSideProps(context) {
   const { params } = context;
-  const { vendor_id } = params;
+  const { application_id } = params;
+  const res = await axios.get(
+    "http://localhost:4000/api/getvendorsfromID/" + application_id
+  );
+  // console.log(res);
+  const data = await JSON.parse(JSON.stringify(res.data));
   return {
     props: {
-      VendorId: vendor_id,
+      VendorDetails: data,
     },
   };
 }

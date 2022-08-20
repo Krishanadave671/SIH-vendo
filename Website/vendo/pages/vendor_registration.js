@@ -4,7 +4,6 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import Navbar2 from "./components/Navbar2.jsx";
 
 export default function dashboard({ VendorsPending, VendorsApproved }) {
   console.log(VendorsPending);
@@ -92,7 +91,7 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
                       make up the bulk of the card's content.
                     </Card.Text>
                     <Card.Link
-                      href={`/pending_application/${application.vendorId}`}
+                      href={`/approved_application/${application.vendorId}`}
                     >
                       Card Link
                     </Card.Link>
@@ -206,10 +205,10 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
 
 export async function getServerSideProps(context) {
   const res = await axios.get("http://localhost:4000/api/getvendors/pending");
-  // console.log(res);
   const data = await JSON.parse(JSON.stringify(res.data));
   const res1 = await axios.get("http://localhost:4000/api/getvendors/approved");
-  // console.log(res);
+  console.log(data);
+  console.log(data);
   const data1 = await JSON.parse(JSON.stringify(res1.data));
   return {
     props: {
