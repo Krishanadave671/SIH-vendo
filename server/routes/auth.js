@@ -49,6 +49,7 @@ authRouter.post("/api/signup", async (req, res) => {
             isApproved
         });
         vendor = await vendor.save();
+        await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {$inc: {pendingRegistrations: 1}});
         // await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
         res.json(vendor);
     } catch (e) {
@@ -124,6 +125,28 @@ authRouter.get("/api/getvendors/:id" , async (req, res) =>  {
 authRouter.get("/api/getvendors/pending" , async (req, res) =>  { 
   try {
       let vendors = await Vendor.find({isApproved: "pending"}); 
+      res.status(200).json(vendors); 
+  }catch(e){
+      res.status(500).json({e : e.message}); 
+  }
+})
+
+//get pending vendors by location
+authRouter.get("/api/getvendors/pending/:location" , async (req, res) =>  { 
+  try {
+      const { location  } = req.params ;
+      let vendors = await Vendor.find({isApproved: "pending", shopCity: location}); 
+      res.status(200).json(vendors); 
+  }catch(e){
+      res.status(500).json({e : e.message}); 
+  }
+})
+
+//get approved vendors by location
+authRouter.get("/api/getvendors/approved/:location" , async (req, res) =>  { 
+  try {
+      const { location  } = req.params ;
+      let vendors = await Vendor.find({isApproved: "approved", shopCity: location}); 
       res.status(200).json(vendors); 
   }catch(e){
       res.status(500).json({e : e.message}); 
