@@ -1,5 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/models/vendorDetails/vendor_details.dart';
+
+import '../models/vendorDetailsModel/vendor_details.dart';
+
 
 final vendordetailsProvider = Provider<VendorModel>((ref) {
   VendorModel vendor = VendorModel(
@@ -28,7 +30,9 @@ final vendordetailsProvider = Provider<VendorModel>((ref) {
     shopLocationLong: 0,
     vendingZoneIdApplied: '',
     vendorCategory: '',
-    vendorImageUrl: '', weeklyBazzarList: [],
+    vendorImageUrl: '',
+    weeklyBazzarList: [],
+    shopName: "",
   );
   return vendor;
 });

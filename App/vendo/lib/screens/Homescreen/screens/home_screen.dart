@@ -8,7 +8,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vendo/Screens/Homescreen/screens/widgets/services_card.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
+import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
+
 import 'package:vendo/providers/government_scheme_provider.dart';
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
@@ -31,16 +34,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   // ];
 
   final String uniqueString = "*7%";
-  String? vendorImageURL =
-      "https://avatars.githubusercontent.com/u/84977709?s=400&u=6061e991de17cb0ba45b5713ee1eceb8d7a16ea4&v=4";
-  String? vendorName = "Krishana Dave";
-  String? vendorID = "VX1234567";
-  String? vendorShopName = "Kirti Vadapav Center";
+
   String? expiryDate = "05/27";
-  String? vendorPhoneNo = "8104875867";
-  LatLng? vendorLocation = const LatLng(23, 100);
-  IconData iconData = Icons.clean_hands;
+
+  IconData iconData = Icons.person;
   bool isQRVisible = false;
+  late VendorModel vendorDetails;
 
   void qrPressed() {
     setState(() {
@@ -49,7 +48,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _makingPhoneCall() async {
-    var url = Uri.parse("tel:$vendorPhoneNo");
+    var url = Uri.parse("tel:${vendorDetails.phone}");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -58,10 +57,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void showPlacePicker() async {
+    LatLng latLng =
+        LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong);
     LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PlacePicker(
               "AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw",
-              displayLocation: vendorLocation,
+              displayLocation: latLng,
             )));
 
     // Handle the result in your way
@@ -72,15 +73,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final governmentSchemesData = ref.watch(governmentSchemeProvider);
+    vendorDetails = ref.watch(vendordetailsProvider);
 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.headingThree("Hi Krishana Dave !!"),
-            horizontalSpaceLarge,
+            AppText.headingThree("Hi ${vendorDetails.name} !!"),
+            Spacer(),
             GestureDetector(
               child: const Icon(
                 Icons.notifications,
@@ -118,11 +122,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ListTile(
                                 leading: CircleAvatar(
                                   radius: 30,
-                                  backgroundImage:
-                                      NetworkImage(vendorImageURL!),
+                                  backgroundImage: NetworkImage(
+                                      vendorDetails.vendorImageUrl!),
                                 ),
-                                title: AppText.headingThree(vendorName!),
-                                subtitle: AppText.body('Vendorid : $vendorID'),
+                                title: AppText.headingThree(vendorDetails.name),
+                                subtitle: AppText.body(
+                                    'Vendorid : ${vendorDetails.vendorId}'),
                                 hoverColor: Colors.red,
                                 trailing: Icon(
                                   iconData,
@@ -132,7 +137,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                               Center(
                                   child: Text(
-                                vendorShopName!,
+                                vendorDetails.shopName,
                                 style: const TextStyle(
                                   fontSize: 30,
                                   fontWeight: FontWeight.bold,
@@ -173,7 +178,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         ],
                                       ),
                                     ),
-
                                     const SizedBox(
                                       width: 30,
                                     ),
@@ -188,7 +192,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             color: Colors.green,
                                           ),
                                           Text(
-                                            vendorPhoneNo!,
+                                            vendorDetails.phone,
                                             style: const TextStyle(
                                               color: Colors.green,
                                             ),
@@ -196,21 +200,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                         ],
                                       ),
                                     ),
-
-                                    const SizedBox(
-                                      width: 80,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        qrPressed();
-                                      },
-                                      child: const Icon(
-                                        Icons.qr_code_scanner,
-                                        size: 30,
-                                      ),
-                                    ),
-                                    // contact us
-                                    //
                                   ],
                                 ),
                               ),
@@ -230,20 +219,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children: [
                               Servicescard(
-                                icon: Icons.document_scanner_sharp,
-                                serviceName: "My Schemes",
-                                color: Colors.red,
+                                icon: Icons.price_change,
+                                serviceName: "My Incentives",
+                                color: Colors.green,
+                                onTap: () {},
                               ),
                               Servicescard(
-                                  color: Colors.green,
-                                  icon: Icons.health_and_safety,
-                                  serviceName: "Health and safety"),
+                                color: Colors.red,
+                                icon: Icons.app_registration_outlined,
+                                serviceName: "My Complaints",
+                                onTap: () {},
+                              ),
                               Servicescard(
-                                  color: Colors.blue,
-                                  icon: Icons.search,
-                                  serviceName: "Search Locations"),
+                                color: Colors.blue,
+                                icon: Icons.calendar_month,
+                                serviceName: "My Bazzars",
+                                onTap: () {},
+                              ),
                             ],
                           ),
                           const SizedBox(
@@ -251,45 +245,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
+                            children: [
                               Servicescard(
-                                icon: Icons.location_city,
-                                serviceName: "New shops",
+                                icon: Icons.score_rounded,
+                                serviceName: "My Credit Score",
                                 color: Colors.yellow,
+                                onTap: () {},
                               ),
                               Servicescard(
                                 color: Colors.lightGreen,
-                                icon: Icons.phone_in_talk,
-                                serviceName: "Contact TVC's",
+                                icon: Icons.local_convenience_store_rounded,
+                                serviceName: "License renewal",
+                                onTap: () {},
                               ),
                               Servicescard(
-                                  color: Colors.lightBlue,
-                                  icon: Icons.map_sharp,
-                                  serviceName: "Vending Maps"),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Servicescard(
-                                color: Colors.purple,
-                                icon: Icons.online_prediction_rounded,
-                                serviceName: "Take Permissions",
+                                color: Colors.black,
+                                icon: Icons.qr_code_scanner,
+                                serviceName: "My QR",
+                                onTap: () {
+                                  qrPressed();
+                                },
                               ),
-                              Servicescard(
-                                  color: Colors.teal,
-                                  icon: Icons.shop,
-                                  serviceName: "License renewal"),
-                              Servicescard(
-                                color: Colors.green,
-                                icon: Icons.money,
-                                serviceName: "Loan Facilities",
-                              )
                             ],
                           ),
+
                           const SizedBox(
                             height: 20,
                           ),
@@ -316,7 +295,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           ),
                                         ),
                                         onTap: () => Navigator.of(context)
-                                            .pushNamed(Routes.schemeDetails,arguments: SchemeArguments(model: item)),
+                                            .pushNamed(Routes.schemeDetails,
+                                                arguments: SchemeArguments(
+                                                    model: item)),
                                       ),
                                     )
                                     .toList(),
@@ -372,7 +353,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       child: Center(
                         child: QrImage(
                           data:
-                              "SN:$vendorShopName \nVL: \nED:$expiryDate \nPN:$vendorPhoneNo \n$uniqueString",
+                              "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
                           version: QrVersions.auto,
                           size: 300.0,
                         ),
