@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'dart:developer';
@@ -18,7 +19,7 @@ import '../../../util/error_handling.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.1.104:4000";
+  static const _baseurl = "http://192.168.0.101:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -27,6 +28,8 @@ class Apiservice {
   static const addcomplaint = "/api/addcomplaint";
   static const addreview = "/";
   static const getSchema = "/api/getschemes/all";
+  static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
+  static const registerbazzar = "/api/registerforbazzar";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -134,6 +137,10 @@ class Apiservice {
 
   Future<void> addComplaint(
       VendorComplaintModel complaintData, BuildContext context) async {
+    complaintData.vendorId = "yash123";
+    complaintData.complaintCity = "Mumbai";
+    log(complaintData.toString());
+
     try {
       complaintData.complaintId = 'CI' + DateTime.now().microsecond.toString();
       log(complaintData.toJson().toString());
@@ -190,10 +197,16 @@ class Apiservice {
     String dateSelected,
   ) async {
     try {
-      Response weeklyBazzarData = await _dio.get(''
-          // '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory'
-          );
+      Response weeklyBazzarData = await _dio.post(
+        _baseurl + getweeklyBazzar,
+        data: {
+          "city": "Mumbai",
+          "bazzarDate": dateSelected,
+        },
+      );
+      log(_baseurl + getweeklyBazzar);
       List vendingBazzars = weeklyBazzarData.data;
+      log(vendingBazzars.toString());
       List<WeeklyBazzarModel?> list =
           vendingBazzars.map((e) => WeeklyBazzarModel.fromJson(e)).toList();
       log(list[0].toString());
@@ -236,6 +249,35 @@ class Apiservice {
       }
     }
     return <GovernmentSchemeModel>[];
+  }
+
+  Future<void> registerBazzar(
+      String bazzarId, String vendorId, BuildContext context) async {
+    try {
+      log(_baseurl + registerbazzar);
+      log(bazzarId);
+      Response response = await _dio.post(
+        _baseurl + registerbazzar,
+        data: {
+          "bazzarId": bazzarId,
+          "vendorId": "VX001",
+        },
+      );
+      log(response.toString());
+
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Registered for the bazzar!',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 }
 
