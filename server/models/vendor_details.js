@@ -1,13 +1,13 @@
 const mongoose = require("mongoose");
-const {complaints} = require("./complaints");
-const {reviews} = require("./reviews");
+const { complaints } = require("./complaints");
+const { reviews } = require("./reviews");
 
 const vendorDetails = mongoose.Schema({
     vendorId: {
-        type: String,  
-        trim: true, 
-        unique: true 
-      },
+        type: String,
+        trim: true,
+        unique: true
+    },
     name: {
         required: true,
         type: String,
@@ -26,122 +26,127 @@ const vendorDetails = mongoose.Schema({
         default: "",
     },
     password: {
-      required: true,
-      type: String,
+        required: true,
+        type: String,
     },
     phone: {
-      type: String,
-      required: true,
-      trim: true,
-      validate: {
-        validator: function (v) {
-          return /^[0-9]{10}/.test(v);
-        },
-        message: '{VALUE} is not a valid 10 digit phone number!'
-      }
+        type: String,
+        required: true,
+        trim: true,
+        validate: {
+            validator: function(v) {
+                return /^[0-9]{10}/.test(v);
+            },
+            message: '{VALUE} is not a valid 10 digit phone number!'
+        }
     },
     aadharNo: {
-      type: String,
-      required: true,
-      trim: true,
-      validate: {
-        validator: function (v) {
-          return /^[0-9]{12}/.test(v);
-        },
-        message: '{VALUE} is not a valid Aadhar number!'
-      }
+        type: String,
+        required: true,
+        trim: true,
+        validate: {
+            validator: function(v) {
+                return /^[0-9]{12}/.test(v);
+            },
+            message: '{VALUE} is not a valid Aadhar number!'
+        }
     },
     panCardNo: {
-      type: String,
-      required: true,
-      trim: true,
-      validate: {
-        validator: function (v) {
-          return /[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(v);
-        },
-        message: '{VALUE} is not a valid Pancard number!'
-      }
+        type: String,
+        required: true,
+        trim: true,
+        validate: {
+            validator: function(v) {
+                return /[A-Z]{5}[0-9]{4}[A-Z]{1}/.test(v);
+            },
+            message: '{VALUE} is not a valid Pancard number!'
+        }
     },
     isPassport: {
-      type: Boolean, 
-      required : true
+        type: Boolean,
+        required: true
     },
     isElectionid: {
-      type: Boolean, 
-      required : true 
+        type: Boolean,
+        required: true
     },
     isMcgmLicense: {
-      type: Boolean, 
-      required : true 
+        type: Boolean,
+        required: true
     },
     aadharcardImageUrl: {
-      type: String, 
-      required : true 
+        type: String,
+        required: true
     },
     pancardImageUrl: {
-      type: String, 
-      required : true 
+        type: String,
+        required: true
     },
     shopLocationAddress: {
-      type: String, 
-      required : true 
+        type: String,
+        required: true
     },
     shopLocationLat: {
-      type: Number, 
-      required : true 
+        type: Number,
+        required: true
     },
     shopLocationLong: {
-      type: Number, 
-      required : true 
+        type: Number,
+        required: true
     },
     vendingZoneIdApplied: {
-      type: String, 
-      required : true 
+        type: String,
+        required: true
     },
     shopCity: {
-      type: String, 
-      required : true 
+        type: String,
+        required: true
     },
     creditScore: {
-      type: Number,
-      required: true,
-      default: 0
+        type: Number,
+        required: true,
+        default: 0
     },
-    vendorImageurl : {
-      type : String , 
-      default : "https://avatars.githubusercontent.com/u/84977709?v=4" 
-    } , 
-    isApproved : {
-      type : String  , 
-      default : "pending" 
-    }, 
-    complaintsList: {
-      type: [complaints]
-    }, 
-    reviewList: {
-      type: [reviews]
-    }, 
-    weeklyBazzarList: [{
-      "bazzarId" : {
-        type: String, 
-        required : true , 
-        unique : true 
-      },
-      "status" : {
+    vendorImageurl: {
         type: String,
-        required : true ,
-        default : "pending"
-      } 
-    }
+        default: "https://avatars.githubusercontent.com/u/84977709?v=4"
+    },
+    isApproved: {
+        type: String,
+        default: "pending"
+    },
+    complaintsList: {
+        type: [complaints]
+    },
+    reviewList: {
+        type: [reviews]
+    },
+    weeklyBazzarList: [{
+            "bazzarId": {
+                type: String,
+                required: true,
+                unique: true
+            },
+            "status": {
+                type: String,
+                required: true,
+                default: "pending"
+            }
+        }
 
     ]
 
     ,
-    vendorCategory : {
-      type : String , 
-      required : true 
-    }, 
- 
+    vendorCategory: {
+        type: String,
+        required: true
+    },
+    name: {
+        required: true,
+        type: String,
+        trim: true,
+    },
+
 });
 
 const Vendor = mongoose.model("Vendor", vendorDetails);
