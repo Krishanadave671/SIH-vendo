@@ -12,12 +12,12 @@ class WeeklyBazzarModel {
   double bazzarLat;
   double bazzarLong;
   String bazzarName;
-  String bazaarAddress;
-  double bazaarMaximumCapacity;
+  String bazzarAddress;
+  double bazzarMaximumCapacity;
   List<String> vendorRegisteredList;
-  String bazaarDate;
-  String bazaarDescription;
-  String bazaarCity;
+  String bazzarDate;
+  String bazzarDescription;
+  String bazzarCity;
 
   WeeklyBazzarModel({
     required this.bazzarId,
@@ -26,12 +26,12 @@ class WeeklyBazzarModel {
     required this.bazzarLat,
     required this.bazzarLong,
     required this.bazzarName,
-    required this.bazaarAddress,
-    required this.bazaarMaximumCapacity,
+    required this.bazzarAddress,
+    required this.bazzarMaximumCapacity,
     required this.vendorRegisteredList,
-    required this.bazaarDate,
-    required this.bazaarDescription,
-    required this.bazaarCity,
+    required this.bazzarDate,
+    required this.bazzarDescription,
+    required this.bazzarCity,
   });
 
   factory WeeklyBazzarModel.fromJson(Map<String, dynamic> json) =>

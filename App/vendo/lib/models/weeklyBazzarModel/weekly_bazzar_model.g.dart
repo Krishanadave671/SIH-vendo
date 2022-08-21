@@ -16,14 +16,14 @@ WeeklyBazzarModel _$WeeklyBazzarModelFromJson(Map<String, dynamic> json) =>
       bazzarLat: (json['bazzarLat'] as num).toDouble(),
       bazzarLong: (json['bazzarLong'] as num).toDouble(),
       bazzarName: json['bazzarName'] as String,
-      bazaarAddress: json['bazaarAddress'] as String,
-      bazaarMaximumCapacity: (json['bazaarMaximumCapacity'] as num).toDouble(),
+      bazzarAddress: json['bazzarAddress'] as String,
+      bazzarMaximumCapacity: (json['bazzarMaximumCapacity'] as num).toDouble(),
       vendorRegisteredList: (json['vendorRegisteredList'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
-      bazaarDate: json['bazaarDate'] as String,
-      bazaarDescription: json['bazaarDescription'] as String,
-      bazaarCity: json['bazaarCity'] as String,
+      bazzarDate: json['bazzarDate'] as String,
+      bazzarDescription: json['bazzarDescription'] as String,
+      bazzarCity: json['bazzarCity'] as String,
     );
 
 Map<String, dynamic> _$WeeklyBazzarModelToJson(WeeklyBazzarModel instance) =>
@@ -34,10 +34,10 @@ Map<String, dynamic> _$WeeklyBazzarModelToJson(WeeklyBazzarModel instance) =>
       'bazzarLat': instance.bazzarLat,
       'bazzarLong': instance.bazzarLong,
       'bazzarName': instance.bazzarName,
-      'bazaarAddress': instance.bazaarAddress,
-      'bazaarMaximumCapacity': instance.bazaarMaximumCapacity,
+      'bazzarAddress': instance.bazzarAddress,
+      'bazzarMaximumCapacity': instance.bazzarMaximumCapacity,
       'vendorRegisteredList': instance.vendorRegisteredList,
-      'bazaarDate': instance.bazaarDate,
-      'bazaarDescription': instance.bazaarDescription,
-      'bazaarCity': instance.bazaarCity,
+      'bazzarDate': instance.bazzarDate,
+      'bazzarDescription': instance.bazzarDescription,
+      'bazzarCity': instance.bazzarCity,
     };

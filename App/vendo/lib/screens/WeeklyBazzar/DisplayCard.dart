@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
+import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/colors.dart';
 
 import '../../util/AppInterface/ui_helpers.dart';
 
 class DisplayCard extends StatelessWidget {
-  const DisplayCard(
-      {Key? key, required this.Location, required this.favourableType})
-      : super(key: key);
-  final String Location;
-  final List<String> favourableType;
+  const DisplayCard({
+    Key? key,
+    required this.weeklyBazzarModel,
+  }) : super(key: key);
+  final WeeklyBazzarModel weeklyBazzarModel;
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +30,26 @@ class DisplayCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  AppText.containerText("Location: "),
+                  AppText.containerText("Bazzar Name: "),
                   const SizedBox(
                     width: 10,
                   ),
-                  AppText.containerText(Location),
+                  AppText.containerText(weeklyBazzarModel.bazzarName),
                 ],
               ),
               verticalSpaceMedium,
               Row(
                 children: [
-                  AppText.containerText("Time: "),
+                  AppText.containerText("Favourable Type: "),
                   const SizedBox(
                     width: 20,
                   ),
-                  AppText.containerText(favourableType.toString()),
+                  Expanded(
+                    child: AppText.containerText(
+                      weeklyBazzarModel.vendorTypeFavourable.toString(),
+                      isSingleLined: 1,
+                    ),
+                  ),
                 ],
               ),
             ],

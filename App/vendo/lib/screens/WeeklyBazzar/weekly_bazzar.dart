@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/providers/weekly_bazzar_provider.dart';
 
 import 'DisplayList.dart';
 
@@ -51,8 +52,6 @@ class _CalendarState extends ConsumerState<Calendar> {
     );
   }
 
-
-
   Widget _getDateDetail() {
     return const DisplayList();
   }
@@ -91,10 +90,11 @@ class _CalendarState extends ConsumerState<Calendar> {
             onValueChanged: (values) {
               print("hi");
               ref.watch(selectedDateProvider.notifier).state = values;
+              ref.refresh(weeklyBazzarProvider);
               print(_singleDatePickerValueWithDefaultValue.toString());
             },
             selectableDayPredicate: (day) => !day
-                .difference(DateTime.now().subtract(const Duration(days: 3)))
+                .difference(DateTime.now().subtract(const Duration(days: 1)))
                 .isNegative,
           ),
           const SizedBox(height: 10),

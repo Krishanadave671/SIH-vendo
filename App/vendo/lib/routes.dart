@@ -5,12 +5,14 @@ import 'package:vendo/Screens/registration/space_allocation_list.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/Screens/login/login_screen2.dart';
+import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
+import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -48,7 +50,8 @@ class Routes {
   static const notificationScreen = '/notification_screen';
   static const splashScreen = '/splash_screen';
   static const schemeDetails = '/scheme_details';
-  static const incentiveList = '/incentive_list';
+  static const weeklyBazzarCard = '/weekly_bazzar_card';
+
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -146,6 +149,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const ApprovalPage(),
       );
 
+      case Routes.weeklyBazzarCard:
+      final args = settings.arguments as WeeklyBazzarCardArguments;
+      return MaterialPageRoute(
+        builder: (context) => WeeklyBazzarCard(
+          model: args.model,
+        ),
+      );
+
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
@@ -178,4 +189,11 @@ class SchemeArguments {
     required this.model,
   });
   final GovernmentSchemeModel model;
+}
+
+class WeeklyBazzarCardArguments {
+  WeeklyBazzarCardArguments({
+    required this.model,
+  });
+  final WeeklyBazzarModel model;
 }
