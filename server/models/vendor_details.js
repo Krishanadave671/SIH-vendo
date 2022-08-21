@@ -117,9 +117,9 @@ const vendorDetails = mongoose.Schema({
     }, 
     complaintsList: {
       type: [complaints]
-    }, 
+    },
     reviewList: {
-      type: [reviews]
+      type : [reviews]
     }, 
     weeklyBazzarList: [{
       "bazzarId" : {
@@ -132,11 +132,19 @@ const vendorDetails = mongoose.Schema({
         required : true ,
         default : "pending"
       } 
-    }
-
-    ]
-
-    ,
+}]  ,
+    schemeList :[{
+      "schemeId" : {
+        type: String,
+        required : true ,
+        unique : true
+      },
+      "status" : {
+        type: String,
+        required : true ,
+        default : "pending"
+      }
+    }], 
     vendorCategory : {
       type : String , 
       required : true 

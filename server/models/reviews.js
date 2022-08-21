@@ -1,6 +1,15 @@
 const mongoose = require("mongoose");
 
-const reviewDetails = mongoose.Schema({
+const reviewSchema = mongoose.Schema({
+    reviewId: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    vendorId : {
+        type : String ,
+        required : true,  
+    } , 
     isApprovedLocation: {
         type: Boolean,
         required: true
@@ -41,7 +50,6 @@ const reviewDetails = mongoose.Schema({
         type: String,
         required: true
     }
-})
+});
 
-const Review = mongoose.model("Review", reviewDetails);
-module.exports = Review;
+module.exports = reviewSchema;
