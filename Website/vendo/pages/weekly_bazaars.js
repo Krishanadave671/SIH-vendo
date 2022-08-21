@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Router, { useRouter } from 'next/router';
 import { Button } from "react-bootstrap";
 import DashboardSidebar from "./components/DashboardSidebar";
 import Navbar2 from "./components/Navbar2.jsx";
@@ -39,8 +40,9 @@ export default function dashboard({ WeeklyBazaars }) {
    * bazzarCity
    */
 
+  const [WeeklyBazaarList, setWeeklyBazaarList] = React.useState(WeeklyBazaars);
   const [address,setAddress] =React.useState("");
-  const [vendorTypeFavourable, setvendorTypeFavourable] = React.useState([0,0,0,0,0,0]);
+  const [_vendorTypeFavourables, setvendorTypeFavourable] = React.useState([0,0,0,0,0,0]);
   const [bazaarName, setbazaarName] = React.useState("");
   const [bazaarImageUrl, setbazaarImageUrl] = React.useState("");
   const [bazaarLat, setbazaarLat] = React.useState(0);
@@ -55,7 +57,7 @@ export default function dashboard({ WeeklyBazaars }) {
   Geocode.enableDebug();
   var uploadData = async () => {
     console.log(address);
-    console.log(vendorTypeFavourable);
+    console.log(_vendorTypeFavourables);
     console.log(bazaarName);
     console.log(bazaarImageUrl);
     console.log(bazaarLat);
@@ -64,34 +66,34 @@ export default function dashboard({ WeeklyBazaars }) {
     console.log(bazaarDate);
     console.log(bazaarDescription);
     console.log(bazaarCity);
-    var categoryOfVendorsNotAllowed = [];
-    var vendorTypeFavourables = [];
+    var vendorTypeFavourable = [];
     for(var i = 0; i < 6; i++){
       if(_vendorTypeFavourables[i]==1){
         vendorTypeFavourable.push(getType(i));
       }
     }
-    console.log(data);
-    // const res = await axios.post(
-    //   "http://localhost:4000/api/addvendingzones",
-    //   {
-    //     "bazzarId":"BZ1X030",
-    //     bazaarName,
-    //     bazaarImageUrl,
-    //     bazaarLat,
-    //     bazaarLong,
-    //     bazaarMaximumCapacity,
-    //     bazaarDate,
-    //     bazaarDescription,
-    //     bazaarCity,
-    //     bazaarAddress,
-    //     "vendorIdList":[],
-    //   }
-    // ).then((response)=>{
-    //   console.log("Uploaded successfully");
-    //   Router.push("/vending_zones");
+    // console.log(data);
+    const res = await axios.post(
+      "http://localhost:4000/api/addbazzar",
+      {
+        "bazzarId":"BZ1X030",
+        "vendorTypeFavourable": vendorTypeFavourable,
+        "bazzarImageUrl": bazaarImageUrl,
+        "bazzarLat": bazaarLat,
+        "bazzarLong": bazaarLong,
+        "bazzarName": bazaarName,
+        "bazzarMaximumCapacity":bazaarMaximumCapacity,
+        "bazzarDate":bazaarDate,
+        "bazzarDescription":bazaarDescription,
+        "bazzarCity":bazaarCity,
+        "bazzarAddress":address,
+      }
+      // "vendorIdList":[],
+    ).then((response)=>{
+      console.log("Uploaded successfully");
+      Router.push("/weekly_bazaars");
 
-    // })
+    })
     
   }
   const containerStyle = {
@@ -133,7 +135,7 @@ export default function dashboard({ WeeklyBazaars }) {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                 console.log(url);
                 // vendingZoneImageURL = url;
-                setbazaarImageURL(url);
+                setbazaarImageUrl(url);
                 
             });
         }
@@ -177,32 +179,42 @@ export default function dashboard({ WeeklyBazaars }) {
     }
       return "Flowers";
   }
-  const [date, setDate] = React.useState(new Date('December 17, 1995 03:24:00'));
 
+  const [city,setcity] =React.useState("");
+  const [date,setdate] =React.useState("");
   const SearchBar = () =>{
     return (
         <div className='vendor-registration-search-bar'>
             <div className="vendor-registration-search-bar-items">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control type="text" placeholder="Enter city" 
-                    onChange={(text)=>{city = text.target.value}}
+                    onChange={(text)=>{
+                      city = text.target.value;
+                    }}
                     />
                 </Form.Group>
-                {/* <FormComponent state={city} setState={changeCity} label="Enter City" /> */}
             </div>
             <div className="vendor-registration-search-bar-items">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="locality" placeholder="Enter ward number" 
-                    onChange={(text)=>{locality = text.target.value}}/>
+                    <Form.Control type="locality" placeholder="Enter Date" 
+                    onChange={(text)=>{
+                      date = text.target.value;
+                    }}/>
                 </Form.Group>
             </div>
             <div className="vendor-registration-search-bar-items">
                 <Button variant="primary"
-                onClick={()=>{
-                    console.log(city);
-                    console.log(locality);
-                    changeCity(city);
-                    changeLocality(locality);
+                onClick={async ()=>{
+                  console.log(city);
+                  console.log(date);
+                  const res = await axios.post(
+                    "http://localhost:4000/api/getbazzarsbycityandDate",{
+                      "city" : city, 
+                      "bazzarDate" : date
+                    }
+                  );
+                  const data = await JSON.parse(JSON.stringify(res.data));
+                  setWeeklyBazaarList(data);
                 }}
                 >Search</Button>{' '}
             </div>
@@ -227,7 +239,10 @@ export default function dashboard({ WeeklyBazaars }) {
                   setbazaarName(e.target.value);
                 }} />
                 <CommonInput placeholderText="Enter date of the event" onChange={(e)=>{
-                  setbazaarDate(e.target.text);
+                  setbazaarDate(e.target.value);
+                }}/>
+                <CommonInput placeholderText="Enter description of bazaar" onChange={(e)=>{
+                  setbazaarDescription(e.target.value);
                 }}/>
                 <CommonInput placeholderText="Enter maximum capacity of vendors" onChange={(e)=>{
                   setbazaarMaximumCapacity(parseInt(e.target.value));
@@ -250,7 +265,7 @@ export default function dashboard({ WeeklyBazaars }) {
                         label={`${type}`}
                         
                         onChange={(e)=>{
-                          var tmpvendorTypeFavourable = vendorTypeFavourable;
+                          var tmpvendorTypeFavourable = _vendorTypeFavourables;
                           tmpvendorTypeFavourable[findIdx(e.target.id)] ^=1;
                           setvendorTypeFavourable(tmpvendorTypeFavourable);
                         }}
@@ -270,12 +285,21 @@ export default function dashboard({ WeeklyBazaars }) {
                     zoom={16}
                     onClick={(e) => {
                       setbazaarLat(e.latLng.lat());
-                      setbazaarLong(e.latLng.long());
+                      setbazaarLong(e.latLng.lng());
                       setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                       Geocode.fromLatLng(
                         position.lat.toString(),
                         position.lng.toString()
                       ).then((response) => {
+                        for (let i = 0; i < response.results[0].address_components.length; i++) {
+                          for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                            switch (response.results[0].address_components[i].types[j]) {
+                              case "locality":
+                                setbazaarCity(response.results[0].address_components[i].long_name);
+                                break;
+                                }
+                              }
+                            }
                         console.log(response.results[0].formatted_address);
                         setAddress(response.results[0].formatted_address);                        
                       });
@@ -288,7 +312,7 @@ export default function dashboard({ WeeklyBazaars }) {
                       <input
                         type="text"
                         placeholder="Enter zone address"
-                        defaultValue={address}
+                        defaultValue={""}
                         onChange={(e) => {
                           Geocode.fromAddress(e.target.value).then(
                             (response) => {
@@ -305,8 +329,8 @@ export default function dashboard({ WeeklyBazaars }) {
                               
                               const { lat, lng } =
                                 response.results[0].geometry.location;
-                                setbazaarLat(e.latLng.lat());
-                                setbazaarLong(e.latLng.long());
+                                setbazaarLat(lat);
+                                setbazaarLong(lng);
                                 setPosition({ lat: lat, lng: lng });
                                 setCenter({ lat: lat, lng: lng });
                             },
@@ -314,7 +338,9 @@ export default function dashboard({ WeeklyBazaars }) {
                               console.log(error);
                             }
                           );
-                        }}
+                          setAddress(e.target.value);
+                        }
+                      }
                         style={{
                           boxSizing: `border-box`,
                           border: `1px solid var(--primary-color-dark)`,
@@ -341,6 +367,16 @@ export default function dashboard({ WeeklyBazaars }) {
                     <MarkerF />
                   </GoogleMap>
                 </LoadScript>
+                <div
+                style={{
+                  marginTop:"20px",
+                  fontWeight:"normal",
+                  fontSize:"1.2rem"
+                }}
+                >
+                  Selected address - 
+                  {address} 
+                </div>
                 <Button style={{ marginTop: "20px" }} onClick={uploadData}>Submit</Button>
               </Accordion.Body>
             </Accordion.Item>
@@ -349,7 +385,7 @@ export default function dashboard({ WeeklyBazaars }) {
         <SearchBar />
         <div className="vendor-zone-list">
           <ul>
-            {WeeklyBazaars.map((bazaar) => {
+            {WeeklyBazaarList.map((bazaar) => {
               let url = "/weekly_bazaar/" ;
               return (
                 <li>

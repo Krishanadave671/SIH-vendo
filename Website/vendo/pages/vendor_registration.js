@@ -35,24 +35,23 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
    * reviewList
    * weeklyBazzarList
    * vendorCategory
+   * shopName
    */
-
+  let [pendingList, setpendingList] = useState(VendorsPending);
+  let [approvedList, setapprovedList] = useState(VendorsApproved);
   let [state, changeState] = useState(0);
-  let [cityState, changeCity] = useState("");
-  let [localityState, changeLocality] = useState("");
-  var city = "";
-  var locality = "";
+
   const MainContainer = () => {
     if (state == 0) {
       return (
         <div className="vendor-registration-main-container">
           <ul>
-            {VendorsPending.map((application) => {
+            {pendingList.map((application) => {
               return (
               <li>
                 <Card>
                   <Card.Body>
-                    <Card.Title>{application.vendorName}</Card.Title>
+                    <Card.Title>{application.shopName}</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
                       {application.vendorId}
                     </Card.Subtitle>
@@ -77,7 +76,7 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
       return (
         <div className="vendor-registration-main-container">
           <ul>
-            {VendorsApproved.map((application) => {
+            {approvedList.map((application) => {
               return(
               <li>
                 <Card>
@@ -106,6 +105,8 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
     }
   };
 
+  let [city, setcity] = useState("");
+  // let [localityState, changeLocality] = useState("");
   const SearchBar = () => {
     return (
       <div className="vendor-registration-search-bar">
@@ -121,7 +122,7 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
           </Form.Group>
           {/* <FormComponent state={city} setState={changeCity} label="Enter City" /> */}
         </div>
-        <div className="vendor-registration-search-bar-items">
+        {/* <div className="vendor-registration-search-bar-items">
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="locality"
@@ -131,15 +132,21 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
               }}
             />
           </Form.Group>
-        </div>
+        </div> */}
         <div className="vendor-registration-search-bar-items">
           <Button
             variant="primary"
-            onClick={() => {
-              console.log(city);
-              console.log(locality);
-              changeCity(city);
-              changeLocality(locality);
+            onClick={ async () => {
+              if(state == 0){
+                const res = await axios.get("http://localhost:4000/api/getvendors/pending" + city);
+                const data = await JSON.parse(JSON.stringify(res.data));
+                setpendingList(data);
+              }
+              else{
+                const res = await axios.get("http://localhost:4000/api/getvendors/approved" + city);
+                const data = await JSON.parse(JSON.stringify(res.data));
+                setpendingList(data);
+              }
             }}
           >
             Search
