@@ -103,7 +103,7 @@ export default function dashboard({ VendorComplaints }) {
                   }}
                 >
                   <div className="pending-application-section-title">
-                    <a href="/approved_application/V1243234">
+                    <a href={"/complaints_section/" + reviews.complaintId}>
                       {reviews.vendorId}
                     </a>
                   </div>

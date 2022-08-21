@@ -78,7 +78,8 @@
     background-color: rgb(0, 0, 0, 0.4);
     display: grid;
     place-items: center;
-    height: 800px;
+    height: 90vh;
+    padding: 20px;
     border-radius: 25px;
     padding-top: 5em;
     grid-template-rows: repeat(3, 1fr);

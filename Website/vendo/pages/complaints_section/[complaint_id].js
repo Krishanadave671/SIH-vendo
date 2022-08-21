@@ -1,0 +1,123 @@
+import Button from "react-bootstrap/Button";
+import Navbar2 from "../components/Navbar2.jsx";
+import React, { useEffect, useState } from "react";
+import Rating from "@mui/material/Rating";
+import Card from "react-bootstrap/Card";
+import axios from "axios";
+import Tags from "../components/Tags";
+import {
+  GoogleMap,
+  LoadScript,
+  MarkerF,
+  Autocomplete,
+} from "@react-google-maps/api";
+
+function VendorApplicationDetails({ ComplaintDetails, VendorDetails }) {
+  // Map params
+  const containerStyle = {
+    // width: '800px',
+    height: "400px",
+    marginTop: "20px",
+  };
+
+  const [center, setCenter] = React.useState({
+    lat: VendorDetails.shopLocationLat % 90,
+    lng: VendorDetails.shopLocationLong % 90,
+  });
+
+  const [position, setPosition] = React.useState({
+    lat: VendorDetails.shopLocationLat % 90,
+    lng: VendorDetails.shopLocationLong % 90,
+  });
+
+  console.log(ComplaintDetails);
+  console.log(VendorDetails);
+  const MainContainer = () => {
+    return (
+      <div className="approved-application-main-container">
+        <div className="pending-application-section-title">Vendor Name </div>
+        <div className="pending-application-section-desc">
+          {VendorDetails.name}
+        </div>
+        <div className="pending-application-section-title">Documents </div>
+        <div className="pending-application-docs">
+          <a
+            href="https://firebasestorage.googleapis.com/v0/b/dhatnoon-backend.appspot.com/o/DBMS_Notes.pdf?alt=media&token=6a001bc9-3a6c-4cd0-8324-460caeab3f15"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View Aadhar Card
+          </a>
+          <a
+            href="https://firebasestorage.googleapis.com/v0/b/dhatnoon-backend.appspot.com/o/DBMS_Notes.pdf?alt=media&token=6a001bc9-3a6c-4cd0-8324-460caeab3f15"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View PAN Card
+          </a>
+        </div>
+        <div className="pending-application-section-title">Complaint tags </div>
+        <div className="pending-application-section-desc">
+          {ComplaintDetails.complaintType.map((tags) => {
+            return <Tags Text={tags} />;
+          })}
+        </div>
+        <div className="pending-application-section-title">
+          Complaint description{" "}
+        </div>
+        <div className="pending-application-section-desc">
+          {ComplaintDetails.complaintDescription}
+        </div>
+        <div className="pending-application-section-title">
+          Vendor Location{" "}
+        </div>
+        <div className="pending-application-section-desc">
+          {VendorDetails.shopLocationAddress}
+        </div>
+
+        <LoadScript
+          googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
+          libraries={["places"]}
+        >
+          <GoogleMap
+            id="marker-example"
+            mapContainerStyle={containerStyle}
+            center={center}
+            zoom={16}
+          >
+            <MarkerF position={position} />
+          </GoogleMap>
+        </LoadScript>
+      </div>
+    );
+  };
+
+  return (
+    <div className="approved-application-container">
+      <Navbar2 />
+      <div className="license-id">License No - {VendorDetails.vendorId}</div>
+      <MainContainer />
+    </div>
+  );
+}
+
+export default VendorApplicationDetails;
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { complaint_id } = params;
+  const res = await axios.get(
+    "http://localhost:4000/api/getcomplaintsbyid/" + complaint_id
+  );
+  const data = await JSON.parse(JSON.stringify(res.data));
+  const res2 = await axios.get(
+    "http://localhost:4000/api/getvendorsfromID/VX003"
+  );
+  const data2 = await JSON.parse(JSON.stringify(res2.data));
+  return {
+    props: {
+      ComplaintDetails: data[0],
+      VendorDetails: data2,
+    },
+  };
+}
