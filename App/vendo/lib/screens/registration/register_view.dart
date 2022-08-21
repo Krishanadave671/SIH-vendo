@@ -186,9 +186,10 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                             onChanged: ((value) {
                               _phoneNo = value;
                             }),
-                            decoration:  InputDecoration(
+                            decoration: InputDecoration(
                                 border: InputBorder.none,
-                                errorText:  _validate ? 'Value Can\'t Be Empty' : null,
+                                errorText:
+                                    _validate ? 'Value Can\'t Be Empty' : null,
                                 labelText: 'Applicant Phone No',
                                 hintText: 'Enter phone no'),
                           ),
@@ -251,8 +252,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                       verticalSpaceMedium,
                       TextField(
                         controller: dateInput,
-                        decoration:  InputDecoration(
-                            errorText:  _validate ? 'Value Can\'t Be Empty' : null,
+                        decoration: InputDecoration(
+                            errorText:
+                                _validate ? 'Value Can\'t Be Empty' : null,
                             icon: Icon(Icons.calendar_today),
                             labelText: "Enter Birthday"),
                         readOnly: true,
@@ -286,7 +288,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                               showPlacePicker();
                             },
                             decoration: InputDecoration(
-                                errorText:  _validate ? 'Value Can\'t Be Empty' : null,
+                                errorText:
+                                    _validate ? 'Value Can\'t Be Empty' : null,
                                 border: InputBorder.none,
                                 labelText: 'Location',
                                 hintText: _location,
@@ -354,14 +357,27 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           onTap: () {
             setState(() {
               _name.toString().isEmpty ? _validate = true : _validate = false;
-              _phoneNo.toString().isEmpty ? _validate = true : _validate = false;
-              _password.toString().isEmpty ? _validate = true : _validate = false;
-              _location.toString().isEmpty ? _validate = true : _validate = false;
+              _phoneNo.toString().isEmpty
+                  ? _validate = true
+                  : _validate = false;
+              _password.toString().isEmpty
+                  ? _validate = true
+                  : _validate = false;
+              _location.toString().isEmpty
+                  ? _validate = true
+                  : _validate = false;
               _dob.toString().isEmpty ? _validate = true : _validate = false;
             });
-            if (_validate == false) {
+            RegExp contact = RegExp('r^[1-9]{1}[0-9]{9}');
+            if (_validate == false && contact.hasMatch(_phoneNo) == true) {
               uploadVendorData();
               Navigator.of(context).pushNamed(Routes.nationalityEvidence);
+            } else if (contact.hasMatch(_phoneNo) == false) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("Enter valid phone number"),
+                      ));
             }
           },
           child: Padding(

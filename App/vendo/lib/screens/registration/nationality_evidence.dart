@@ -17,7 +17,6 @@ class NationalityEvidence extends ConsumerStatefulWidget {
 }
 
 class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
-
   BasicOptions? _passport = BasicOptions.yes;
   BasicOptions? _election = BasicOptions.yes;
   BasicOptions? _liscense = BasicOptions.yes;
@@ -286,14 +285,21 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
         child: GestureDetector(
           onTap: () {
             RegExp exp = RegExp(r'[A-Z]{5}[0-9]{4}[A-Z]{1}');
-            if (exp.hasMatch(_pan) == true) {
+            RegExp exp1 = RegExp(r'[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}');
+            if (exp.hasMatch(_pan) == true && exp1.hasMatch(_aadhar)==true) {
               uploadNationalityDetails();
               Navigator.of(context).pushNamed(Routes.documentaryEvidence);
-            } else {
+            } else if (exp.hasMatch(_pan) == false) {
               showDialog(
                   context: context,
                   builder: (BuildContext context) => const AlertDialog(
                         title: Text("Enter valid PAN number"),
+                      ));
+            } else if (exp1.hasMatch(_aadhar) == false) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("Enter valid Adhaar number"),
                       ));
             }
           },
