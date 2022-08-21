@@ -4,7 +4,7 @@ const Schemes = require("../models/schemes");
 // add scheme
 schemerouter.post("/api/addscheme", async(req, res) => {
     try {
-        const { schemeId, schemeName,schemeBenefits ,schemeReq ,  schemeImageUrl } = req.body;
+        const { schemeId, schemeName, schemeBenefits, schemeReq, schemeImageUrl } = req.body;
         let scheme = new Schemes({
             schemeId,
             schemeName,
@@ -22,8 +22,9 @@ schemerouter.post("/api/addscheme", async(req, res) => {
 schemerouter.get("/api/getschemes/all", async(req, res) => {
     console.log("inside get government schema");
     try {
-         
+        let schemes = await Schemes.find();
         res.status(200).json(schemes);
+
     } catch (e) {
         res.status(500).json({ e: e.message });
     }
