@@ -69,7 +69,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     final vendordata = ref.read(vendordetailsProvider);
     vendordata.gender = _genderType;
     vendordata.dob = _dob;
-    vendordata.address =_location;
+    vendordata.address = _location;
     vendordata.name = _name;
     vendordata.phone = _phoneNo;
     vendordata.password = _password;
@@ -79,6 +79,8 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     print(
         "vendor data $_name , $_dob , $_genderType , $_location , $_phoneNo , $_password ");
   }
+
+  late bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -160,13 +162,17 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            keyboardType: TextInputType.name,
                             onChanged: ((value) {
                               _name = value;
                             }),
-                            decoration: const InputDecoration(
-                                border: InputBorder.none,
-                                labelText: 'Applicant Name',
-                                hintText: 'Enter Applicant Name'),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: 'Applicant Name',
+                              hintText: 'Enter Applicant Name',
+                              errorText:
+                                  _validate ? 'Value Can\'t Be Empty' : null,
+                            ),
                           ),
                         ),
                       ),
@@ -176,38 +182,77 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            keyboardType: TextInputType.phone,
                             onChanged: ((value) {
                               _phoneNo = value;
                             }),
-                            decoration: const InputDecoration(
+                            decoration:  InputDecoration(
                                 border: InputBorder.none,
+                                errorText:  _validate ? 'Value Can\'t Be Empty' : null,
                                 labelText: 'Applicant Phone No',
                                 hintText: 'Enter phone no'),
                           ),
                         ),
                       ),
                       verticalSpaceMedium,
-                      DecoratedBox(
-                        decoration: borderBoxOutline,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 20),
-                          child: PasswordField(
-                            onChanged: (value) {
-                              _password = value;
-                            },
-                            passwordConstraint: r'.*[@$#.*].*',
-                            inputDecoration:
-                                PasswordDecoration(inputStyle: null),
-                            hintText: 'must have special characters',
-                            errorMessage:
-                                'must contain special character either . * @ # \$',
+                      // DecoratedBox(
+                      //   decoration: borderBoxOutline,
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.only(left: 20),
+                      //     child: PasswordField(
+                      //       onChanged: (value) {
+                      //         _password = value;
+                      //       },
+                      //       passwordConstraint: r'.*[@$#.*].*',
+                      //       inputDecoration: PasswordDecoration(inputStyle: null),
+                      //       //hintText: 'Include special characters',
+                      //       errorMessage:
+                      //           'must contain special character either . * @ # \$',
+                      //     ),
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 0,
+                        ),
+                        child: PasswordField(
+                          backgroundColor: Colors.grey[100],
+                          onChanged: (value) {
+                            _password = value;
+                          },
+                          //controller: _passwordController,
+                          //color: ,
+                          passwordConstraint: r'.*[@$#.*].*',
+                          inputDecoration: PasswordDecoration(),
+                          //hintText: 'must have special characters',
+                          border: PasswordBorder(
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: const BorderSide(
+                                  width: 2, color: Colors.blueGrey),
+                            ),
                           ),
+                          errorMessage:
+                              'must contain special character either . * @ # \$',
                         ),
                       ),
                       verticalSpaceMedium,
                       TextField(
                         controller: dateInput,
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
+                            errorText:  _validate ? 'Value Can\'t Be Empty' : null,
                             icon: Icon(Icons.calendar_today),
                             labelText: "Enter Birthday"),
                         readOnly: true,
@@ -241,6 +286,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                               showPlacePicker();
                             },
                             decoration: InputDecoration(
+                                errorText:  _validate ? 'Value Can\'t Be Empty' : null,
                                 border: InputBorder.none,
                                 labelText: 'Location',
                                 hintText: _location,
@@ -306,8 +352,17 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         elevation: 0,
         child: GestureDetector(
           onTap: () {
-            uploadVendorData();
-            Navigator.of(context).pushNamed(Routes.nationalityEvidence);
+            setState(() {
+              _name.toString().isEmpty ? _validate = true : _validate = false;
+              _phoneNo.toString().isEmpty ? _validate = true : _validate = false;
+              _password.toString().isEmpty ? _validate = true : _validate = false;
+              _location.toString().isEmpty ? _validate = true : _validate = false;
+              _dob.toString().isEmpty ? _validate = true : _validate = false;
+            });
+            if (_validate == false) {
+              uploadVendorData();
+              Navigator.of(context).pushNamed(Routes.nationalityEvidence);
+            }
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 60, bottom: 8),

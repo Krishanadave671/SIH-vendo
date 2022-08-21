@@ -17,6 +17,19 @@ class NationalityEvidence extends ConsumerStatefulWidget {
 }
 
 class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
+  @override
+  void initState() {
+    if (RegExp("[A-Z]{5}[0-9]{4}[A-Z]{1}").hasMatch(_pan)) {
+      null;
+    } else {
+      const SnackBar(
+        content: Text("Enter Valid PAN number"),
+        backgroundColor: Colors.green,
+      );
+    }
+    super.initState();
+  }
+
   BasicOptions? _passport = BasicOptions.yes;
   BasicOptions? _election = BasicOptions.yes;
   BasicOptions? _liscense = BasicOptions.yes;
@@ -133,6 +146,8 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            keyboardType: TextInputType.number,
+                            maxLength: 12,
                             onChanged: (value) {
                               _aadhar = value;
                             },
@@ -149,6 +164,7 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            maxLength: 10,
                             onChanged: (value) {
                               _pan = value;
                             },
