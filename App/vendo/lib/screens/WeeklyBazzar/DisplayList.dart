@@ -7,7 +7,7 @@ import 'package:vendo/providers/weekly_bazzar_provider.dart';
 import 'package:vendo/screens/WeeklyBazzar/DisplayCard.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 
-import '../../models/calendar_display_list.dart';
+
 import '../../routes.dart';
 
 class DisplayList extends ConsumerStatefulWidget {

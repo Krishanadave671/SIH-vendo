@@ -33,6 +33,7 @@ class VendorModel {
   double shopLocationLong;
   String vendorCategory;
   String shopCity;
+  String shopName;
   VendorModel({
     required this.vendorId,
     required this.name,
@@ -61,6 +62,7 @@ class VendorModel {
     required this.shopLocationLong,
     required this.vendorCategory,
     required this.shopCity,
+    required this.shopName,
   });
 
   factory VendorModel.fromJson(Map<String, dynamic> json) =>
