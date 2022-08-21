@@ -6,7 +6,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/models/vendorDetails/vendor_details.dart';
+import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
+
 import 'package:vendo/providers/vendor_complaints_provider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';

@@ -34,6 +34,7 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       shopLocationLong: (json['shopLocationLong'] as num).toDouble(),
       vendorCategory: json['vendorCategory'] as String,
       shopCity: json['shopCity'] as String,
+      shopName: json['shopName'] as String,
     );
 
 Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
@@ -65,4 +66,5 @@ Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
       'shopLocationLong': instance.shopLocationLong,
       'vendorCategory': instance.vendorCategory,
       'shopCity': instance.shopCity,
+      'shopName': instance.shopName,
     };

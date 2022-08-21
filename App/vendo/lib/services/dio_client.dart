@@ -7,14 +7,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/models/vendorComplains/vendor_complaints.dart';
+
 import 'package:vendo/models/vendorReviewModel/vendor_review_model.dart';
 import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
-import '../../../models/vendorDetails/vendor_details.dart';
+
 import '../../../util/AppInterface/ui_helpers.dart';
 import '../../../util/error_handling.dart';
+import '../models/vendorComplainsModel/vendor_complaints.dart';
+import '../models/vendorDetailsModel/vendor_details.dart';
 
 class Apiservice {
   final Dio _dio = Dio();

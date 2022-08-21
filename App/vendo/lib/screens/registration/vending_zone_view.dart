@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/models/vendorDetails/vendor_details.dart';
+import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
+
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';

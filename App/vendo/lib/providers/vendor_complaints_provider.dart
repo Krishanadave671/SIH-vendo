@@ -1,7 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vendo/models/vendorComplains/vendor_complaints.dart';
-import 'package:vendo/models/vendorDetails/vendor_details.dart';
+
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+
+import '../models/vendorComplainsModel/vendor_complaints.dart';
 
 final vendorComplaintProvider = Provider<VendorComplaintModel>((ref) {
   var vendorId = ref.watch(vendordetailsProvider).vendorId;
