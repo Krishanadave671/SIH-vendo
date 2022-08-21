@@ -17,18 +17,6 @@ class NationalityEvidence extends ConsumerStatefulWidget {
 }
 
 class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
-  @override
-  void initState() {
-    if (RegExp("[A-Z]{5}[0-9]{4}[A-Z]{1}").hasMatch(_pan)) {
-      null;
-    } else {
-      const SnackBar(
-        content: Text("Enter Valid PAN number"),
-        backgroundColor: Colors.green,
-      );
-    }
-    super.initState();
-  }
 
   BasicOptions? _passport = BasicOptions.yes;
   BasicOptions? _election = BasicOptions.yes;
@@ -74,6 +62,8 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
     print("nationality $_aadhar , $_pan , $passport , $election , $liscense ");
     log(vendordata.toJson().toString());
   }
+
+  RegExp exp = RegExp(r'[A-Z]{5}[0-9]{4}[A-Z]{1}');
 
   @override
   Widget build(BuildContext context) {
@@ -295,8 +285,17 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
         elevation: 0,
         child: GestureDetector(
           onTap: () {
-            uploadNationalityDetails();
-            Navigator.of(context).pushNamed(Routes.documentaryEvidence);
+            RegExp exp = RegExp(r'[A-Z]{5}[0-9]{4}[A-Z]{1}');
+            if (exp.hasMatch(_pan) == true) {
+              uploadNationalityDetails();
+              Navigator.of(context).pushNamed(Routes.documentaryEvidence);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("Enter valid PAN number"),
+                      ));
+            }
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 60, bottom: 8),
