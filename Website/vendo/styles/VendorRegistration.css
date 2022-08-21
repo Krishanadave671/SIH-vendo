@@ -22,7 +22,7 @@
     display: inline-block;
     background-color: var(--primary-color);
     text-align: center;
-    color: #ffffff;
+    color: #c2c2c2;
     font-size: 1rem;
 	font-weight: 600;
     padding: 1.1rem 2.75rem;
@@ -56,7 +56,7 @@
     margin-right: 20px;
     flex: 1;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
     
     
 }
