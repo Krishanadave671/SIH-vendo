@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/Screens/registration/space_allocation_list.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/Screens/login/login_screen2.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
-import 'package:vendo/screens/BMCModule/VendorReview/vendor_check.dart';
+import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
+import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -22,13 +24,13 @@ import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
 import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
-import 'Screens/calendar_screen/calendar.dart';
+
 
 class Routes {
   static const calendarScreen = '/calendar_screen';
   static const loginScreen = '/login_screen';
   static const mainPage = '/main_page';
-  static const LoginScreen1 = "/login_screen1"; 
+
   static const languageSelect = '/languageSelect_screen';
   static const welcomeScreen = '/welcome_screen';
   static const spaceallocation = '/space_allocation_screen';
@@ -57,9 +59,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           title: "Krishana",
         ),
       );
-    case Routes.schemeDetails:
+   case Routes.schemeDetails:
+      final args = settings.arguments as SchemeArguments;
       return MaterialPageRoute(
-        builder: (context) => const SchemeDetails(),
+        builder: (context) => SchemeDetails(
+          governmentSchemeModel: args.model,
+        ),
       );
     case Routes.splashScreen:
       return MaterialPageRoute(
@@ -118,10 +123,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const BMCHomePage(),
       );
-     case Routes.LoginScreen1 : 
-       return MaterialPageRoute(
-        builder: (context) => LoginScreen1(), 
-       ); 
+
     case Routes.vendorCheck:
       final args = settings.arguments as VendorCheckArguments;
       return MaterialPageRoute(
@@ -139,7 +141,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           vendingZone: args.model,
         ),
       );
-      case Routes.apporvalPage:
+    case Routes.apporvalPage:
       return MaterialPageRoute(
         builder: (context) => const ApprovalPage(),
       );
@@ -169,4 +171,11 @@ class VendingZoneViewArguments {
     required this.model,
   });
   final VendingzoneModel model;
+}
+
+class SchemeArguments {
+  SchemeArguments({
+    required this.model,
+  });
+  final GovernmentSchemeModel model;
 }

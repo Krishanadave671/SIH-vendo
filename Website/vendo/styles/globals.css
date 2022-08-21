@@ -11,11 +11,11 @@ body {
 }
 
 :root{
-  --primary-color: #FF6B62;
-  --primary-color-dark: #c20a00;
-  --secondary-color: #2C3333;
-  --shade-color: #395B64;
-  --box-color: #FFBC80;
+  --primary-color: #646FD4;
+  --primary-color-dark: #242F9B;
+  --secondary-color: #9BA3EB;
+  --shade-color:#DBDFFD ;
+  --box-color: #745ebdea;
   --gradient-text: linear-gradient(270deg,#FFBC80  0.08%, #FF6B62 94.04%);
 	--gradient-bg: linear-gradient(90deg,#ffd8b5  0.08%, #ffa29e 94.04%);
 }
@@ -69,7 +69,7 @@ div::-webkit-scrollbar-thumb {
   display: flex;
 }
 .dashboard-main-container{
-  width: 100%;
+  /* width: 100%; */
   margin-left: 300px;
   height: 100vh;
   overflow: hidden;
@@ -83,7 +83,7 @@ div::-webkit-scrollbar-thumb {
   background-color: var(--primary-color)!important;
   box-shadow: 0 0 0 0.25rem var(--box-color) !important;
   color: white!important;
-  border-color: #FF6B62!important;
+  border-color: black!important;
 }
 .outline-btn{
   color: var(--primary-color-dark)!important;
@@ -91,7 +91,7 @@ div::-webkit-scrollbar-thumb {
 }
 .outline-btn:hover, .outline-btn:active, .btn:active, .btn-primary{
   background-color: var(--primary-color-dark)!important;
-  border-color: #FF6B62!important;
+  border-color: black!important;
   color: white!important;
 }
 .btn:active, .btn:hover, .outline-btn:hover, .outline-btn:focus, .btn:focus{
@@ -112,7 +112,7 @@ div::-webkit-scrollbar-thumb {
 }
 
 
-/* Form */
+/*Form */
 
 .form-control:focus{
   box-shadow: 0 0 0 0.25rem var(--box-color) !important;
@@ -121,7 +121,7 @@ div::-webkit-scrollbar-thumb {
 
 input {
 	width: 100%;
-	border: 1px solid var(--primary-color-dark);
+	border: 1px solid black;
 	padding: 1rem 2rem;
 	border-radius: 0.9rem;
 	font-family: Inter;
@@ -138,43 +138,87 @@ input:placeholder {
 	color: var(--primary-color);
 }
 
+/* React form */
+.form-check-input:focus{
+  border-color: var(--box-color);
+  box-shadow: none;
+}
+.form-check-input{
+  height: 20px;
+  padding: 8px 16px 8px 16px;
+  margin-right: 12px;
+}
+.form-check-input:checked{
+  background-color: var(--primary-color);
+  border-color: #ffa29e;
+}
+
+
+
 
 /* Landing page */
 .download-btn{
   
-  display: inline-block;
-  width: 148px;
+  display: inline-flex;
+  gap:10px;
+  width: 160px;
   padding:6px;
   border-radius: 4px;
   margin: 4px;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
+  margin-top: 20px;
+  
 }
 .download-btn div{
   margin-left: 12px;
   font-size: 1.25rem;
   padding-right: 8px;
   align-items: center;
+  
+  
 }
 .google-play{
   color: #f8f9fa;
   /* background-color: white; */
   border: 2px solid #f8f9fa;
+  
 }
 .google-play:hover{
   background-color: #f8f9fa;
   color: black;
+
 }
 .app-store{
   color: #f8f9fa;
   background-color: black;
+  width: 160px;
+ 
+  
+  
 }
 .flex{
   display: flex;
-  justify-content:space-around;
+  justify-content:space-between;
+  margin: 0 30px ;
+  text-align: left;
+  margin-top: 50px;
+  margin-bottom: -64px;
+ 
   
+
+}
+
+.TextWrapper{
+margin-right: 80px;
+background-color: #0b0c14dc;
+opacity: 80%;
+width: 60%;
+height: 30%;
+
+
 }
 .font-awesome-icons{
   color: var(--box-color);

@@ -10,15 +10,18 @@ const DB = process.env.MONGO_URI;
 const vendingzonerouter = require("./routes/vendingroutes"); 
 const vendordetailsrouter = require("./routes/auth");
 const complaintsrouter = require("./routes/complaintsroutes");
-const authRouter = require('./routes/auth');
+const schemesRouter = require("./routes/schemesroutes");
+const WeeklyBazzarRouter = require('./routes/weeklybazaars');
+
 // middlewares
 app.use(cors()); 
 app.use(express.json()); 
 app.use(vendingzonerouter);
 app.use(vendordetailsrouter);
-app.use(complaintsrouter); 
+app.use(complaintsrouter);
+app.use(schemesRouter); 
+app.use(WeeklyBazzarRouter); 
  
-// connection to mongodb 
 mongoose.connect(DB).then( () => {
     console.log("Connection successful "); 
 }).catch( (err) => {

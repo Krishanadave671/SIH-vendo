@@ -9,6 +9,7 @@ import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+
 import '../../routes.dart';
 import '../../services/dio_client.dart';
 
@@ -49,7 +50,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       Colors.black.withOpacity(0.5),
                       BlendMode.dstATop,
                     ),
-                    image: NetworkImage(vendingZone.vendingZoneImageUrl),
+                    image: NetworkImage(vendingZone.vendingZoneImageurl),
                     fit: BoxFit.fill),
               ),
               child: Padding(
@@ -57,7 +58,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    vendingZone.vendingZoneImageUrl,
+                    vendingZone.vendingZoneImageurl,
                     fit: BoxFit.contain,
                   ),
                 ),

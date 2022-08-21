@@ -13,7 +13,7 @@ VendingzoneModel _$VendingzoneModelFromJson(Map<String, dynamic> json) =>
       vendingZoneLat: (json['vendingZoneLat'] as num).toDouble(),
       vendingZoneLong: (json['vendingZoneLong'] as num).toDouble(),
       vendingZoneDescription: json['vendingZoneDescription'] as String,
-      vendingZoneImageUrl: json['vendingZoneImageUrl'] as String,
+      vendingZoneImageurl: json['vendingZoneImageurl'] as String,
       maximumVendorsAllowed: (json['maximumVendorsAllowed'] as num).toDouble(),
       vendingZoneCity: json['vendingZoneCity'] as String,
       vendingZoneWard: json['vendingZoneWard'] as String,
@@ -24,12 +24,14 @@ VendingzoneModel _$VendingzoneModelFromJson(Map<String, dynamic> json) =>
           (json['categoryOfVendorsNotAllowed'] as List<dynamic>)
               .map((e) => e as String)
               .toList(),
-      vendorTypeFavourable: (json['vendorTypeFavourable'] as List<dynamic>)
+      vendorTypeFavorable: (json['vendorTypeFavorable'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
       vendorIdList: (json['vendorIdList'] as List<dynamic>)
-          .map((e) => e as String)
+          .map((e) => Map<String, String>.from(e as Map))
           .toList(),
+      pendingRegistration:
+          (json['pendingRegistration'] as num?)?.toDouble() ?? 0,
     );
 
 Map<String, dynamic> _$VendingzoneModelToJson(VendingzoneModel instance) =>
@@ -39,13 +41,14 @@ Map<String, dynamic> _$VendingzoneModelToJson(VendingzoneModel instance) =>
       'vendingZoneLat': instance.vendingZoneLat,
       'vendingZoneLong': instance.vendingZoneLong,
       'vendingZoneDescription': instance.vendingZoneDescription,
-      'vendingZoneImageUrl': instance.vendingZoneImageUrl,
+      'vendingZoneImageurl': instance.vendingZoneImageurl,
       'maximumVendorsAllowed': instance.maximumVendorsAllowed,
       'vendingZoneCity': instance.vendingZoneCity,
       'vendingZoneWard': instance.vendingZoneWard,
       'vendingZoneLocationFee': instance.vendingZoneLocationFee,
       'vendingZoneAddress': instance.vendingZoneAddress,
       'categoryOfVendorsNotAllowed': instance.categoryOfVendorsNotAllowed,
-      'vendorTypeFavourable': instance.vendorTypeFavourable,
+      'vendorTypeFavorable': instance.vendorTypeFavorable,
       'vendorIdList': instance.vendorIdList,
+      'pendingRegistration': instance.pendingRegistration,
     };

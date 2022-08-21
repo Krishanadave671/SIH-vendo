@@ -1,26 +1,43 @@
 const mongoose = require("mongoose");
 
 const complaintDetails = mongoose.Schema({
-    complaintid: {
+    vendorId: {
+        type: String,
+        trim: true,
+        required : true 
+    }, 
+    complaintId: {
         type: String,  
         trim: true, 
         unique: true
     },
-    complaintdate: {
+    complaintDate: {
         type: String,
         required: true
     },
-    complaintstatus: {
+    complaintStatus: {
         type: String,
         default: "pending"
     },
-    complainttype: [{
+    complaintType: [{
         type: String
     }],
-    imageurl: {
+    complaintImageUrl: {
         type: String
     },
-    complaintdescription: {
+    complaintDescription: {
+        type: String,
+        required: true
+    },
+    complaintLocationLat: {
+        type: Number,
+        required: true
+    },
+    complaintLocationLong: {
+        type: Number,
+        required: true
+    },
+    complaintCity: {
         type: String,
         required: true
     }

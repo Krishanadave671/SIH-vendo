@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const {complaints} = require("./complaints");
+const {reviews} = require("./reviews");
 
 const vendorDetails = mongoose.Schema({
     vendorId: {
@@ -86,11 +87,11 @@ const vendorDetails = mongoose.Schema({
       required : true 
     },
     shopLocationLat: {
-      type: String, 
+      type: Number, 
       required : true 
     },
     shopLocationLong: {
-      type: String, 
+      type: Number, 
       required : true 
     },
     vendingZoneIdApplied: {
@@ -102,7 +103,9 @@ const vendorDetails = mongoose.Schema({
       required : true 
     },
     creditScore: {
-      type: Number
+      type: Number,
+      required: true,
+      default: 0
     },
     vendorImageurl : {
       type : String , 
@@ -113,14 +116,27 @@ const vendorDetails = mongoose.Schema({
       default : "pending" 
     }, 
     complaintsList: {
-      type: [complaints],
+      type: [complaints]
     }, 
     reviewList: {
-      type: [complaints]
+      type: [reviews]
     }, 
-    weeklyBazzarList: {
-      type: [complaints]
-    },
+    weeklyBazzarList: [{
+      "bazzarId" : {
+        type: String, 
+        required : true , 
+        unique : true 
+      },
+      "status" : {
+        type: String,
+        required : true ,
+        default : "pending"
+      } 
+    }
+
+    ]
+
+    ,
     vendorCategory : {
       type : String , 
       required : true 

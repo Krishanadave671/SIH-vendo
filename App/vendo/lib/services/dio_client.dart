@@ -3,8 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'dart:developer';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
+import 'package:vendo/models/vendorComplains/vendor_complaints.dart';
+import 'package:vendo/models/vendorReviewModel/vendor_review_model.dart';
+import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import '../../../models/vendorDetails/vendor_details.dart';
@@ -14,16 +18,20 @@ import '../../../util/error_handling.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.43.223";
+  static const _baseurl = "http://192.168.1.104:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
   static const tokenisValid = "/tokenIsValid";
   static const getuserdata = "/getuserdata";
+  static const addcomplaint = "/api/addcomplaint";
+  static const addreview = "/";
+  static const getSchema = "/api/getschemes/all";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
     try {
+      log('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       Response vendingzonedata = await _dio.get(
           '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       List vendingzones = vendingzonedata.data;
@@ -123,37 +131,114 @@ class Apiservice {
       log(e.toString());
     }
   }
+
+  Future<void> addComplaint(
+      VendorComplaintModel complaintData, BuildContext context) async {
+    try {
+      complaintData.complaintId = 'CI' + DateTime.now().microsecond.toString();
+      log(complaintData.toJson().toString());
+      log(_baseurl + addcomplaint);
+      Response response = await _dio.post(
+        _baseurl + addcomplaint,
+        data: complaintData.toJson(),
+      );
+      log(response.toString());
+      log(complaintData.toJson().toString());
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Complaint Registered!!',
+          );
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> addReview(
+      VendorReviewModel reviewData, BuildContext context) async {
+    try {
+      log(reviewData.toJson().toString());
+      log(_baseurl + addreview);
+      Response response = await _dio.post(
+        _baseurl + addreview,
+        data: reviewData.toJson(),
+      );
+      log(response.toString());
+      log(reviewData.toJson().toString());
+      httpErrorHandle(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context,
+            'Review Submitted!!',
+          );
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<List<WeeklyBazzarModel?>> getBazzar(
+    String vendorCity,
+    String dateSelected,
+  ) async {
+    try {
+      Response weeklyBazzarData = await _dio.get(''
+          // '$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory'
+          );
+      List vendingBazzars = weeklyBazzarData.data;
+      List<WeeklyBazzarModel?> list =
+          vendingBazzars.map((e) => WeeklyBazzarModel.fromJson(e)).toList();
+      log(list[0].toString());
+      return list;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('Dio error!');
+        log('STATUS: ${e.response?.statusCode}');
+        log('DATA: ${e.response?.data}');
+        log('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        log('Error sending request!');
+        log(e.message);
+      }
+    }
+    return <WeeklyBazzarModel>[];
+  }
+
+  Future<List<GovernmentSchemeModel?>> getGovernmentSchema() async {
+    try {
+      log('${_baseurl + getSchema}');
+      Response governmentSchemeData = await _dio.get('${_baseurl + getSchema}');
+      List governmentSchemes = governmentSchemeData.data;
+      List<GovernmentSchemeModel?> list = governmentSchemes
+          .map((e) => GovernmentSchemeModel.fromJson(e))
+          .toList();
+      log(list[0].toString());
+      return list;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('Dio error!');
+        log('STATUS: ${e.response?.statusCode}');
+        log('DATA: ${e.response?.data}');
+        log('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        log('Error sending request!');
+        log(e.message);
+      }
+    }
+    return <GovernmentSchemeModel>[];
+  }
 }
 
 final apiserviceProvider = Provider<Apiservice>((ref) {
   return Apiservice();
 });
-
-
-// @freezed
-// class SendDataResponse with _$SendDataResponse {
-//   SendDataResponse._();
-
-//   factory SendDataResponse({
-//     @JsonKey(name: "success") bool? success,
-//   }) = _SendDataResponse;
-
-//   factory SendDataResponse.fromJson(Map<String, dynamic> json) =>
-//       _$SendDataResponseFromJson(json);
-// }
-
-// @JsonSerializable(explicitToJson: true)
-// class SetAWSDrivingFilesBody {
-  
-//   final String drivingLicence;
-
-//   SetAWSDrivingFilesBody(
-    
-//     this.drivingLicence,
-//   );
-
-//   factory SetAWSDrivingFilesBody.fromJson(Map<String, dynamic> json) =>
-//       _$SetAWSDrivingFilesBodyFromJson(json);
-
-//   Map<String, dynamic> toJson() => _$SetAWSDrivingFilesBodyToJson(this);
-// }

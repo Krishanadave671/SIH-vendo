@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:camera/camera.dart';
@@ -6,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/models/vendorDetails/vendor_details.dart';
+import 'package:vendo/providers/vendor_complaints_provider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'package:vendo/screens/write_Complaints_screen/take_picture.dart';
@@ -13,6 +15,7 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
+import '../../services/dio_client.dart';
 import '../../util/AppFonts/styles.dart';
 
 class AddComplaints extends ConsumerStatefulWidget {
@@ -28,10 +31,10 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
   VendorModel? vendorDetails;
   bool isInitialized = false;
   XFile? image;
-  String? _description;
+  String? description;
   late final String uniqueString;
   late final String imagePathString;
-  late final imageRef;
+  late Reference imageRef;
   late final CameraController cameraController;
   late CameraDescription cameraDescription;
 
@@ -76,12 +79,25 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     );
   }
 
-  void onContinue() {
-    //make api call here
-    double complaintLat = vendorDetails!.shopLocationLat;
-    double complaintLong = vendorDetails!.shopLocationLong;
-    String complaintcity = vendorDetails!.shopCity;
-    print(" $complaintLat , $complaintLong , $complaintcity , $imagePathString ");
+  void onContinue() async {
+    var imageUrl = await imageRef.getDownloadURL();
+    final complaintDetails = ref.watch(vendorComplaintProvider);
+    complaintDetails.complaintLocationLat = vendorDetails!.shopLocationLat;
+    complaintDetails.complaintLocationLong = vendorDetails!.shopLocationLong;
+
+    complaintDetails.complaintDescription = description!;
+    complaintDetails.complaintImageUrl = imageUrl;
+    complaintDetails.complaintDate = DateTime.now().toString();
+    log(complaintDetails.complaintDate);
+    complaintDetails.complaintType = _complaintType!;
+
+    try {
+      //api to register the complaint
+      final _api = ref.watch(apiserviceProvider);
+      var response = await _api.addComplaint(complaintDetails, context);
+    } on Exception catch (e) {
+      log(e.toString());
+    }
   }
 
   Future<void> uploadPhoto() async {
@@ -97,15 +113,17 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
 
   @override
   void initState() {
-    uniqueString = 'yash';
+    vendorDetails = ref.read(vendordetailsProvider);
+    uniqueString = vendorDetails!.vendorId;
     imagePathString = 'vendor_complaints/$uniqueString/photo.jpeg';
     cameraSettings();
-    vendorDetails = ref.read(vendordetailsProvider);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    vendorDetails = ref.watch(vendordetailsProvider);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 232, 231, 231),
       appBar: AppBar(
@@ -165,10 +183,10 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                                 });
                               },
                               items: <String>[
-                                'Sanitation',
-                                'Harrasement',
-                                'Water Clogging',
-                                'Garbage Disposal'
+                                'other',
+                                'harrasement',
+                                'waterClogging',
+                                'garbageDisposal'
                               ].map<DropdownMenuItem<String>>(
                                 (String value) {
                                   return DropdownMenuItem<String>(
@@ -183,7 +201,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                           AppText.bodyBold("Write short description"),
                           TextField(
                             onChanged: ((value) {
-                              _description = value;
+                              description = value;
                             }),
                             keyboardType: TextInputType.multiline,
                             maxLines: null,
