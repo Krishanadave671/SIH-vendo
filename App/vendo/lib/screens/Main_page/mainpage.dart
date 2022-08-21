@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:vendo/Screens/Homescreen/screens/home_screen.dart';
-import 'package:vendo/Screens/Resources_page/resources_page.dart';
 import 'package:vendo/Screens/calendar_screen/calendar.dart';
 import 'package:vendo/Screens/write_Complaints_screen/complaints.dart';
-import 'package:vendo/screens/Main_page/scroll_to_hide.dart';
+import 'package:vendo/screens/incentive_detail/incentive_detail.dart';
+import 'package:vendo/screens/incentive_lists/incentive_list.dart';
 import 'package:vendo/util/colors.dart';
 
 class MainPage extends StatefulWidget {
@@ -24,24 +24,11 @@ class _MainPageState extends State<MainPage> {
   }
 
   List pages = [
-    HomeScreen(),
+    const HomeScreen(),
     AddComplaints(),
-    Calendar(title: 'Krishana'),
-    ResourcesPage(),
+    const Calendar(title: 'Krishana'),
+    const AvailableIncentives(),
   ];
-
-  late ScrollController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

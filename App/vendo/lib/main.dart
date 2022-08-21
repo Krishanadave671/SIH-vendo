@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'firebase_options.dart';
@@ -28,7 +27,6 @@ class MyApp extends ConsumerStatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  
   ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
@@ -37,9 +35,9 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     final _apiservice = ref.watch(apiserviceProvider);
     _apiservice.getuserData(context, ref);
-     final vendordata = ref.watch(vendordetailsProvider);
+    final vendordata = ref.watch(vendordetailsProvider);
     log(vendordata.toJson().toString());
-    // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen 
+    // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,

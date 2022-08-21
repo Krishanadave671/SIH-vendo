@@ -115,7 +115,7 @@ class Apiservice {
         _dio.options.headers['x-auth-token'] = token;
         Response userRes = await _dio.get(_baseurl + getuserdata);
         VendorModel vendordata = ref.read(vendordetailsProvider);
-        vendordata = VendorModel.fromJson(userRes.data); 
+        vendordata = VendorModel.fromJson(userRes.data);
         log(vendordata.toJson().toString());
       }
     } catch (e) {

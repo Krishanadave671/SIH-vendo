@@ -46,6 +46,7 @@ class Routes {
   static const notificationScreen = '/notification_screen';
   static const splashScreen = '/splash_screen';
   static const schemeDetails = '/scheme_details';
+  static const incentiveList = '/incentive_list';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
