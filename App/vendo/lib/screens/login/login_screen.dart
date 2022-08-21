@@ -10,7 +10,6 @@ import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 
-
 import '../../services/dio_client.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -39,6 +38,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         _phonenoController.text, _passwordController.text, context, ref);
   }
 
+  late bool _validate = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         child: SafeArea(
           child: Column(
             children: [
+              verticalSpaceMedium,
               Padding(
                 padding: const EdgeInsets.only(left: 12, top: 12),
                 child: Row(
@@ -77,12 +79,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: TextFormField(
                   controller: _phonenoController,
                   cursorColor: colors.primary,
-                  maxLength: 20,
+                  maxLength: 10,
+                  keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
                     labelText: 'Contact',
                     labelStyle: TextStyle(
-                      color: colors.primary,
-                    ),
+                        color: Colors.black87,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: colors.primary),
                     ),
@@ -96,7 +100,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   color: colors.primary,
                   passwordConstraint: r'.*[@$#.*].*',
                   inputDecoration: PasswordDecoration(),
-                  hintText: 'must have special characters',
+                  //hintText: 'must have special characters',
                   border: PasswordBorder(
                     enabledBorder: OutlineInputBorder(
                       borderSide: const BorderSide(

@@ -62,6 +62,8 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
     log(vendordata.toJson().toString());
   }
 
+  RegExp exp = RegExp(r'[A-Z]{5}[0-9]{4}[A-Z]{1}');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,6 +135,8 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            keyboardType: TextInputType.number,
+                            maxLength: 12,
                             onChanged: (value) {
                               _aadhar = value;
                             },
@@ -149,6 +153,7 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
                           child: TextField(
+                            maxLength: 10,
                             onChanged: (value) {
                               _pan = value;
                             },
@@ -279,8 +284,24 @@ class _NationalityEvidenceState extends ConsumerState<NationalityEvidence> {
         elevation: 0,
         child: GestureDetector(
           onTap: () {
-            uploadNationalityDetails();
-            Navigator.of(context).pushNamed(Routes.documentaryEvidence);
+            RegExp exp = RegExp(r'[A-Z]{5}[0-9]{4}[A-Z]{1}');
+            RegExp exp1 = RegExp(r'[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}');
+            if (exp.hasMatch(_pan) == true && exp1.hasMatch(_aadhar)==true) {
+              uploadNationalityDetails();
+              Navigator.of(context).pushNamed(Routes.documentaryEvidence);
+            } else if (exp.hasMatch(_pan) == false) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("Enter valid PAN number"),
+                      ));
+            } else if (exp1.hasMatch(_aadhar) == false) {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => const AlertDialog(
+                        title: Text("Enter valid Adhaar number"),
+                      ));
+            }
           },
           child: Padding(
             padding: const EdgeInsets.only(right: 60, bottom: 8),
