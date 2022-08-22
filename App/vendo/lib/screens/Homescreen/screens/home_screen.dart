@@ -12,6 +12,7 @@ import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
 
 import 'package:vendo/providers/government_scheme_provider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
@@ -26,28 +27,21 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  // final List<String> imgList = [
-  //   'https://i1.wp.com/www.forwardpress.in/wp-content/uploads/2018/02/narega-1.jpg?resize=745%2C398&ssl=1',
-  //   'https://sarkariyojanas.com/wp-content/uploads/2019/11/Samagra-Shiksha-Abhiyan.jpg',
-  //   'https://theindianfreepress.com/wp-content/uploads/2020/09/Poshan-Abhiyan-e1599499040576.jpeg',
-  //   'https://th.bing.com/th/id/R.861ac8a40b36204c15e1e4facc795ea6?rik=WArgFFKNNq9DlA&riu=http%3a%2f%2fwww.bhubaneswarbuzz.com%2fwp-content%2fuploads%2f2015%2f11%2fAMRUT-Logo.png&ehk=bwOvyjWP8TiHEbQlrkvoCtDLD4O7Zu2xrLJzMy9O5zY%3d&risl=&pid=ImgRaw&r=0',
-  // ];
-
   final String uniqueString = "*7%";
 
   String? expiryDate = "05/27";
 
   IconData iconData = Icons.person;
   bool isQRVisible = false;
-  late VendorModel vendorDetails;
 
   void qrPressed() {
+    // ref.watch(apiserviceProvider).getuserData(context, ref);
     setState(() {
       isQRVisible = !isQRVisible;
     });
   }
 
-  void _makingPhoneCall() async {
+  void _makingPhoneCall(vendorDetails) async {
     var url = Uri.parse("tel:${vendorDetails.phone}");
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
@@ -56,7 +50,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
   }
 
-  void showPlacePicker() async {
+  void showPlacePicker(vendorDetails) async {
     LatLng latLng =
         LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong);
     LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
@@ -65,15 +59,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               displayLocation: latLng,
             )));
 
-    // Handle the result in your way
-    // ignore: avoid_print
     print(result.latLng);
   }
 
   @override
   Widget build(BuildContext context) {
+    log('message');
     final governmentSchemesData = ref.watch(governmentSchemeProvider);
-    vendorDetails = ref.watch(vendordetailsProvider);
+    final vendorDetails = ref.watch(vendordetailsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -96,275 +89,284 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SafeArea(
-              child: Container(
-                color: const Color.fromARGB(255, 232, 231, 231),
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      verticalSpaceMedium,
-                      PhysicalModel(
-                        color: Colors.white,
-                        elevation: 8,
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Container(
-                          height: 210,
-                          margin: const EdgeInsets.only(bottom: 6.0),
-                          child: Column(
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SafeArea(
+                  child: Container(
+                    color: const Color.fromARGB(255, 232, 231, 231),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          verticalSpaceMedium,
+                          PhysicalModel(
+                            color: Colors.white,
+                            elevation: 8,
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Container(
+                              height: 210,
+                              margin: const EdgeInsets.only(bottom: 6.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 30,
+                                      backgroundImage: NetworkImage(
+                                          vendorDetails.vendorImageurl),
+                                    ),
+                                    title: AppText.headingThree(
+                                        vendorDetails.name),
+                                    subtitle: AppText.body(
+                                        'Vendorid : ${vendorDetails.vendorId}'),
+                                    hoverColor: Colors.red,
+                                    trailing: Icon(
+                                      iconData,
+                                      size: 40,
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  Center(
+                                      child: Text(
+                                    vendorDetails.shopName,
+                                    style: const TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.orange,
+                                    ),
+                                  )),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: AppText.body1(
+                                        "Expiry date : $expiryDate"),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            showPlacePicker(vendorDetails);
+                                          },
+                                          child: Row(
+                                            children: const [
+                                              Icon(
+                                                Icons.location_on,
+                                                color: Colors.blue,
+                                              ),
+                                              Text(
+                                                "Location",
+                                                style: TextStyle(
+                                                  color: Colors.blue,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 30,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            _makingPhoneCall(vendorDetails);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.call,
+                                                color: Colors.green,
+                                              ),
+                                              Text(
+                                                vendorDetails.phone,
+                                                style: const TextStyle(
+                                                  color: Colors.green,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          AppText.headingThree("Services"),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ListTile(
-                                leading: CircleAvatar(
-                                  radius: 30,
-                                  backgroundImage: NetworkImage(
-                                      vendorDetails.vendorImageUrl!),
-                                ),
-                                title: AppText.headingThree(vendorDetails.name),
-                                subtitle: AppText.body(
-                                    'Vendorid : ${vendorDetails.vendorId}'),
-                                hoverColor: Colors.red,
-                                trailing: Icon(
-                                  iconData,
-                                  size: 40,
-                                  color: Colors.green,
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Servicescard(
+                                    icon: Icons.price_change,
+                                    serviceName: "My Incentives",
+                                    color: Colors.green,
+                                    onTap: () {},
+                                  ),
+                                  Servicescard(
+                                    color: Colors.red,
+                                    icon: Icons.app_registration_outlined,
+                                    serviceName: "My Complaints",
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.complaintsList);
+                                    },
+                                  ),
+                                  Servicescard(
+                                    color: Colors.blue,
+                                    icon: Icons.calendar_month,
+                                    serviceName: "My Bazzars",
+                                    onTap: () {},
+                                  ),
+                                ],
                               ),
-                              Center(
-                                  child: Text(
-                                vendorDetails.shopName,
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.orange,
-                                ),
-                              )),
                               const SizedBox(
                                 height: 20,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 16),
-                                child:
-                                    AppText.body1("Expiry date : $expiryDate"),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Servicescard(
+                                    icon: Icons.score_rounded,
+                                    serviceName: "My Credit Score",
+                                    color: Colors.yellow,
+                                    onTap: () {},
+                                  ),
+                                  Servicescard(
+                                    color: Colors.lightGreen,
+                                    icon: Icons.reviews,
+                                    serviceName: "My Reviews",
+                                    onTap: () {},
+                                  ),
+                                  Servicescard(
+                                    color: Colors.black,
+                                    icon: Icons.qr_code_scanner,
+                                    serviceName: "My QR",
+                                    onTap: () {
+                                      qrPressed();
+                                    },
+                                  ),
+                                ],
                               ),
+
                               const SizedBox(
-                                height: 10,
+                                height: 20,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        showPlacePicker();
-                                      },
-                                      child: Row(
-                                        children: const [
-                                          Icon(
-                                            Icons.location_on,
-                                            color: Colors.blue,
-                                          ),
-                                          Text(
-                                            "Location",
-                                            style: TextStyle(
-                                              color: Colors.blue,
+                              AppText.headingThree("Goverment Schemes"),
+                              //carousel slider
+
+                              governmentSchemesData.when(
+                                data: (data) {
+                                  List<GovernmentSchemeModel?>
+                                      governmentSchemeList =
+                                      data.map((e) => e).toList();
+
+                                  return CarouselSlider(
+                                    items: governmentSchemeList
+                                        .map(
+                                          (item) => GestureDetector(
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              child: Image.network(
+                                                item!.schemeImageUrl,
+                                                fit: BoxFit.cover,
+                                                width: 1000,
+                                              ),
                                             ),
+                                            onTap: () => Navigator.of(context)
+                                                .pushNamed(Routes.schemeDetails,
+                                                    arguments: SchemeArguments(
+                                                        model: item)),
                                           ),
-                                        ],
-                                      ),
+                                        )
+                                        .toList(),
+                                    options: CarouselOptions(
+                                      autoPlay: true,
+                                      viewportFraction: 1,
+                                      aspectRatio: 2.0,
+                                      enlargeCenterPage: true,
                                     ),
-                                    const SizedBox(
-                                      width: 30,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        _makingPhoneCall();
-                                      },
-                                      child: Row(
-                                        children: [
-                                          const Icon(
-                                            Icons.call,
-                                            color: Colors.green,
-                                          ),
-                                          Text(
-                                            vendorDetails.phone,
-                                            style: const TextStyle(
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      AppText.headingThree("Services"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Servicescard(
-                                icon: Icons.price_change,
-                                serviceName: "My Incentives",
-                                color: Colors.green,
-                                onTap: () {},
-                              ),
-                              Servicescard(
-                                color: Colors.red,
-                                icon: Icons.app_registration_outlined,
-                                serviceName: "My Complaints",
-                                onTap: () {},
-                              ),
-                              Servicescard(
-                                color: Colors.blue,
-                                icon: Icons.calendar_month,
-                                serviceName: "My Bazzars",
-                                onTap: () {},
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Servicescard(
-                                icon: Icons.score_rounded,
-                                serviceName: "My Credit Score",
-                                color: Colors.yellow,
-                                onTap: () {},
-                              ),
-                              Servicescard(
-                                color: Colors.lightGreen,
-                                icon: Icons.local_convenience_store_rounded,
-                                serviceName: "License renewal",
-                                onTap: () {},
-                              ),
-                              Servicescard(
-                                color: Colors.black,
-                                icon: Icons.qr_code_scanner,
-                                serviceName: "My QR",
-                                onTap: () {
-                                  qrPressed();
+                                  );
                                 },
+                                error: (e, t) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                                loading: () => const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
                               ),
                             ],
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          AppText.headingThree("Goverment Schemes"),
-                          //carousel slider
-
-                          governmentSchemesData.when(
-                            data: (data) {
-                              List<GovernmentSchemeModel?>
-                                  governmentSchemeList =
-                                  data.map((e) => e).toList();
-
-                              return CarouselSlider(
-                                items: governmentSchemeList
-                                    .map(
-                                      (item) => GestureDetector(
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(20.0),
-                                          child: Image.network(
-                                            item!.schemeImageUrl,
-                                            fit: BoxFit.cover,
-                                            width: 1000,
-                                          ),
-                                        ),
-                                        onTap: () => Navigator.of(context)
-                                            .pushNamed(Routes.schemeDetails,
-                                                arguments: SchemeArguments(
-                                                    model: item)),
-                                      ),
-                                    )
-                                    .toList(),
-                                options: CarouselOptions(
-                                  autoPlay: true,
-                                  viewportFraction: 1,
-                                  aspectRatio: 2.0,
-                                  enlargeCenterPage: true,
-                                ),
-                              );
-                            },
-                            error: (e, t) {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            },
-                            loading: () => const Center(
-                              child: CircularProgressIndicator(),
-                            ),
-                          ),
+                          )
+                          // Gridview
+                          // MySchemes ,
+                          // pay taxes ,
+                          // my complaints ,
+                          // weather updates ,
+                          // ward Details ,
+                          // Emergency contacts  ,
+                          // full profile ,
+                          // my Complaints
                         ],
-                      )
-                      // Gridview
-                      // MySchemes ,
-                      // pay taxes ,
-                      // my complaints ,
-                      // weather updates ,
-                      // ward Details ,
-                      // Emergency contacts  ,
-                      // full profile ,
-                      // my Complaints
-                    ],
 
-                    // horizontal scrollview schemes available by goverment
+                        // horizontal scrollview schemes available by goverment
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Visibility(
-              visible: isQRVisible,
-              child: GestureDetector(
-                onTap: () {
-                  qrPressed();
-                },
-                child: BackdropFilter(
-                  filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                  child: Center(
-                    child: Container(
-                      decoration:
-                          const BoxDecoration(color: Colors.transparent),
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      height: MediaQuery.of(context).size.height * 0.95,
+                Visibility(
+                  visible: isQRVisible,
+                  child: GestureDetector(
+                    onTap: () {
+                      qrPressed();
+                    },
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
                       child: Center(
-                        child: QrImage(
-                          data:
-                              "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
-                          version: QrVersions.auto,
-                          size: 300.0,
+                        child: Container(
+                          decoration: const BoxDecoration(color: Colors.black),
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          height: MediaQuery.of(context).size.height * 0.95,
+                          child: Center(
+                            child: QrImage(
+                              data: "hii yassh",
+                              // "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
+                              version: QrVersions.auto,
+                              size: 300.0,
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

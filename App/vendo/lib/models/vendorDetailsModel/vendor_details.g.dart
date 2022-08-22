@@ -25,10 +25,12 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       token: json['token'] as String,
       vendingZoneIdApplied: json['vendingZoneIdApplied'] as String,
       reviewList: json['reviewList'] as List<dynamic>,
-      complaintsList: json['complaintsList'] as List<dynamic>,
+      complaintsList: (json['complaintsList'] as List<dynamic>)
+          .map((e) => VendorComplaintModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       weeklyBazzarList: json['weeklyBazzarList'] as List<dynamic>,
       creditScore: (json['creditScore'] as num).toDouble(),
-      vendorImageUrl: json['vendorImageUrl'] as String,
+      vendorImageurl: json['vendorImageurl'] as String,
       isApproved: json['isApproved'] as String,
       shopLocationLat: (json['shopLocationLat'] as num).toDouble(),
       shopLocationLong: (json['shopLocationLong'] as num).toDouble(),
@@ -60,7 +62,7 @@ Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
       'complaintsList': instance.complaintsList,
       'weeklyBazzarList': instance.weeklyBazzarList,
       'creditScore': instance.creditScore,
-      'vendorImageUrl': instance.vendorImageUrl,
+      'vendorImageurl': instance.vendorImageurl,
       'isApproved': instance.isApproved,
       'shopLocationLat': instance.shopLocationLat,
       'shopLocationLong': instance.shopLocationLong,

@@ -9,10 +9,12 @@ import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
+import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
+import 'package:vendo/screens/Write_complaints_screen/complaints_list.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -26,7 +28,6 @@ import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
 import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
-
 
 class Routes {
   static const calendarScreen = '/calendar_screen';
@@ -51,7 +52,7 @@ class Routes {
   static const splashScreen = '/splash_screen';
   static const schemeDetails = '/scheme_details';
   static const weeklyBazzarCard = '/weekly_bazzar_card';
-
+  static const complaintsList = '/complaints_list';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -62,7 +63,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           title: "Krishana",
         ),
       );
-   case Routes.schemeDetails:
+    case Routes.schemeDetails:
       final args = settings.arguments as SchemeArguments;
       return MaterialPageRoute(
         builder: (context) => SchemeDetails(
@@ -99,7 +100,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.spaceallocationList:
       return MaterialPageRoute(
-        builder: (context) => const  SpaceAllocationListView(),
+        builder: (context) => const SpaceAllocationListView(),
       );
 
     case Routes.documentaryEvidence:
@@ -149,12 +150,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const ApprovalPage(),
       );
 
-      case Routes.weeklyBazzarCard:
+    case Routes.weeklyBazzarCard:
       final args = settings.arguments as WeeklyBazzarCardArguments;
       return MaterialPageRoute(
         builder: (context) => WeeklyBazzarCard(
           model: args.model,
         ),
+      );
+    case Routes.complaintsList:
+      return MaterialPageRoute(
+        builder: (context) => const ComplaintsList(),
+      );
+    case Routes.test:
+      return MaterialPageRoute(
+        builder: (context) => const WhereToDirect(),
       );
 
     default:

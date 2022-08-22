@@ -25,7 +25,7 @@ class Apiservice {
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
-  static const tokenisValid = "/tokenIsValid";
+  static const tokenisValid = "/api/tokenIsValid";
   static const getuserdata = "/getuserdata";
   static const addcomplaint = "/api/addcomplaint";
   static const addreview = "/";
@@ -35,6 +35,7 @@ class Apiservice {
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
+    log("inside getvendingZones");
     try {
       log('$_baseurl$searchallvendingzones/$locationcity/$taxlocation/$vendorcategory');
       Response vendingzonedata = await _dio.get(
@@ -61,6 +62,7 @@ class Apiservice {
 
   Future<void> registerUser(
       VendorModel vendordata, BuildContext context) async {
+    log("inside registerUser");
     try {
       vendordata.vendorId = 'VX' + DateTime.now().microsecond.toString();
       log(vendordata.toJson().toString());
@@ -88,6 +90,7 @@ class Apiservice {
 
   Future<void> login(String phoneno, String password, BuildContext context,
       WidgetRef ref) async {
+    log("inside login");
     try {
       Response response = await _dio.post(_baseurl + vendorlogin,
           data: {'phone': phoneno, 'password': password});
@@ -96,7 +99,9 @@ class Apiservice {
       prefs.setString('x-auth-token', response.data['token']);
       VendorModel vendordata = ref.read(vendordetailsProvider);
       vendordata = VendorModel.fromJson(response.data);
-      log(vendordata.toJson().toString());
+      log("inside login ${vendordata.toJson().toString()}");
+      log("hash code ${vendordata.hashCode.toString()}");
+      ref.read(vendordetailsProvider.notifier).loginVendor(vendordata);
       httpErrorHandle(
         response: response,
         context: context,
@@ -114,6 +119,7 @@ class Apiservice {
   }
 
   Future<void> getuserData(BuildContext context, WidgetRef ref) async {
+    log("inside get user DAta ${context.toString()}");
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -123,29 +129,37 @@ class Apiservice {
 
       _dio.options.headers['x-auth-token'] = token;
       var tokenRes = await _dio.post(_baseurl + tokenisValid);
+      log(tokenRes.toString());
       var response = tokenRes.data;
+      log(response.toString());
       if (response == true) {
         _dio.options.headers['x-auth-token'] = token;
         Response userRes = await _dio.get(_baseurl + getuserdata);
-        VendorModel vendordata = ref.read(vendordetailsProvider);
+        VendorModel vendordata = ref.watch(vendordetailsProvider);
         vendordata = VendorModel.fromJson(userRes.data);
-        log(vendordata.toJson().toString());
+        log("inside api ${vendordata.toJson().toString()}");
+        ref.read(vendordetailsProvider.notifier).loginVendor(vendordata);
       }
     } catch (e) {
       // showSnackBar(context, e.toString());
+      log("error of get user");
       log(e.toString());
     }
   }
 
-  Future<void> addComplaint(
-      VendorComplaintModel complaintData, BuildContext context) async {
-    complaintData.vendorId = "yash123";
-    complaintData.complaintCity = "Mumbai";
+  Future<void> addComplaint(VendorComplaintModel complaintData,
+      BuildContext context, WidgetRef ref) async {
+    log("inside addComplaint");
     log(complaintData.toString());
+    final now = DateTime.now();
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(now);
+    complaintData.complaintDate = formatted;
 
     try {
       complaintData.complaintId = 'CI' + DateTime.now().microsecond.toString();
       log(complaintData.toJson().toString());
+      ref.watch(vendordetailsProvider.notifier).addComplaint(complaintData);
       log(_baseurl + addcomplaint);
       Response response = await _dio.post(
         _baseurl + addcomplaint,
@@ -170,6 +184,8 @@ class Apiservice {
 
   Future<void> addReview(
       VendorReviewModel reviewData, BuildContext context) async {
+    log("inside addReview");
+
     try {
       log(reviewData.toJson().toString());
       log(_baseurl + addreview);
@@ -198,11 +214,12 @@ class Apiservice {
     String vendorCity,
     String dateSelected,
   ) async {
+    log("inside getBazzar");
     try {
       Response weeklyBazzarData = await _dio.post(
         _baseurl + getweeklyBazzar,
         data: {
-          "city": "Mumbai",
+          "city": vendorCity,
           "bazzarDate": dateSelected,
         },
       );
@@ -229,6 +246,7 @@ class Apiservice {
   }
 
   Future<List<GovernmentSchemeModel?>> getGovernmentSchema() async {
+    log("inside getGovernmentSchema");
     try {
       log('${_baseurl + getSchema}');
       Response governmentSchemeData = await _dio.get('${_baseurl + getSchema}');
@@ -255,6 +273,7 @@ class Apiservice {
 
   Future<void> registerBazzar(
       String bazzarId, String vendorId, BuildContext context) async {
+    log("inside registerBazzar");
     try {
       log(_baseurl + registerbazzar);
       log(bazzarId);
@@ -262,7 +281,7 @@ class Apiservice {
         _baseurl + registerbazzar,
         data: {
           "bazzarId": bazzarId,
-          "vendorId": "VX001",
+          "vendorId": vendorId,
         },
       );
       log(response.toString());
