@@ -11,7 +11,7 @@ final vendorComplaintProvider = Provider<VendorComplaintModel>((ref) {
     complaintId: "",
     complaintDate: "",
     complaintStatus: "pending",
-    complaintType: "",
+    complaintType: [],
     complaintImageUrl: "",
     complaintDescription: "",
     complaintLocationLat: 0,
