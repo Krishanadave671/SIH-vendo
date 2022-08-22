@@ -19,6 +19,7 @@ class _getStartedState extends State<getStarted> {
       body: SafeArea(
         child: Column(
           children: [
+            verticalSpaceLarge,
             Padding(
               padding: const EdgeInsets.only(left: 12, top: 12),
               child: Row(

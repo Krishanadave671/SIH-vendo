@@ -6,13 +6,16 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:vendo/Screens/Homescreen/screens/widgets/services_card.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
 
 import 'package:vendo/providers/government_scheme_provider.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
+
 import 'package:vendo/services/dio_client.dart';
+
+import 'package:vendo/screens/Homescreen/screens/widgets/services_card.dart';
+
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
@@ -203,8 +206,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               ),
                             ),
                           ),
+
                           const SizedBox(
                             height: 10,
+
                           ),
                           AppText.headingThree("Services"),
                           const SizedBox(

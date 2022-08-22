@@ -14,12 +14,46 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   List<NotificationModel> notifications = [
-    NotificationModel("Vendors can avail for benefits ", "23 july 2022",
-        "https://imageio.forbes.com/specials-images/imageserve/5f962df3991e5636a2f68758/0x0.jpg?format=jpg&crop=812,457,x89,y103,safe&width=1200"),
-    NotificationModel("Vendors can avail for benefits ", "23 july 2022",
-        "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png"),
-    NotificationModel("Vendors can avail for benefits ", "23 july 2022",
-        "https://assets.devfolio.co/hackathons/d2e152245d8146898efc542304ef6653/assets/cover/694.png"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
+    NotificationModel(
+        "Vendors can avail for benefits ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "incentiveEligibility"),
+    NotificationModel(
+        "Vendors can avail for benefits ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "weeklyBazaar"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
+    NotificationModel(
+        "Vendors can avail for benefits djalknl kaldn klandglkjn klajglklakjf kjalk ",
+        "23 july 2022",
+        "lkakvnaid ijaoifnkl ijhoaeiknflka ajois jhif kaesfjoweijf askjfasdfkln kijofgi df kjd ikjgoire dgjihaasdklf kd kadsfk kndknj kdk",
+        "officerReview"),
   ];
 
   @override
@@ -46,17 +80,20 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
             verticalSpaceMedium,
-            ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: notifications.length,
-                itemBuilder: ((context, index) {
-                  return NotificationCard(
-                    notificationTopic: notifications[index].topic,
-                    notificationDate: notifications[index].releaseDate,
-                    notificationImage: notifications[index].image,
-                  );
-                }))
+            Expanded(
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: notifications.length,
+                  itemBuilder: ((context, index) {
+                    return NotificationCard(
+                      notificationTopic: notifications[index].topic,
+                      notificationDate: notifications[index].releaseDate,
+                      notificationDiscription: notifications[index].discription,
+                      notificationTag: notifications[index].tag,
+                    );
+                  })),
+            )
           ],
         ),
       ),
