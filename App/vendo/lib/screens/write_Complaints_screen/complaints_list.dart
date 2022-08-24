@@ -37,26 +37,66 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
               Navigator.of(context).pop();
             }),
       ),
-      body: RefreshIndicator(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ListView.builder(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: vendorDetails.complaintsList.length,
-            itemBuilder: ((context, index) {
-              return GestureDetector(
-                onTap: () {},
-                child: ComplaintListTile(
-                  model: vendorDetails.complaintsList[index],
-                ),
-              );
-            }),
+      body: Column(
+        children: [
+          Container(
+            decoration: const BoxDecoration(color: Colors.pink),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  const Text(
+                    "Opportunities are where the complaints are",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(child: Container()),
+                      const Image(
+                        image: AssetImage("assets/images/community.png"),
+                        width: 80,
+                        fit: BoxFit.fitHeight,
+                      ),
+                      const SizedBox(width: 50),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
-        onRefresh: () async {
-          ref.refresh(vendordetailsProvider);
-        },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                AppText.headingTwo("Recent complaints"),
+              ],
+            ),
+          ),
+          RefreshIndicator(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount: vendorDetails.complaintsList.length,
+                itemBuilder: ((context, index) {
+                  return GestureDetector(
+                    onTap: () {},
+                    child: ComplaintListTile(
+                      model: vendorDetails.complaintsList[index],
+                    ),
+                  );
+                }),
+              ),
+            ),
+            onRefresh: () async {
+              ref.refresh(vendordetailsProvider);
+            },
+          ),
+        ],
       ),
     );
   }
