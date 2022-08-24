@@ -21,7 +21,7 @@ vendingzonerouter.get("/api/getvendingzones/search/:city/:tax/:vendorcategory"  
 
 
 // find vendingzones by id
-vendingzonerouter.get("/api/getvendingzones/:id"  , async (req , res) => {
+vendingzonerouter.get("/api/getvendingzonesbyId/:id"  , async (req , res) => {
     try {
         const { id } = req.params;
         let vendingzone = await vendingzones.find({ vendingzoneId : id });
