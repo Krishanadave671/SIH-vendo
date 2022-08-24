@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
+import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
 import '../../util/AppFonts/app_text.dart';
@@ -16,6 +17,17 @@ class ApprovalPage extends ConsumerStatefulWidget {
 }
 
 class _ApprovalPageState extends ConsumerState<ApprovalPage> {
+  Future<void> getStatus(WidgetRef ref) async {
+    final _apiservice = ref.watch(apiserviceProvider);
+    await _apiservice.getuserData(context, ref);
+  }
+
+  @override
+  void initState() async {
+    await getStatus(ref);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String isApproved = ref.watch(vendordetailsProvider).isApproved;
@@ -92,7 +104,6 @@ class _ApprovalPageState extends ConsumerState<ApprovalPage> {
             GestureDetector(
               onTap: () {
                 if (isApproved == "approved") {
-                  
                   Navigator.pushNamedAndRemoveUntil(
                       context, Routes.mainPage, (route) => false);
                 }

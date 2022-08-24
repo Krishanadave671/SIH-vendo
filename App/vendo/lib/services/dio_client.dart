@@ -32,6 +32,7 @@ class Apiservice {
   static const getSchema = "/api/getschemes/all";
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
+  static const getdataById = "/";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -298,6 +299,25 @@ class Apiservice {
       );
     } catch (e) {
       showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<void> getUserDataFromId(BuildContext context, WidgetRef ref) async {
+    log("inside get user Data from id ${context.toString()}");
+    try {
+      final vendor = ref.watch(vendordetailsProvider);
+      Response status = await _dio.post(
+        _baseurl + getdataById,
+        data: {
+          "vendorId": vendor.vendorId,
+        },
+      );
+
+      vendor.vendorId = status.data;
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
     }
   }
 }
