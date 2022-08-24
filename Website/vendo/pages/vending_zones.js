@@ -312,8 +312,7 @@ export default function dashboard({ VendingZones }) {
                     <input type="file" onChange={(e)=>{
                       file = e.target.files[0];
                     }} accept="/image/*" />
-                    <button onClick={UploadImage}>Upload to Firebase</button>
-                    <p> "% done"</p>
+                    <Button onClick={UploadImage} style={{marginTop:"20px"}}>Upload Image</Button>
                 </div>
                 <img src={vendingZoneImageurl} alt="" width={"600px"} />
                 
@@ -489,7 +488,8 @@ export default function dashboard({ VendingZones }) {
         <div className="vendor-zone-list">
           <ul>
             {vendorZoneList.map((zone) => {
-              let url = "/approved_application/" + zone.vendingzoneid;
+              let url = "/vending_zone/" + zone.vendingZoneId;
+              console.log(zone);
               return (
                 <li>
                   <Card key={zone.vendingZoneId}>
