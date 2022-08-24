@@ -36,6 +36,8 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     final vendordata = ref.watch(vendordetailsProvider);
     log("inside main ${vendordata.toJson().toString()}");
+
+    // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
