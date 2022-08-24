@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/Screens/registration/space_allocation_list.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/Screens/login/login_screen2.dart';
+
 import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
-import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
+
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
+import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
+
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
@@ -47,7 +49,7 @@ class Routes {
   static const bmcMainPage = '/bmc_main_page';
   static const vendorCheck = '/vendor_check';
   static const bmcNavBar = '/bmc_nav_bar';
-  static const test = '/test';
+  static const whereTo = '/test';
   static const vendingZoneCard = '/vending_zone_card';
   static const apporvalPage = '/approval_page_view';
   static const notificationScreen = '/notification_screen';
@@ -174,7 +176,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const ComplaintsList(),
       );
-    case Routes.test:
+    case Routes.whereTo:
       return MaterialPageRoute(
         builder: (context) => const WhereToDirect(),
       );

@@ -1,12 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:vendo/providers/vendor_detailsprovider.dart';
+
 import 'package:vendo/screens/Main_page/mainpage.dart';
 import '../../../services/dio_client.dart';
-import '../../login/login_screen.dart';
+import '../../language_selector/language_selector.dart';
 
 class WhereToDirect extends ConsumerStatefulWidget {
   const WhereToDirect({Key? key}) : super(key: key);
@@ -41,9 +39,9 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
         body: Center(
           child: CircularProgressIndicator(),
         ),
-      );
+      );  
     } else if (comp == "0") {
-      return LoginScreen();
+      return LanguageSelector();
     } else {
       return MainPage();
     }
