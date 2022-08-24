@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+import 'package:vendo/util/string.dart';
 
 import '../../routes.dart';
 
@@ -23,11 +24,11 @@ class _getStartedState extends State<getStarted> {
             Padding(
               padding: const EdgeInsets.only(left: 12, top: 12),
               child: Row(
-                children: [AppText.headingOne("Hello Vendors!!")],
+                children: [AppText.headingOne(StringsList.translate["hi"]!)],
               ),
             ),
             verticalSpaceMedium,
-            AppText.headline("Let's start with revolution"),
+            AppText.headline(StringsList.translate["tagline"]!),
             verticalSpaceMedium,
             Container(
               height: 300,
@@ -40,8 +41,7 @@ class _getStartedState extends State<getStarted> {
             verticalSpaceMedium,
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20),
-              child: AppText.body(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "),
+              child: AppText.body(StringsList.translate["message"]!),
             ),
             Expanded(child: Container()),
             Padding(
@@ -53,7 +53,7 @@ class _getStartedState extends State<getStarted> {
                       primary: colors.primary,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30))),
-                  child: AppText.buttonText("Get Started")),
+                  child: AppText.buttonText(StringsList.translate["start"]!)),
             )
           ],
         ),

@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:translator/translator.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+import 'package:vendo/util/string.dart';
 
 import '../../routes.dart';
 
@@ -14,9 +18,24 @@ class LanguageSelector extends StatefulWidget {
 
 class _LanguageSelectorState extends State<LanguageSelector> {
   String dropdownvalue = 'English';
+  bool isVisible = false;
 
   // List of items in our dropdown menu
   var items = ['English', 'Hindi'];
+
+  Future<void> languageConverter(dropdownvalue) async {
+    if (dropdownvalue == "Hindi") {
+      StringsList.language = "Hindi";
+      StringsList.convert();
+    }
+  }
+
+  bool loading() {
+    setState(() {
+      isVisible = !isVisible;
+    });
+    return isVisible;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +86,7 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                 // After selecting the desired option,it will
                 // change button value to selected value
                 onChanged: (String? newValue) {
+                  
                   setState(() {
                     dropdownvalue = newValue!;
                   });
@@ -74,7 +94,15 @@ class _LanguageSelectorState extends State<LanguageSelector> {
               ),
             ),
 
-            Expanded(child: Container()),
+            Expanded(
+                child: Container(
+              child: Visibility(
+                visible: isVisible,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            )),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 60, right: 20),
@@ -82,8 +110,12 @@ class _LanguageSelectorState extends State<LanguageSelector> {
                 children: [
                   Expanded(child: Container()),
                   ElevatedButton(
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(Routes.welcomeScreen),
+                    onPressed: () async {
+                      loading();
+                      languageConverter(dropdownvalue);
+                      await Future.delayed(const Duration(seconds: 5), () {});
+                      Navigator.of(context).pushNamed(Routes.welcomeScreen);
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: colors.primary,
                     ),

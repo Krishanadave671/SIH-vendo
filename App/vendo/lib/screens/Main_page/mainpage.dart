@@ -28,7 +28,6 @@ class _MainPageState extends State<MainPage> {
     const HomeScreen(),
     AddComplaints(),
     const Calendar(title: 'Krishana'),
-    const AvailableIncentives(),
   ];
 
   @override
@@ -67,8 +66,6 @@ class _MainPageState extends State<MainPage> {
                 label: 'Complaints', icon: Icon(Icons.edit_note)),
             BottomNavigationBarItem(
                 label: 'weekly bazaar ', icon: Icon(Icons.calendar_month)),
-            BottomNavigationBarItem(
-                label: 'Resources', icon: Icon(Icons.cast_for_education))
           ]),
     );
   }

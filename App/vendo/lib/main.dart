@@ -14,7 +14,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
- 
+
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
@@ -34,14 +34,11 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
-   
     final vendordata = ref.watch(vendordetailsProvider);
     log("inside main ${vendordata.toJson().toString()}");
-    
-    // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
-        initialRoute: Routes.test);
+        initialRoute: Routes.languageSelect);
   }
 }
