@@ -119,34 +119,43 @@ const vendorDetails = mongoose.Schema({
         type: [complaints]
     },
     reviewList: {
-        type: [reviews]
+        type : [reviews]
     },
     weeklyBazzarList: [{
-            "bazzarId": {
-                type: String,
-                required: true,
-                unique: true
-            },
-            "status": {
-                type: String,
-                required: true,
-                default: "pending"
-            }
-        }
-
-    ]
-
-    ,
-    vendorCategory: {
+      "bazzarId" : {
+        type: String,  
+      },
+      "bazzarName" : {
         type: String,
-        required: true
-    },
-    name: {
-        required: true,
+       
+      },
+      "status" : {
         type: String,
-        trim: true,
-    },
-
+        default : "pending"
+      } 
+}]  ,
+    schemeList :[{
+      "schemeId" : {
+        type: String,
+        unique : true, 
+        
+      },
+      "status" : {
+        type: String,
+     
+        default : "pending"
+      }
+    }], 
+    vendorCategory : {
+      type : String , 
+      required : true 
+    }, 
+    shopName : {
+        type : String ,
+        required : true ,
+        trim : true
+    }, 
+ 
 });
 
 const Vendor = mongoose.model("Vendor", vendorDetails);
