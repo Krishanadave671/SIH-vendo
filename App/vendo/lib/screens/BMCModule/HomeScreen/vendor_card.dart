@@ -1,49 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
+import '../../../util/AppFonts/app_text.dart';
+
 class VendorCard extends StatelessWidget {
-  const VendorCard(
-      {Key? key,
-      required this.location,
-      required this.photo,
-      required this.name})
+  const VendorCard({Key? key, required this.location, required this.name})
       : super(key: key);
 
   final String location;
-  final String photo;
   final String name;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Material(
-        elevation: 10,
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Image(
-                      image: NetworkImage(photo),
-                      width: 100,
-                      fit: BoxFit.fitHeight,
-                    ),
-                    Text("Name: "),
-                    Text(name),
-                  ],
-                ),
-                verticalSpaceSmall,
-                Row(
-                  children: [Text("Location: "), Text(location)],
-                ),
-                verticalSpaceSmall
-              ],
-            ),
+      child: Container(
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+            color: Color.fromARGB(255, 240, 239, 223)),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12, top: 8),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  AppText.body("Name: "),
+                  AppText.body(name),
+                ],
+              ),
+              verticalSpaceSmall,
+              Row(
+                children: [
+                  AppText.body("Location: "),
+                  Expanded(child: AppText.body(location))
+                ],
+              ),
+              verticalSpaceSmall
+            ],
           ),
         ),
       ),
