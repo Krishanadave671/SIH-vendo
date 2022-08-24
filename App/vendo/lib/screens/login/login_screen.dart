@@ -9,6 +9,7 @@ import 'package:vendo/routes.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 import 'package:vendo/util/colors.dart';
+import 'package:vendo/util/string.dart';
 
 import '../../services/dio_client.dart';
 
@@ -52,8 +53,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 padding: const EdgeInsets.only(left: 12, top: 12),
                 child: Row(
                   children: [
-                    AppText.headingThree(
-                        "Let's sign you in\nWelcome back\nYou have been missed")
+                    AppText.headingThree(StringsList.translate["signIn"]!),
                   ],
                 ),
               ),
@@ -70,7 +70,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Padding(
                 padding: const EdgeInsets.only(left: 12),
                 child: Row(
-                  children: [AppText.headline("Login")],
+                  children: [AppText.headline(StringsList.translate["login"]!)],
                 ),
               ),
               verticalSpaceMedium,
@@ -82,7 +82,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   maxLength: 10,
                   keyboardType: TextInputType.phone,
                   decoration: const InputDecoration(
-                    labelText: 'Contact',
+                    labelText: "Contact",
                     labelStyle: TextStyle(
                         color: Colors.black87,
                         fontSize: 15,
@@ -120,8 +120,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           const BorderSide(width: 2, color: colors.primary),
                     ),
                   ),
-                  errorMessage:
-                      'must contain special character either . * @ # \$',
+                  errorMessage: StringsList.translate["password"],
                 ),
               ),
               Padding(
@@ -130,7 +129,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   onPressed: () {
                     signInUser(context);
                   },
-                  child: AppText.buttonText("Login"),
+                  child: AppText.buttonText(StringsList.translate["loginbtn"]!),
                   style: ElevatedButton.styleFrom(
                       primary: colors.primary,
                       shape: RoundedRectangleBorder(
@@ -141,13 +140,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               Row(
                 children: [
                   Expanded(child: Container()),
-                  AppText.bodyBold("New Vendor ?"),
+                  AppText.bodyBold(StringsList.translate["newVendor"]!),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pushNamed(Routes.registerView);
                     },
-                    child: const Text(
-                      "Register",
+                    child: Text(
+                      StringsList.translate["register"]!,
                       style: TextStyle(color: Colors.blueAccent, fontSize: 16),
                     ),
                   ),

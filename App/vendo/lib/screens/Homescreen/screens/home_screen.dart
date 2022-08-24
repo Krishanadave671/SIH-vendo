@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:place_picker/place_picker.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:translator/translator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
@@ -209,7 +210,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
                           const SizedBox(
                             height: 10,
-
                           ),
                           AppText.headingThree("Services"),
                           const SizedBox(
@@ -226,7 +226,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     icon: Icons.price_change,
                                     serviceName: "My Incentives",
                                     color: Colors.green,
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(
+                                          Routes.availableIncentives);
+                                    },
                                   ),
                                   Servicescard(
                                     color: Colors.red,
@@ -241,7 +244,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     color: Colors.blue,
                                     icon: Icons.calendar_month,
                                     serviceName: "My Bazzars",
-                                    onTap: () {},
+                                    onTap: () async {
+                                      
+                                    },
                                   ),
                                 ],
                               ),
