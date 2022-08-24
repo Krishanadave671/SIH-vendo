@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +15,7 @@ class WhereToDirect extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _WhereToDirect();
 }
 
-String go = "";
+String go = "/";
 final goProvider = StateProvider<String>((ref) {
   return go;
 });
@@ -22,7 +24,8 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
   Future<void> tokenGeneration(WidgetRef ref) async {
     // log(ref.watch(goProvider.notifier).state);
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('x-auth-token') ?? "0";
+    final token = prefs.getString('x-auth-token') ?? "";
+    log("token : $token");
     ref.watch(goProvider.notifier).state = token;
 
     // log(ref.watch(goProvider.notifier).state);
@@ -33,14 +36,14 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
     tokenGeneration(ref);
 
     String comp = ref.watch(goProvider);
-    if (comp == "") {
+    if (comp == "/") {
       ref.watch(apiserviceProvider).getuserData(context, ref);
       return Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
-      );  
-    } else if (comp == "0") {
+      );
+    } else if (comp == "") {
       return LanguageSelector();
     } else {
       return MainPage();

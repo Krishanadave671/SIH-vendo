@@ -35,6 +35,7 @@ class VendorModel {
   String vendorCategory;
   String shopCity;
   String shopName;
+  List<dynamic> schemeList;
   VendorModel({
     required this.vendorId,
     required this.name,
@@ -64,6 +65,7 @@ class VendorModel {
     required this.vendorCategory,
     required this.shopCity,
     required this.shopName,
+    required this.schemeList,
   });
 
   factory VendorModel.fromJson(Map<String, dynamic> json) =>

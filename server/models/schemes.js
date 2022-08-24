@@ -24,7 +24,17 @@ const schemeSchema = new mongoose.Schema({
     schemeImageUrl: {
         type: String,
         default: "https://lh5.googleusercontent.com/p/AF1QipM8YeTMOC9DfdD7GmXMnGN9OuG9MrQYOn24eHta=w408-h306-k-no"
-    }
+    }, 
+    vendorappliedList : [{
+        "vendorId" : {
+            type : String ,
+            required : true
+        },
+        "vendorStatus" : {
+            type : String ,
+            default : "pending"
+        }
+    }]
 });
 
 const Schemes = mongoose.model("Schemes", schemeSchema);

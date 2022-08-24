@@ -37,7 +37,7 @@ class ComplaintListTile extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        AppText.body(model.complaintType.toString()),
+                        AppText.body(model.complaintType[0]),
                       ],
                     ),
                     verticalSpaceSmall,

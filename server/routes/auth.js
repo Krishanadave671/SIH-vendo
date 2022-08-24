@@ -110,14 +110,15 @@ authRouter.post("/api/tokenIsValid", async(req, res) => {
         if (!vendor) return res.json(false);
         res.json(true);
     } catch (e) {
-        res.status(500).json({ error: e.message });
+         res.status(500).json({ error: e.message });
     }
 });
 
 // get user data
 authRouter.get("/getuserdata", auth, async(req, res) => {
     const vendor = await Vendor.findById(req.vendor);
-    res.json({...vendor._doc, token: req.token });
+    console.log(vendor); 
+    res.json({token: req.token ,...vendor._doc});
 });
 
 //get approved vendors

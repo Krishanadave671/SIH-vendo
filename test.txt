@@ -1,0 +1,9 @@
+App testing
+- Register Testing -- get vending 
+- Login Testing 
+- add weekly bazaar testing 
+- add complaints testing
+- your weekly bazaars by date 
+- get all schemes on Homepage 
+- Apply on schemes 
+- 

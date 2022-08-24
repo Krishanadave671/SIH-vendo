@@ -95,7 +95,7 @@ div::-webkit-scrollbar-thumb {
   color: white!important;
 }
 .btn:active, .btn:hover, .outline-btn:hover, .outline-btn:focus, .btn:focus{
-  background-color: #ff0f00!important;
+  background-color: #9BA3EB!important;
 }
 
 /* React accordion */
