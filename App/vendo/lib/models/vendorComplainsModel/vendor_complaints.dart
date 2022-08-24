@@ -6,7 +6,7 @@ class VendorComplaintModel {
   String complaintId;
   String complaintDate;
   String complaintStatus;
-  String complaintType;
+  List<dynamic> complaintType;
   String complaintImageUrl;
   String complaintDescription;
   double complaintLocationLat;

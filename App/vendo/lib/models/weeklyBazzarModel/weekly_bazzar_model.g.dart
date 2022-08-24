@@ -18,9 +18,7 @@ WeeklyBazzarModel _$WeeklyBazzarModelFromJson(Map<String, dynamic> json) =>
       bazzarName: json['bazzarName'] as String,
       bazzarAddress: json['bazzarAddress'] as String,
       bazzarMaximumCapacity: (json['bazzarMaximumCapacity'] as num).toDouble(),
-      vendorRegisteredList: (json['vendorRegisteredList'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
+      vendorRegisteredList: json['vendorRegisteredList'] as List<dynamic>,
       bazzarDate: json['bazzarDate'] as String,
       bazzarDescription: json['bazzarDescription'] as String,
       bazzarCity: json['bazzarCity'] as String,

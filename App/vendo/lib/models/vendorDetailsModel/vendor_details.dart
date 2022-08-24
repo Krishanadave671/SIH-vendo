@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:vendo/models/vendorComplainsModel/vendor_complaints.dart';
 
 part 'vendor_details.g.dart';
 
@@ -24,10 +25,10 @@ class VendorModel {
   String token;
   String vendingZoneIdApplied;
   List<dynamic> reviewList;
-  List<dynamic> complaintsList;
+  List<VendorComplaintModel> complaintsList;
   List<dynamic> weeklyBazzarList;
   double creditScore;
-  String vendorImageUrl;
+  String vendorImageurl;
   String isApproved;
   double shopLocationLat;
   double shopLocationLong;
@@ -56,7 +57,7 @@ class VendorModel {
     required this.complaintsList,
     required this.weeklyBazzarList,
     required this.creditScore,
-    required this.vendorImageUrl,
+    required this.vendorImageurl,
     required this.isApproved,
     required this.shopLocationLat,
     required this.shopLocationLong,

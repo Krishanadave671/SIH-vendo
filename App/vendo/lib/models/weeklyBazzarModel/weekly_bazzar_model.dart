@@ -14,7 +14,7 @@ class WeeklyBazzarModel {
   String bazzarName;
   String bazzarAddress;
   double bazzarMaximumCapacity;
-  List<String> vendorRegisteredList;
+  List<dynamic> vendorRegisteredList;
   String bazzarDate;
   String bazzarDescription;
   String bazzarCity;

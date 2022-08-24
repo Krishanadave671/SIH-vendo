@@ -90,12 +90,12 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     complaintDetails.complaintImageUrl = imageUrl;
     complaintDetails.complaintDate = DateTime.now().toString();
     log(complaintDetails.complaintDate);
-    complaintDetails.complaintType = _complaintType!;
+    complaintDetails.complaintType.add(_complaintType!);
 
     try {
       //api to register the complaint
       final _api = ref.watch(apiserviceProvider);
-      var response = await _api.addComplaint(complaintDetails, context);
+      var response = await _api.addComplaint(complaintDetails, context, ref);
     } on Exception catch (e) {
       log(e.toString());
     }
@@ -246,9 +246,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                     onTap: () async {
                       await uploadPhoto();
                       onContinue();
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("Complaint Registered"),
-                      ));
+
                       Navigator.of(context).pushNamed(Routes.mainPage);
                     },
                     child: Center(

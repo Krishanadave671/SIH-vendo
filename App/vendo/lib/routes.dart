@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
+
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/Screens/registration/space_allocation_list.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
-import 'package:vendo/Screens/login/login_screen2.dart';
+
 import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 
 import 'package:vendo/screens/BMCModule/HomeScreen/BottomNavBar/bottom_nav.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
+
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
+import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
+
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
+import 'package:vendo/screens/Write_complaints_screen/complaints_list.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
+import 'package:vendo/screens/incentive_lists/incentive_list.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
 import 'package:vendo/screens/registration/approval_page.dart';
@@ -26,7 +31,6 @@ import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
 import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
-
 
 class Routes {
   static const calendarScreen = '/calendar_screen';
@@ -44,7 +48,7 @@ class Routes {
   static const bmcMainPage = '/bmc_main_page';
   static const vendorCheck = '/vendor_check';
   static const bmcNavBar = '/bmc_nav_bar';
-  static const test = '/test';
+  static const whereTo = '/test';
   static const vendingZoneCard = '/vending_zone_card';
   static const apporvalPage = '/approval_page_view';
   static const notificationScreen = '/notification_screen';
@@ -52,6 +56,9 @@ class Routes {
   static const schemeDetails = '/scheme_details';
   static const weeklyBazzarCard = '/weekly_bazzar_card';
 
+  static const complaintsList = '/complaints_list';
+
+  static const availableIncentives = '/available_incentives';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -62,12 +69,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           title: "Krishana",
         ),
       );
-   case Routes.schemeDetails:
+    case Routes.schemeDetails:
       final args = settings.arguments as SchemeArguments;
       return MaterialPageRoute(
         builder: (context) => SchemeDetails(
           governmentSchemeModel: args.model,
         ),
+      );
+    case Routes.availableIncentives:
+      return MaterialPageRoute(
+        builder: (context) => const AvailableIncentives(),
       );
     case Routes.splashScreen:
       return MaterialPageRoute(
@@ -99,7 +110,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case Routes.spaceallocationList:
       return MaterialPageRoute(
-        builder: (context) => const  SpaceAllocationListView(),
+        builder: (context) => const SpaceAllocationListView(),
       );
 
     case Routes.documentaryEvidence:
@@ -149,12 +160,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const ApprovalPage(),
       );
 
-      case Routes.weeklyBazzarCard:
+    case Routes.weeklyBazzarCard:
       final args = settings.arguments as WeeklyBazzarCardArguments;
       return MaterialPageRoute(
         builder: (context) => WeeklyBazzarCard(
           model: args.model,
         ),
+      );
+    case Routes.complaintsList:
+      return MaterialPageRoute(
+        builder: (context) => const ComplaintsList(),
+      );
+    case Routes.whereTo:
+      return MaterialPageRoute(
+        builder: (context) => const WhereToDirect(),
       );
 
     default:
