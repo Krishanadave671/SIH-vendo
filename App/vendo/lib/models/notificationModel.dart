@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
 class NotificationModel {
   final String topic;
   final String releaseDate;
-  final String image;
+  final String discription;
+  final String tag;
 
-  NotificationModel(this.topic, this.releaseDate, this.image);
+  NotificationModel(this.topic, this.releaseDate, this.discription, this.tag);
 }

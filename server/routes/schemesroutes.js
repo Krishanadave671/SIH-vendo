@@ -5,7 +5,7 @@ const Vendor  = require('../models/vendor_details');
 // add scheme
 schemerouter.post("/api/addscheme", async(req, res) => {
     try {
-        const { schemeId, schemeName,schemeBenefits ,schemeReq ,  schemeImageUrl } = req.body;
+        const { schemeId, schemeName, schemeBenefits, schemeReq, schemeImageUrl } = req.body;
         let scheme = new Schemes({
             schemeId,
             schemeName,
@@ -25,6 +25,7 @@ schemerouter.get("/api/getschemes/all", async(req, res) => {
     try {
         let schemes = await Schemes.find();
         res.status(200).json(schemes);
+
     } catch (e) {
         res.status(500).json({ e: e.message });
     }

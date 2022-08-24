@@ -1,24 +1,44 @@
 const express = require('express'); 
 const reviewsrouter = express.Router(); 
 const Vendor = require("../models/vendor_details");
+const Review = require("../models/reviews");
 // add review
 reviewsrouter.post("/api/addreview", async (req, res) =>{
     try{
-        const {vendorId} = req.body; 
-        let vendors = await Vendor.findOne({vendorId : vendorId});
-        const reviewSchema = req.body;
-        console.log(reviewSchema); 
-        vendors.reviewList
-            .push(reviewSchema);
-        vendors = await vendors.save(); 
-        res.status(200).json(vendors);
+        const {vendorId , creditScoreAbsolute} = req.body ; 
+        let vendor = await Vendor.findOne({ vendorId : vendorId});
 
-    }catch (e){
-        res.status(500).json({e : e.message});
+        let review = new Review(req.body);
+         console.log(review); 
+        review = await review.save();
+        console.log(review); 
+        
+        vendor.reviewList.push(review);
+        let n  = vendor.reviewList.length ; 
+        let sum = 0 ; 
+        for(let i = 0 ; i < n ; i++){
+           sum +=  vendor.reviewList[i].creditScoreAbsolute ;
+        }
+        vendor.creditScore = ((sum/(n*7))*100).toPrecision(3);
+        vendor = await vendor.save();
+        res.status(200).json(review);
+    }catch(e){
+        res.status(500).json({e : e.message}); 
     }
 });
 
-// get creditscorecount of particular vendor
+
 // get all reviews of particular vendor
+reviewsrouter.get("/api/getreviews/:vendorId", async(req, res) => {
+    try{
+        const {vendorId} = req.params;
+        let vendor = await Vendor.findOne({ vendorId : vendorId});
+        let reviews = vendor.reviewList;
+        res.status(200).json(reviews); 
+    }catch(e) {
+        res.status(500).json({e : e.message});
+    }
+} );
+
 
 module.exports = reviewsrouter;

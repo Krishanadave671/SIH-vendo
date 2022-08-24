@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Router, { useRouter } from 'next/router';
 import { Button } from "react-bootstrap";
 import DashboardSidebar from "./components/DashboardSidebar";
 import Navbar2 from "./components/Navbar2.jsx";
@@ -8,6 +9,9 @@ import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 import CommonInput from "../pages/components/CommonInput";
 import DatePicker from "react-datepicker";
+import Highlighter from "./components/Highlighter";
+import { storage } from './firebase';
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import {
   GoogleMap,
   LoadScript,
@@ -18,19 +22,27 @@ import Geocode from "react-geocode";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 
-export default function dashboard({ VendingZones }) {
+export default function dashboard({ WeeklyBazaars }) {
+  console.log(WeeklyBazaars)
+  /**
+   * @Params
+   * bazzarId
+   * vendorTypeFavourable
+   * bazzarImageUrl
+   * bazzarLong
+   * bazzarLat
+   * bazzarName
+   * bazzarAddress
+   * bazzarMaximumCapacity
+   * vendorRegisteredList
+   * bazzarDate
+   * bazzarDescription
+   * bazzarCity
+   */
 
-  Geocode.setApiKey("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw");
-  Geocode.enableDebug();
-
-  const containerStyle = {
-    // width: '800px',
-    height: '400px',
-    marginTop: '20px',
-  };
-
+  const [WeeklyBazaarList, setWeeklyBazaarList] = React.useState(WeeklyBazaars);
   const [address,setAddress] =React.useState("");
-  const [vendorTypeFavourable, setvendorTypeFavourable] = React.useState([0,0,0,0,0,0]);
+  const [_vendorTypeFavourables, setvendorTypeFavourable] = React.useState([0,0,0,0,0,0]);
   const [bazaarName, setbazaarName] = React.useState("");
   const [bazaarImageUrl, setbazaarImageUrl] = React.useState("");
   const [bazaarLat, setbazaarLat] = React.useState(0);
@@ -40,6 +52,55 @@ export default function dashboard({ VendingZones }) {
   const [bazaarDate, setbazaarDate] = React.useState("");
   const [bazaarDescription, setbazaarDescription] = React.useState("");
   const [bazaarCity,setbazaarCity] = React.useState("");
+  var file;
+  Geocode.setApiKey("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw");
+  Geocode.enableDebug();
+  var uploadData = async () => {
+    console.log(address);
+    console.log(_vendorTypeFavourables);
+    console.log(bazaarName);
+    console.log(bazaarImageUrl);
+    console.log(bazaarLat);
+    console.log(bazaarLong);
+    console.log(bazaarMaximumCapacity);
+    console.log(bazaarDate);
+    console.log(bazaarDescription);
+    console.log(bazaarCity);
+    var vendorTypeFavourable = [];
+    for(var i = 0; i < 6; i++){
+      if(_vendorTypeFavourables[i]==1){
+        vendorTypeFavourable.push(getType(i));
+      }
+    }
+    // console.log(data);
+    const res = await axios.post(
+      "http://localhost:4000/api/addbazzar",
+      {
+        "bazzarId":"BZ1X030",
+        "vendorTypeFavourable": vendorTypeFavourable,
+        "bazzarImageUrl": bazaarImageUrl,
+        "bazzarLat": bazaarLat,
+        "bazzarLong": bazaarLong,
+        "bazzarName": bazaarName,
+        "bazzarMaximumCapacity":bazaarMaximumCapacity,
+        "bazzarDate":bazaarDate,
+        "bazzarDescription":bazaarDescription,
+        "bazzarCity":bazaarCity,
+        "bazzarAddress":address,
+      }
+      // "vendorIdList":[],
+    ).then((response)=>{
+      console.log("Uploaded successfully");
+      Router.push("/weekly_bazaars");
+
+    })
+    
+  }
+  const containerStyle = {
+    // width: '800px',
+    height: '400px',
+    marginTop: '20px',
+  };
 
   const [center,setCenter] = React.useState({
     lat:  19.0760,
@@ -74,7 +135,7 @@ export default function dashboard({ VendingZones }) {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
                 console.log(url);
                 // vendingZoneImageURL = url;
-                setbazaarImageURL(url);
+                setbazaarImageUrl(url);
                 
             });
         }
@@ -118,32 +179,42 @@ export default function dashboard({ VendingZones }) {
     }
       return "Flowers";
   }
-  const [date, setDate] = React.useState(new Date('December 17, 1995 03:24:00'));
 
+  const [city,setcity] =React.useState("");
+  const [date,setdate] =React.useState("");
   const SearchBar = () =>{
     return (
         <div className='vendor-registration-search-bar'>
             <div className="vendor-registration-search-bar-items">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control type="text" placeholder="Enter city" 
-                    onChange={(text)=>{city = text.target.value}}
+                    onChange={(text)=>{
+                      city = text.target.value;
+                    }}
                     />
                 </Form.Group>
-                {/* <FormComponent state={city} setState={changeCity} label="Enter City" /> */}
             </div>
             <div className="vendor-registration-search-bar-items">
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="locality" placeholder="Enter ward number" 
-                    onChange={(text)=>{locality = text.target.value}}/>
+                    <Form.Control type="locality" placeholder="Enter Date" 
+                    onChange={(text)=>{
+                      date = text.target.value;
+                    }}/>
                 </Form.Group>
             </div>
             <div className="vendor-registration-search-bar-items">
                 <Button variant="primary"
-                onClick={()=>{
-                    console.log(city);
-                    console.log(locality);
-                    changeCity(city);
-                    changeLocality(locality);
+                onClick={async ()=>{
+                  console.log(city);
+                  console.log(date);
+                  const res = await axios.post(
+                    "http://localhost:4000/api/getbazzarsbycityandDate",{
+                      "city" : city, 
+                      "bazzarDate" : date
+                    }
+                  );
+                  const data = await JSON.parse(JSON.stringify(res.data));
+                  setWeeklyBazaarList(data);
                 }}
                 >Search</Button>{' '}
             </div>
@@ -168,7 +239,10 @@ export default function dashboard({ VendingZones }) {
                   setbazaarName(e.target.value);
                 }} />
                 <CommonInput placeholderText="Enter date of the event" onChange={(e)=>{
-                  setbazaarDate(e.target.text);
+                  setbazaarDate(e.target.value);
+                }}/>
+                <CommonInput placeholderText="Enter description of bazaar" onChange={(e)=>{
+                  setbazaarDescription(e.target.value);
                 }}/>
                 <CommonInput placeholderText="Enter maximum capacity of vendors" onChange={(e)=>{
                   setbazaarMaximumCapacity(parseInt(e.target.value));
@@ -181,6 +255,7 @@ export default function dashboard({ VendingZones }) {
                     <p> "% done"</p>
                 </div>
                 <img src={bazaarImageUrl} alt="" width={"600px"} />
+                <Highlighter Text="Select favourable vendor categories" fontSize="1.2rem"/>
                 <Form>
                   {['Foods and vegetables', 'Fast Food Veg','Fast Food Non-veg','Toys','Utensils','Flowers'].map((type) => (
                     <div key={`${type}`} className="mb-3">
@@ -190,7 +265,7 @@ export default function dashboard({ VendingZones }) {
                         label={`${type}`}
                         
                         onChange={(e)=>{
-                          var tmpvendorTypeFavourable = vendorTypeFavourable;
+                          var tmpvendorTypeFavourable = _vendorTypeFavourables;
                           tmpvendorTypeFavourable[findIdx(e.target.id)] ^=1;
                           setvendorTypeFavourable(tmpvendorTypeFavourable);
                         }}
@@ -210,12 +285,21 @@ export default function dashboard({ VendingZones }) {
                     zoom={16}
                     onClick={(e) => {
                       setbazaarLat(e.latLng.lat());
-                      setbazaarLong(e.latLng.long());
+                      setbazaarLong(e.latLng.lng());
                       setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
                       Geocode.fromLatLng(
                         position.lat.toString(),
                         position.lng.toString()
                       ).then((response) => {
+                        for (let i = 0; i < response.results[0].address_components.length; i++) {
+                          for (let j = 0; j < response.results[0].address_components[i].types.length; j++) {
+                            switch (response.results[0].address_components[i].types[j]) {
+                              case "locality":
+                                setbazaarCity(response.results[0].address_components[i].long_name);
+                                break;
+                                }
+                              }
+                            }
                         console.log(response.results[0].formatted_address);
                         setAddress(response.results[0].formatted_address);                        
                       });
@@ -228,7 +312,7 @@ export default function dashboard({ VendingZones }) {
                       <input
                         type="text"
                         placeholder="Enter zone address"
-                        defaultValue={address}
+                        defaultValue={""}
                         onChange={(e) => {
                           Geocode.fromAddress(e.target.value).then(
                             (response) => {
@@ -245,8 +329,8 @@ export default function dashboard({ VendingZones }) {
                               
                               const { lat, lng } =
                                 response.results[0].geometry.location;
-                                setbazaarLat(e.latLng.lat());
-                                setbazaarLong(e.latLng.long());
+                                setbazaarLat(lat);
+                                setbazaarLong(lng);
                                 setPosition({ lat: lat, lng: lng });
                                 setCenter({ lat: lat, lng: lng });
                             },
@@ -254,7 +338,9 @@ export default function dashboard({ VendingZones }) {
                               console.log(error);
                             }
                           );
-                        }}
+                          setAddress(e.target.value);
+                        }
+                      }
                         style={{
                           boxSizing: `border-box`,
                           border: `1px solid var(--primary-color-dark)`,
@@ -281,7 +367,17 @@ export default function dashboard({ VendingZones }) {
                     <MarkerF />
                   </GoogleMap>
                 </LoadScript>
-                <Button style={{ marginTop: "20px" }}>Submit</Button>
+                <div
+                style={{
+                  marginTop:"20px",
+                  fontWeight:"normal",
+                  fontSize:"1.2rem"
+                }}
+                >
+                  Selected address - 
+                  {address} 
+                </div>
+                <Button style={{ marginTop: "20px" }} onClick={uploadData}>Submit</Button>
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -289,31 +385,30 @@ export default function dashboard({ VendingZones }) {
         <SearchBar />
         <div className="vendor-zone-list">
           <ul>
-            {VendingZones.map((zone) => {
-              let url = "/weekly_bazaar/" + zone.vendingzoneid;
+            {WeeklyBazaarList.map((bazaar) => {
+              let url = "/weekly_bazaar/" ;
               return (
                 <li>
-                  <Card key={zone.vendingzoneid}>
+                  <Card key={bazaar.bazzarId}>
                     <Card.Body>
                       <Card.Title>
                         <div className="pending-application-section-title">
-                          <a href={url}>Weekly bazaar id - {zone.vendingzoneid}</a>
+                          <a href={url}>Weekly bazaar id - {}</a>
                         </div>
                         <div className="pending-application-section-title">
-                          {zone.vendingzonestreetName}
+                          {bazaar.bazzarName}
                           <br/>
-                          Date - 16/04/2003
-                          Time - 12:00 to 16:00
+                          Date - {bazaar.bazzarDate}
                         </div>
                       </Card.Title>
                       <Card.Subtitle className="mb-2 text-muted">
                         <div className="pending-application-section-desc">
-                          {zone.vendingzonecity}
+                          {bazaar.bazzarCity}
                         </div>
-                        {zone.vendingzonedescription}
+                        {bazaar.bazzarDescription}
                         {/* <div>{reviews.custom_officer_date}</div> */}
                       </Card.Subtitle>
-                      <Card.Text>{zone.vendingzoneward}</Card.Text>
+                      <Card.Text>{bazaar.bazzarMaximumCapacity}</Card.Text>
                       {/* <Card.Link href={``}>Card Link</Card.Link> */}
                       <Card.Link href="#" style={{ color: "red" }}>
                         <FontAwesomeIcon icon={faTrashCan} size="1x" /> Delete
@@ -332,14 +427,16 @@ export default function dashboard({ VendingZones }) {
 
 
   export async function getServerSideProps(context) {
-    const res = await axios.get(
-      "http://localhost:4000/api/getvendingzones/search"
+    const res = await axios.post(
+      "http://localhost:4000/api/getbazzarsbycityandDate",{
+        "city" : "Mumbai", 
+        "bazzarDate" : "22/05/2002"
+      }
     );
-    // console.log(res);
     const data = await JSON.parse(JSON.stringify(res.data));
     return {
       props: {
-        VendingZones: data,
+        WeeklyBazaars: data,
       },
     };
   }

@@ -5,8 +5,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 import 'package:vendo/providers/weekly_bazzar_provider.dart';
 import 'package:vendo/screens/WeeklyBazzar/DisplayCard.dart';
+import 'package:vendo/util/AppFonts/app_text.dart';
 
-import '../../models/calendar_display_list.dart';
+
+import '../../routes.dart';
 
 class DisplayList extends ConsumerStatefulWidget {
   const DisplayList({Key? key}) : super(key: key);
@@ -38,18 +40,29 @@ class _DisplayListState extends ConsumerState<DisplayList> {
               shrinkWrap: true,
               itemCount: weeklyList.length,
               itemBuilder: ((context, index) {
-                return DisplayCard(
-                  Location: weeklyList[index]!.bazaarAddress,
-                  favourableType: weeklyList[index]!.vendorTypeFavourable,
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      Routes.weeklyBazzarCard,
+                      arguments: WeeklyBazzarCardArguments(
+                        model: weeklyList[index]!,
+                      ),
+                    );
+                  },
+                  child: DisplayCard(
+                    weeklyBazzarModel: weeklyList[index]!,
+                  ),
                 );
               }),
             ),
-            onRefresh: () async {});
+            onRefresh: () async {
+              ref.refresh(weeklyBazzarProvider);
+            });
       },
       error: (e, t) {
         log(e.toString());
         return Center(
-          child: CircularProgressIndicator(),
+          child: AppText.body("No Weekly Bazzars"),
         );
       },
       loading: () => const Center(

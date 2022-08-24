@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/models/vendingzoneModel/vendingzone_details.dart';
 import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
 
+import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
@@ -14,28 +15,28 @@ import 'package:vendo/util/colors.dart';
 import '../../routes.dart';
 import '../../services/dio_client.dart';
 
-class VendingZoneCard extends ConsumerStatefulWidget {
-  VendingZoneCard({Key? key, required this.vendingZone}) : super(key: key);
-  VendingzoneModel vendingZone;
+class WeeklyBazzarCard extends ConsumerStatefulWidget {
+  WeeklyBazzarCard({Key? key, required this.model}) : super(key: key);
+  WeeklyBazzarModel model;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _VendingZoneCardState();
+      _WeeklyBazzarCardState();
 }
 
-class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
+class _WeeklyBazzarCardState extends ConsumerState<WeeklyBazzarCard> {
   @override
   Widget build(BuildContext context) {
-    final vendingZone = widget.vendingZone;
+    final weeklyBazzar = widget.model;
     var vendorDetails = ref.read(vendordetailsProvider);
 
     return Scaffold(
       backgroundColor: Colors.blue[50],
-      body: getBody(vendingZone, vendorDetails),
+      body: getBody(weeklyBazzar, vendorDetails),
     );
   }
 
-  Widget getBody(VendingzoneModel vendingZone, VendorModel vendorDetails) {
+  Widget getBody(WeeklyBazzarModel weeklyBazzar, VendorModel vendorDetails) {
     var size = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Stack(
@@ -51,7 +52,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       Colors.black.withOpacity(0.5),
                       BlendMode.dstATop,
                     ),
-                    image: NetworkImage(vendingZone.vendingZoneImageurl),
+                    image: NetworkImage(weeklyBazzar.bazzarImageUrl),
                     fit: BoxFit.fill),
               ),
               child: Padding(
@@ -59,7 +60,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   child: Image.network(
-                    vendingZone.vendingZoneImageurl,
+                    weeklyBazzar.bazzarImageUrl,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -91,7 +92,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                     ),
                   ),
                   verticalSpaceMedium,
-                  AppText.headline(vendingZone.vendingZoneLocality),
+                  AppText.headline(weeklyBazzar.bazzarName),
                   verticalSpaceMedium,
                   Row(
                     children: <Widget>[
@@ -101,7 +102,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       ),
                       horizontalSpaceSmall,
                       Expanded(
-                        child: AppText.body(vendingZone.vendingZoneAddress),
+                        child: AppText.body(weeklyBazzar.bazzarAddress),
                       )
                     ],
                   ),
@@ -114,8 +115,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       Row(
                         children: [
                           Expanded(
-                            child: AppText.body(
-                                vendingZone.vendingZoneDescription),
+                            child: AppText.body(weeklyBazzar.bazzarDescription),
                           ),
                         ],
                       ),
@@ -132,7 +132,7 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                       ),
                       horizontalSpaceSmall,
                       AppText.body(
-                          "Available slots : ${vendingZone.maximumVendorsAllowed}"),
+                          "Available slots : ${weeklyBazzar.bazzarMaximumCapacity}"),
                     ],
                   ),
                   Row(
@@ -142,33 +142,25 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                         color: colors.primary,
                       ),
                       horizontalSpaceSmall,
-                      AppText.body(
-                          "Location Fee : ${vendingZone.vendingZoneLocationFee}"),
+                      AppText.body("Date : ${weeklyBazzar.bazzarDate}"),
                     ],
                   ),
                   verticalSpaceMedium,
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(primary: colors.primary),
                     onPressed: () async {
-                      vendorDetails.vendingZoneIdApplied =
-                          vendingZone.vendingZoneId;
-                      vendorDetails.shopLocationLat =
-                          vendingZone.vendingZoneLat;
-                      vendorDetails.shopLocationLong =
-                          vendingZone.vendingZoneLong;
-
-                      //add api to update vendorIdList
-
                       try {
-                        //api to register the vendor
-                        final _api = ref.watch(apiserviceProvider); 
-                        var response = await _api.registerUser(vendorDetails, context);
+                        //api to register for the weekly Bazzar
+                        final _api = ref.watch(apiserviceProvider);
+                        var response = await _api.registerBazzar(
+                            weeklyBazzar.bazzarId,
+                            vendorDetails.vendorId,
+                            context);
                       } on Exception catch (e) {
                         log(e.toString());
                       }
 
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          Routes.apporvalPage, (route) => false);
+                      Navigator.of(context).pop();
                     },
                     child: AppText.body(
                       "Register Now",
