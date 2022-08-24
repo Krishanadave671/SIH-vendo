@@ -16,6 +16,7 @@ import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
 import 'package:vendo/screens/Write_complaints_screen/complaints_list.dart';
 import 'package:vendo/screens/getStarted_screen/getStarted.dart';
+import 'package:vendo/screens/incentive_detail/incentive_detail.dart';
 import 'package:vendo/screens/incentive_lists/incentive_list.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
@@ -53,11 +54,10 @@ class Routes {
   static const splashScreen = '/splash_screen';
   static const schemeDetails = '/scheme_details';
   static const weeklyBazzarCard = '/weekly_bazzar_card';
-
+  static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
 
   static const availableIncentives = '/available_incentives';
-
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -78,6 +78,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Routes.availableIncentives:
       return MaterialPageRoute(
         builder: (context) => const AvailableIncentives(),
+      );
+    case Routes.incentiveDetails:
+      return MaterialPageRoute(
+        builder: (context) => const IncentiveDetail(),
       );
     case Routes.splashScreen:
       return MaterialPageRoute(
