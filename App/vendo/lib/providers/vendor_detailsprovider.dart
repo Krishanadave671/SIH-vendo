@@ -34,7 +34,8 @@ class VendorNotifier extends StateNotifier<VendorModel> {
               shopLocationLong: 0,
               vendorCategory: '',
               shopCity: '',
-              shopName: ''),
+              shopName: '',
+              schemeList: []),
         );
 
   void loginVendor(VendorModel model) {

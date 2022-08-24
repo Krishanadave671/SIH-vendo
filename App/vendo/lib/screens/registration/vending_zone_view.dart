@@ -156,13 +156,18 @@ class _VendingZoneCardState extends ConsumerState<VendingZoneCard> {
                           vendingZone.vendingZoneLat;
                       vendorDetails.shopLocationLong =
                           vendingZone.vendingZoneLong;
+                          
 
                       //add api to update vendorIdList
 
                       try {
                         //api to register the vendor
-                        final _api = ref.watch(apiserviceProvider); 
-                        var response = await _api.registerUser(vendorDetails, context);
+                        final vendor = ref.watch(vendordetailsProvider);
+                        vendor.shopLocationAddress =
+                            vendingZone.vendingZoneAddress;
+                        final _api = ref.watch(apiserviceProvider);
+                        var response =
+                            await _api.registerUser(vendorDetails, context);
                       } on Exception catch (e) {
                         log(e.toString());
                       }

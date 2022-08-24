@@ -368,7 +368,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   : _validate = false;
               _dob.toString().isEmpty ? _validate = true : _validate = false;
             });
-            RegExp contact = RegExp('r^[1-9]{1}[0-9]{9}');
+            RegExp contact = RegExp(r'[1-9]{1}[0-9]{9}');
             if (_validate == false && contact.hasMatch(_phoneNo) == true) {
               uploadVendorData();
               Navigator.of(context).pushNamed(Routes.nationalityEvidence);
