@@ -41,6 +41,10 @@ class _MyAppState extends ConsumerState<MyApp> {
     return const MaterialApp(
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
-        initialRoute: Routes.bmcNavBar);
+<<<<<<< HEAD
+        initialRoute: Routes.approvedPage);
+=======
+        initialRoute: Routes.whereTo);
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
   }
 }

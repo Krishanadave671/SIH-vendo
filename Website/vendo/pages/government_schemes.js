@@ -27,6 +27,7 @@ export default function dashboard() {
         className="dashboard-main-container"
         style={{
           paddingLeft: "30px",
+          paddingRight: "30px"
         }}
       >
         <CommonInput

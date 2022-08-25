@@ -132,7 +132,9 @@ function VendorApplicationDetails({ VendorDetails }) {
             }}>Reject</Button>{" "}
           </div>
         </div>
-        <div className="pending-application-container-item" style={{padding:"20px"}}>
+        <div className="pending-application-container-item" style={{
+          padding:"20px"
+        }}>
           <div className="pending-application-section-title">
             Vendor Location{" "}
           </div>

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const weeklyBazzarDetails = mongoose.Schema({
     bazzarId: {
         type: String,
+        unique : true, 
         reequired: true
     },
     vendorTypeFavourable: {
