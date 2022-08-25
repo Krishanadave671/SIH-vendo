@@ -38,6 +38,11 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       shopCity: json['shopCity'] as String,
       shopName: json['shopName'] as String,
       schemeList: json['schemeList'] as List<dynamic>,
+      currentLat: (json['currentLat'] as num).toDouble(),
+      currentLong: (json['currentLong'] as num).toDouble(),
+      inOrOut: json['inOrOut'] as bool,
+      inTime: json['inTime'] as List<dynamic>,
+      outTime: json['outTime'] as List<dynamic>,
     );
 
 Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
@@ -71,4 +76,9 @@ Map<String, dynamic> _$VendorModelToJson(VendorModel instance) =>
       'shopCity': instance.shopCity,
       'shopName': instance.shopName,
       'schemeList': instance.schemeList,
+      'currentLat': instance.currentLat,
+      'currentLong': instance.currentLong,
+      'inTime': instance.inTime,
+      'outTime': instance.outTime,
+      'inOrOut': instance.inOrOut,
     };
