@@ -60,10 +60,11 @@ function VendorApplicationDetails({ VendorDetails }) {
     <div>
       <Navbar />
       <div className="pending-application-container">
-        <div className="pending-application-container-item">
-          <Button variant="primary" className="pending-application-banner">
+        <div className="pending-application-container-item" style={{padding:"20px"}}>
+          <Button variant="primary" className="pending-application-banner" >
             Application ID - {VendorDetails.vendorId}
           </Button>{" "}
+         
           <div className="pending-application-section-title">Vendor Name </div>
           <div className="pending-application-section-desc">
             {VendorDetails.name}
@@ -131,7 +132,7 @@ function VendorApplicationDetails({ VendorDetails }) {
             }}>Reject</Button>{" "}
           </div>
         </div>
-        <div className="pending-application-container-item">
+        <div className="pending-application-container-item" style={{padding:"20px"}}>
           <div className="pending-application-section-title">
             Vendor Location{" "}
           </div>

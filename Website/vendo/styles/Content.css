@@ -50,8 +50,8 @@
    display: flex; 
    justify-content: space-evenly;
    align-items: center;
-   width: 250px;
-   height: 200px;
+   width: 450px;
+   height: 400px;
    background-color: #b2c2f252;
    border-radius: 30px;
    cursor: pointer;
@@ -61,12 +61,12 @@
 
 .charts{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     position: relative;
     align-items: right;
     margin-left: 30px;
     row-gap: 40px;
-    gap: 800px;
+    
 }
 .bar{
     margin-left: 20px;

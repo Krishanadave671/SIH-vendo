@@ -26,12 +26,12 @@ const data = {
 };
 
 const containerStyle = {
-   width: '800px',
+   width: '95%',
    height: "400px",
    marginTop: "20px",
-   marginLeft: "20px",
-   marginBottom:"20px"
- };
+   marginLeft: "30px",
+   marginBottom:"60px"
+}
  
  const center = {
    lat: 19.076,
@@ -109,18 +109,22 @@ function Content() {
 
       <div className="charts">
         <div className="circle1">
-          <h2></h2>
+          <h2>Vendor Data</h2>
           <Doughnut data={data} width={400} height={400}></Doughnut>
         </div>
         <div className="circle">
-          <h2></h2>
+          <h2>Vending Zone</h2>
           <Doughnut data={data1} width={400} height={400}></Doughnut>
         </div>
       </div>
-      <div style={{display:"flex", width:"100vh",textAlign:"center"}}>
+      <div style={{display:"flex", width:"100%",textAlign:"center"}}>
          <div style={{whiteSpace:"nowrap",fontSize:"1.6rem", margin:"20px"}}>Enter location</div>
          <CommonInput placeholderText="Enter location (default jaipur)" />
          <Button style={{
+          textShadow: "0px 0px 10px rgba(0,0,0,0.2)",
+          boxShadow: "0 0 20px rgb(109, 105, 105)",
+          borderRadius: "10px",
+          backgroundImage: "linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%)",
             height:"50px",
             
             margin:"20px"
@@ -131,6 +135,7 @@ function Content() {
         libraries={["places"]}
       >
         <GoogleMap
+  
           id="marker-example"
           mapContainerStyle={containerStyle}
           center={position}
