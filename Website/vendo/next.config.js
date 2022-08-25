@@ -1,9 +1,7 @@
 
 //For dashboard//
 const withImages = require("next-images");
-module.exports = withImages({
-  domains : ["firebasestorage.googleapis.com"]
-});
+module.exports = withImages({});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

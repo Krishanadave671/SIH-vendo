@@ -8,7 +8,6 @@ import {
   GoogleMap,
   LoadScript,
   MarkerF,
-  Autocomplete,
 } from "@react-google-maps/api";
 
 function VendorApplicationDetails({ VendorDetails, VendorId }) {
@@ -76,35 +75,44 @@ function VendorApplicationDetails({ VendorDetails, VendorId }) {
     };
     if (state == 0) {
       return (
-        <div className="approved-application-main-container">
-          <Button variant="primary" className="pending-application-banner"
-          style={{marginLeft:"0%"}}
-          >
-            {VendorDetails.vendorId}
-          </Button>{" "}
-          <div className="pending-application-section-title">Shop Name </div>
-          <div className="pending-application-section-desc">
-            {VendorDetails.shopName}
-          </div>
-          <div className="pending-application-section-title">Vendor Type </div>
-          <div className="pending-application-section-desc">
-            {VendorDetails.vendorCategory}
-          </div>
-          <Button variant="primary" className="pending-application-banner" style={{marginLeft:"0%"}}> 
-            Applicant Details{" "}
-          </Button>{" "}
-          <div className="pending-application-section-title">
-            Applicant Name{" "}
-          </div>
-          <div className="pending-application-section-desc">
-            {" "}
-            {VendorDetails.name}{" "}
-          </div>
-          <div className="pending-application-section-title">
-            Applicant Address{" "}
-          </div>
-          <div className="pending-application-section-desc">
-            {VendorDetails.shopLocationAddress}
+        <div className="approved-application-main-container" style={{overflow:"hidden"}}>
+          <div style={{display:"flex",flexDirection:"row",justifyContent:"space-evenly"}}>
+            <div className="profphoto">
+              
+            </div>
+            <div>
+              <Button variant="primary" className="pending-application-banner"
+              style={{marginLeft:"0%"}}
+              >
+                {VendorDetails.vendorId}
+              </Button>{" "}
+              <div className="pending-application-section-title">Shop Name </div>
+              <div className="pending-application-section-desc">
+                {VendorDetails.shopName}
+              </div>
+              <div className="pending-application-section-title">Vendor Type </div>
+              <div className="pending-application-section-desc">
+                {VendorDetails.vendorCategory}
+              </div>
+            </div>
+            <div>
+              <Button variant="primary" className="pending-application-banner" style={{marginLeft:"0%"}}> 
+                Applicant Details{" "}
+              </Button>{" "}
+              <div className="pending-application-section-title">
+                Applicant Name{" "}
+              </div>
+              <div className="pending-application-section-desc">
+                {" "}
+                {VendorDetails.name}{" "}
+              </div>
+              <div className="pending-application-section-title">
+                Applicant Address{" "}
+              </div>
+              <div className="pending-application-section-desc">
+                {VendorDetails.shopLocationAddress}
+              </div>
+            </div>
           </div>
           <div className="pending-application-btn">
             <Button variant="primary">Send Warning</Button>{" "}

@@ -39,16 +39,6 @@ function Side() {
               Vendor Registration
             </a>
           </li>
-          {/* <li>
-            <a href="/customer_complaints">
-              <FontAwesomeIcon
-                icon={faPenToSquare}
-                size="1x"
-                style={{ marginRight: "10px" }}
-              />
-              Customer Complaints
-            </a>
-          </li> */}
           <li>
             <a href="/vendor_complaints">
               <FontAwesomeIcon

@@ -3,15 +3,15 @@ import styles from "../../styles/Home.module.css";
 import { Line } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import {
-  GoogleMap,
-  LoadScript,
-  MarkerF,
-  InfoWindowF,
-} from "@react-google-maps/api";
 import { CategoryScale } from "chart.js";
-import CommonInput from "./CommonInput";
-import { Button } from "react-bootstrap";
+import {
+   GoogleMap,
+   LoadScript,
+   MarkerF,
+   InfoWindowF,
+ } from "@react-google-maps/api";
+ import CommonInput from "./CommonInput";
+ import { Button } from "react-bootstrap";
 Chart.register(CategoryScale);
 
 const data = {
@@ -26,34 +26,36 @@ const data = {
 };
 
 const containerStyle = {
-  width: '800px',
-  height: "400px",
-  marginTop: "20px",
-  marginLeft: "20px",
-  marginBottom:"20px"
-};
-
-const center = {
-  lat: 19.076,
-  lng: 72.8777,
-};
-
-const position = {
-  lat: 37.772,
-  lng: -122.214,
-};
-const position1 = {
-  lat: 37.782,
-  lng: -122.214,
-};
-const position2 = {
-  lat: 37.772,
-  lng: -122.224,
-};
-const position3 = {
-  lat: 37.782,
-  lng: -122.224,
-};
+   width: '95%',
+   height: "400px",
+   marginTop: "20px",
+   marginLeft: "30px",
+   marginBottom:"60px"
+}
+ 
+ const center = {
+   lat: 19.076,
+   lng: 72.8777,
+ };
+ 
+ const position = {
+   lat: 37.772,
+   lng: -122.214,
+ };
+ const position1 = {
+   lat: 37.782,
+   lng: -122.214,
+ };
+ const position2 = {
+   lat: 37.772,
+   lng: -122.224,
+ };
+ const position3 = {
+   lat: 37.782,
+   lng: -122.224,
+ };
+ //doughnut chart data set
+ 
 //doughnut chart data set
 
 const data1 = {
@@ -68,7 +70,6 @@ const data1 = {
 };
 
 function Content() {
-   const [city,setcity] = React.useState("Jaipur");
   return (
     <div className="ContentContainer">
       <section className="ScrollText">
@@ -108,18 +109,22 @@ function Content() {
 
       <div className="charts">
         <div className="circle1">
-          <h2></h2>
+          <h2>Vendor Data</h2>
           <Doughnut data={data} width={400} height={400}></Doughnut>
         </div>
         <div className="circle">
-          <h2></h2>
+          <h2>Vending Zone</h2>
           <Doughnut data={data1} width={400} height={400}></Doughnut>
         </div>
       </div>
-      <div style={{display:"flex", width:"100vh",textAlign:"center"}}>
+      <div style={{display:"flex", width:"100%",textAlign:"center"}}>
          <div style={{whiteSpace:"nowrap",fontSize:"1.6rem", margin:"20px"}}>Enter location</div>
          <CommonInput placeholderText="Enter location (default jaipur)" />
          <Button style={{
+          textShadow: "0px 0px 10px rgba(0,0,0,0.2)",
+          boxShadow: "0 0 20px rgb(109, 105, 105)",
+          borderRadius: "10px",
+          backgroundImage: "linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%)",
             height:"50px",
             
             margin:"20px"
@@ -130,6 +135,7 @@ function Content() {
         libraries={["places"]}
       >
         <GoogleMap
+  
           id="marker-example"
           mapContainerStyle={containerStyle}
           center={position}
@@ -141,7 +147,7 @@ function Content() {
           <MarkerF position={position3} /> */}
           <InfoWindowF position={position}>
             <div >
-               <a href="/approved_application/VX174">
+               <a href="/approved_application/VX065">
                   Kirti college ka vadapav link wala
                </a>
             </div>
@@ -165,6 +171,7 @@ function Content() {
       </LoadScript>
     </div>
   );
+
 }
 
 export default Content;
