@@ -26,7 +26,7 @@ const data = {
 };
 
 const containerStyle = {
-   width: '800px',
+   width: '90%',
    height: "400px",
    marginTop: "20px",
    marginLeft: "20px",
@@ -118,13 +118,21 @@ function Content() {
         </div>
       </div>
       <div style={{display:"flex", width:"100vh",textAlign:"center"}}>
-         <div style={{whiteSpace:"nowrap",fontSize:"1.6rem", margin:"20px"}}>Enter location</div>
-         <CommonInput placeholderText="Enter location (default jaipur)" />
+         <div style={{whiteSpace:"nowrap",fontSize:"1.6rem", margin:"20px",marginTop:"35px"}}>Enter location</div>
+         <CommonInput placeholderText="Enter location (default jaipur)" 
+         style={{height:"20px!important"}}
+         
+         />
          <Button style={{
-            height:"50px",
-            
-            margin:"20px"
-         }}> Search </Button>
+            height:"40px",  
+            margin:"20px",
+            marginTop:"35px",
+          }}> Search </Button>
+         <Button style={{
+           height:"40px",  
+           margin:"20px",
+           marginTop:"35px",
+         }}> Refresh </Button>
       </div>
       <LoadScript
         googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"

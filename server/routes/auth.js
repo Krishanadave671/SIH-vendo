@@ -190,3 +190,21 @@ authRouter.get("/api/getvendors/approved/:location", async(req, res) => {
 module.exports = authRouter;
 
 
+authRouter.post("/api/setvendortime", async(req, res) => {
+    try{
+        const {vendorId, inOrOut, time} = req.body;
+        let vendor = await Vendor.findOne({vendorId});
+        if (inOrOut == true){
+            await Vendor.updateOne({vendorId},  {inOrOut: true, "$push": {inTime: time}});
+        }
+        else {
+            await Vendor.updateOne({vendorId}, {inOrOut: false, "$push": {outTime: time}});
+        }
+        res.status(200).json(vendor);
+    }catch (e) {
+        res.status(500).json({ e: e.message });
+    }
+})
+
+module.exports = authRouter;
+
