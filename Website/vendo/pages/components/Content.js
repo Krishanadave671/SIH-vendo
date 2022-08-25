@@ -8,40 +8,16 @@ Chart.register(CategoryScale);
 
 const data = {
 	labels: [
-		"January",
-		"February",
-		"March",
-		"April",
-		"May",
-		"June",
-		"July",
-		"August",
-		"September",
-		"October",
-		"November",
-		"December",
+		"Registered Vendors",
+		"Approved Vendors",
+		"Rejected Vendors",
+		
 	],
 	datasets: [
 		{
-			label: "Sales/ month",
-			fill: true,
-			lineTension: 0.1,
-			backgroundColor: "rgba(75,192,192,0.4)",
-			borderColor: "rgba(75,192,192,1)",
-			borderCapStyle: "butt",
-			borderDash: [],
-			borderDashOffset: 0.0,
-			borderJoinStyle: "miter",
-			pointBorderColor: "rgba(75,192,192,1)",
-			pointBackgroundColor: "#fff",
-			pointBorderWidth: 0,
-			pointHoverRadius: 0,
-			pointHoverBackgroundColor: "rgba(75,192,192,1)",
-			pointHoverBorderColor: "rgba(220,220,220,1)",
-			pointHoverBorderWidth: 0,
-			pointRadius: 0,
-			pointHitRadius: 0,
-			data: [65, 59, 80, 81, 56, 55, 40, 57, 40, 48, 59, 62],
+			data: [15, 80, 5],
+			backgroundColor: ["#7393B3", "#36A2EB", "#FFCE56"],
+			hoverBackgroundColor: ["#CCCCFF", "#7393B3", "#191970"],
 		},
 	],
 };
@@ -49,7 +25,7 @@ const data = {
 //doughnut chart data set
 
 const data1 = {
-	labels: ["Organic", "Social Media", "Websites"],
+	labels: ["Pending", "Verified", "New"],
 	datasets: [
 		{
 			data: [300, 50, 100],
@@ -90,18 +66,23 @@ function Content() {
         </div>
       </div>
 
-      {/* chart js started */}
+      {/* chart js started */}    
+      
+      
       <div className="charts">
-        <div className="bar">
-          <h2>sales</h2>
-          <Line data={data} width={400} height={400}></Line>
+      <div className="circle1">
+          <h2></h2>
+		      <Doughnut data={data} width={400} height={400}></Doughnut>
         </div>
         <div className="circle">
-          <h2>Customers Arrived</h2>
+          <h2></h2>
           <Doughnut data={data1} width={400} height={400}></Doughnut>
         </div>
-      </div>
-    </div>
+</div>
+       
+        
+    
+    </div> 
     );
 }
 

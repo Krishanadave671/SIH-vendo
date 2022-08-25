@@ -52,9 +52,9 @@ bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
               res.status(200).json({message : "You are already registered for this bazzar"});
               return; 
        } 
-        await Bazzars.findOneAndUpdate({bazzarId : bazzarId},{ "$push": {vendorRegisteredList: {vendorId: vendorId}}}, {new: true});
+        let bazaars = await Bazzars.findOneAndUpdate({bazzarId : bazzarId},{ "$push": {vendorRegisteredList: {vendorId: vendorId}}}, {new: true});
          let vendor = await Vendors.findOneAndUpdate({vendorId : vendorId},{ "$push": {weeklyBazzarList: {bazzarId: bazzarId, bazzarName: bazzarName}}}, {new: true});
-         res.status(200).json(vendor);
+         res.status(200).json(bazaars);
     }catch(e){
         res.status(500).json({e : e.message});
     }
@@ -94,6 +94,14 @@ bazzarsrouter.post("/api/rejectbazzar", async (req, res) => {
 bazzarsrouter.get("/api/getallpendingbazaars", async (req, res) => {
     try {
         let bazzars = await Bazzars.find({vendorRegisteredList : {$elemMatch : {vendorstatus : "pending"}}}).sort({bazzarDate : -1});
+        res.status(200).json(bazzars);
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+} );
+bazzarsrouter.get("/api/getallbazaars", async (req, res) => {
+    try {
+        let bazzars = await Bazzars.find({});
         res.status(200).json(bazzars);
     }catch(e){
         res.status(500).json({e : e.message});

@@ -38,7 +38,12 @@ export default function government_login() {
           />
         </div>
         <div className="containerforbutton">
-          <Button className="button" onClick={login}>
+          <Button className="button" onClick={login}
+            style={{
+              width:"340px"
+            }}
+          
+          >
             Login
           </Button>
         </div>
