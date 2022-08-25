@@ -9,35 +9,8 @@ const vendingzones = require("../models/vendingzones");
 //Sign Up
 authRouter.post("/api/signup", async(req, res) => {
     try {
-<<<<<<< HEAD
+
         const {phone , password , vendingZoneIdApplied}  =  req.body ; 
-=======
-        const {
-            vendorId,
-            vendorCategory,
-            name,
-            address,
-            dob,
-            gender,
-            phone,
-            aadharNo,
-            panCardNo,
-            password,
-            isPassport,
-            isElectionid,
-            isMcgmLicense,
-            aadharcardImageUrl,
-            pancardImageUrl,
-            shopLocationAddress,
-            shopLocationLat,
-            shopLocationLong,
-            vendingZoneIdApplied,
-            shopCity,
-
-            shopName,
-        } = req.body;
-
->>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
             return res
@@ -47,34 +20,9 @@ authRouter.post("/api/signup", async(req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
-<<<<<<< HEAD
         let vendor = new Vendor({...req.body , password : hashedPassword});
-=======
-        let vendor = new Vendor({
-            vendorId,
-            name,
-            dob,
-            gender,
-            address,
-            password: hashedPassword,
-            phone,
-            aadharNo,
-            panCardNo,
-            isPassport,
-            isElectionid,
-            isMcgmLicense,
-            aadharcardImageUrl,
-            pancardImageUrl,
-            shopLocationAddress,
-            shopLocationLat,
-            shopLocationLong,
-            vendingZoneIdApplied,
-            shopCity,
-            vendorCategory,
 
-            shopName,
-        });
->>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
+        
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
         res.json(vendor);
