@@ -163,7 +163,18 @@ authRouter.get("/api/getvendors/pending/:location", async(req, res) => {
     } catch (e) {
         res.status(500).json({ e: e.message });
     }
-})
+}) 
+
+
+// set vendors checkin and checkout time -- set inOrOutTime
+// get vendors checkin and checkout time Lists 
+// - track vendors first in or out 
+// - if in -- set inOrOutTime to true
+// - if out -- set inOrOutTime to false
+
+
+
+
 
 //get approved vendors by location
 authRouter.get("/api/getvendors/approved/:location", async(req, res) => {
@@ -174,6 +185,8 @@ authRouter.get("/api/getvendors/approved/:location", async(req, res) => {
     } catch (e) {
         res.status(500).json({ e: e.message });
     }
-})
+}) 
 
 module.exports = authRouter;
+
+

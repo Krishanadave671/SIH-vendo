@@ -35,14 +35,12 @@ dependencies:
   shared_preferences: ^2.0.15
   table_calendar: ^3.0.6
   translator: ^0.1.7
-<<<<<<< HEAD
   url_launcher: ^6.1.5
-=======
   flutter_geofence: ^0.4.4
 
   
 
->>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
+
 
 dev_dependencies:
   build_runner: ^2.2.0
