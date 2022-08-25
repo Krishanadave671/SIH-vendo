@@ -125,10 +125,13 @@ authRouter.get("/getuserdata", auth, async(req, res) => {
 authRouter.post("/checkapprovalstatus", async(req, res) => {
     try {
         const { vendorId } = req.body;
-        let vendorapprovalstatus = await Vendor.findOne({ vendorId: vendorId }).select('isApproved');
-        res.json(vendorapprovalstatus);
+        let vendorapprovalstatus = await Vendor.findOne({ vendorId: vendorId });
+        if (vendorapprovalstatus.isApproved == "approved") {
+            res.send("approved");
+        } else if (vendorapprovalstatus.isApproved == "rejected") res.send("rejected");
+        else res.send("pending");
     } catch (e) {
-        res.status(500).json({ error: e.message });
+        res.status(500).send({ error: e.message });
     }
 
 })
