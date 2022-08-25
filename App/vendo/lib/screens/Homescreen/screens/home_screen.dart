@@ -143,15 +143,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       color: Colors.green,
                                     ),
                                   ),
-                                  Center(
-                                      child: Text(
-                                    vendorDetails.shopName,
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange,
-                                    ),
-                                  )),
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 95,
+                                      ),
+                                      Text(
+                                        vendorDetails.shopName,
+                                        style: const TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.orange,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),
