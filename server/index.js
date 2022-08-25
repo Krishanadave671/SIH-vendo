@@ -13,6 +13,7 @@ const complaintsrouter = require("./routes/complaintsroutes");
 const schemesRouter = require("./routes/schemesroutes");
 const WeeklyBazzarRouter = require('./routes/weeklybazaars');
 const reviewsrouter = require("./routes/reviewroutes");
+const incentiverouter = require('./routes/incentiveroutes');
 
 // middlewares
 app.use(cors()); 
@@ -23,6 +24,7 @@ app.use(complaintsrouter);
 app.use(schemesRouter); 
 app.use(WeeklyBazzarRouter); 
 app.use(reviewsrouter); 
+app.use(incentiverouter); 
  
 mongoose.connect(DB).then( () => {
     console.log("Connection successful "); 
