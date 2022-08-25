@@ -23,7 +23,7 @@ import '../models/vendorDetailsModel/vendor_details.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "https://sihvendoapi.herokuapp.com";
+  static const _baseurl = "http://192.168.83.55:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
