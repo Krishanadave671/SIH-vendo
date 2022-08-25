@@ -36,6 +36,12 @@ class VendorModel {
   String shopCity;
   String shopName;
   List<dynamic> schemeList;
+  double currentLat;
+  double currentLong;
+  List<dynamic> inTime;
+  List<dynamic> outTime;
+  bool inOrOut;
+
   VendorModel({
     required this.vendorId,
     required this.name,
@@ -66,6 +72,11 @@ class VendorModel {
     required this.shopCity,
     required this.shopName,
     required this.schemeList,
+    required this.currentLat,
+    required this.currentLong,
+    required this.inOrOut,
+    required this.inTime,
+    required this.outTime,
   });
 
   factory VendorModel.fromJson(Map<String, dynamic> json) =>
