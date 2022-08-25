@@ -168,11 +168,11 @@ const vendorDetails = mongoose.Schema({
         type : Number , 
     }, 
     inTime : {
-        type : String ,
+        type : [String] ,
 
     }, 
     outTime : {
-        type : String ,
+        type : [String] ,
     },
 
     inOrOut : {

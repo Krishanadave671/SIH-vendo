@@ -61,11 +61,11 @@ class Routes {
   static const weeklyBazzarCard = '/weekly_bazzar_card';
   static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
-<<<<<<< HEAD
+
   static const approvedPage = '/approvedPage';
-=======
+
   static const bazzarList = '/bazzar_list_view';
->>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
+
 
   static const availableIncentives = '/available_incentives';
 }
