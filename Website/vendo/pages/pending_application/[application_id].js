@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Navbar from "../components/Navbar2";
 import axios from "axios";
+import Router from "next/router";
 import {
   GoogleMap,
   LoadScript,
@@ -108,8 +109,32 @@ function VendorApplicationDetails({ VendorDetails }) {
             </a>
           </div>
           <div className="pending-application-btn">
-            <Button variant="primary">Approve</Button>{" "}
-            <Button variant="primary">Reject</Button>{" "}
+            <Button variant="primary" onClick={async (e)=>{
+              const res = await axios.post(
+                "http://localhost:4000/api/approvevendor",{
+                  "vendingZoneId": VendorDetails.vendingZoneIdApplied,
+                  "vendorId": VendorDetails.vendorId,
+                }
+              );
+              // console.log(res);
+              const data = await JSON.parse(JSON.stringify(res.data));
+              console.log(data); 
+              Router.push("/dashboard")
+
+              // vendingZoneIdApplied
+            }}>Approve</Button>{" "}
+            <Button variant="primary" onClick={async (e)=>{
+                 const res = await axios.post(
+                  "http://localhost:4000/api/rejectvendor",{
+                    "vendingZoneId": VendorDetails.vendingZoneIdApplied,
+                    "vendorId": VendorDetails.vendorId,
+                  }
+                );
+                // console.log(res);
+                const data = await JSON.parse(JSON.stringify(res.data));
+                console.log(data); 
+                // Router.push("/dashboard")
+            }}>Reject</Button>{" "}
           </div>
         </div>
         <div className="pending-application-container-item">
