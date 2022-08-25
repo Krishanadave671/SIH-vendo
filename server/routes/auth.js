@@ -9,31 +9,7 @@ const vendingzones = require("../models/vendingzones");
 //Sign Up
 authRouter.post("/api/signup", async(req, res) => {
     try {
-        const {
-            vendorId,
-            vendorCategory,
-            name,
-            address,
-            dob,
-            gender,
-            phone,
-            aadharNo,
-            panCardNo,
-            password,
-            isPassport,
-            isElectionid,
-            isMcgmLicense,
-            aadharcardImageUrl,
-            pancardImageUrl,
-            shopLocationAddress,
-            shopLocationLat,
-            shopLocationLong,
-            vendingZoneIdApplied,
-            shopCity,
-        
-            shopName,
-        } = req.body;
-
+        const {phone , password , vendingZoneIdApplied}  =  req.body ; 
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
             return res
@@ -43,29 +19,7 @@ authRouter.post("/api/signup", async(req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
-        let vendor = new Vendor({
-            vendorId,
-            name,
-            dob,
-            gender,
-            address,
-            password: hashedPassword,
-            phone,
-            aadharNo,
-            panCardNo,
-            isPassport,
-            isElectionid,
-            isMcgmLicense,
-            aadharcardImageUrl,
-            pancardImageUrl,
-            shopLocationAddress,
-            shopLocationLat,
-            shopLocationLong,
-            vendingZoneIdApplied,
-            shopCity,
-            vendorCategory,
-            shopName,
-        });
+        let vendor = new Vendor({...req.body , password : hashedPassword});
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
         res.json(vendor);

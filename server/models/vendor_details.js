@@ -146,7 +146,6 @@ const vendorDetails = mongoose.Schema({
       },
       "status" : {
         type: String,
-     
         default : "pending"
       }
     }], 
@@ -159,8 +158,28 @@ const vendorDetails = mongoose.Schema({
         required : true ,
         trim : true
     }, 
- 
-});
+
+    currentLat : {
+        type : Number , 
+    
+
+    }, 
+    currentLong : {
+        type : Number , 
+    }, 
+    inTime : {
+        type : String ,
+
+    }, 
+    outTime : {
+        type : String ,
+    },
+
+    inOrOut : {
+        type : Boolean ,
+        default : true 
+    }
+})
 
 const Vendor = mongoose.model("Vendor", vendorDetails);
 module.exports = Vendor;
