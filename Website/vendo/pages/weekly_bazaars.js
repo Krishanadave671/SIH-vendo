@@ -79,7 +79,7 @@ export default function dashboard({ WeeklyBazaars }) {
       .post(
         "http://localhost:4000/api/addbazzar",
         {
-          bazzarId: "BZ1X030",
+          bazzarId: "BZ" + Math.floor(1000 + Math.random() * 9000).toString().substring(0,4),
           vendorTypeFavourable: vendorTypeFavourable,
           bazzarImageUrl: bazaarImageUrl,
           bazzarLat: bazaarLat,
@@ -495,12 +495,8 @@ export default function dashboard({ WeeklyBazaars }) {
 }
 
 export async function getServerSideProps(context) {
-  const res = await axios.post(
-    "http://localhost:4000/api/getbazzarsbycityandDate",
-    {
-      city: "Mumbai",
-      bazzarDate: "22/05/2002",
-    }
+  const res = await axios.get(
+    "http://localhost:4000/api/getallpendingbazaars",
   );
   const data = await JSON.parse(JSON.stringify(res.data));
   return {

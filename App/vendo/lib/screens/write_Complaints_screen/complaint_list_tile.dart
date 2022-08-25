@@ -19,39 +19,45 @@ class ComplaintListTile extends StatelessWidget {
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(10)),
           //color: colors.primary,
-          color: Colors.orange,
+          color: Colors.white,
         ),
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: GestureDetector(
             onTap: () {},
-            child: Column(
-              children: [
-                Row(
+            child: Material(
+              elevation: 10,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
                   children: [
-                    AppText.containerText("Complaint Type: "),
-                    const SizedBox(
-                      width: 10,
+                    Row(
+                      children: [
+                        AppText.bodyBold("Complaint Type: "),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        AppText.body(model.complaintType[0]),
+                      ],
                     ),
-                    AppText.containerText(model.complaintType[0]),
+                    verticalSpaceSmall,
+                    Row(
+                      children: [
+                        AppText.bodyBold("Complaint Date: "),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: AppText.body(
+                            model.complaintDate.toString(),
+                            isSingleLined: 1,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
-                verticalSpaceMedium,
-                Row(
-                  children: [
-                    AppText.containerText("Complaint Date: "),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: AppText.containerText(
-                        model.complaintDate.toString(),
-                        isSingleLined: 1,
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
         ),

@@ -50,8 +50,8 @@
    display: flex; 
    justify-content: space-evenly;
    align-items: center;
-   width: 450px;
-   height: 350px;
+   width: 250px;
+   height: 200px;
    background-color: #b2c2f252;
    border-radius: 30px;
    cursor: pointer;
