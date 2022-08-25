@@ -157,7 +157,7 @@ class _IncentiveDetailState extends State<IncentiveDetail> {
                 children: const [
                   Expanded(
                     child: Text(
-                      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+                      "Ministry of Housing & Urban Affairs launched a scheme PM Street Vendor's AtmaNirbhar Nidhi (PM SVANidhi) to empower Street Vendors by not only extending loans to them, but also for their holistic development and economic upliftment. The scheme intends to facilitate collateral free working capital loans of up to INR10,000/- of one-year tenure, to approximately 50 lakh street vendors, to help resume their businesses in the urban areas, including surrounding peri-urban/rural areas.",
                       style: TextStyle(fontSize: 16),
                     ),
                   )

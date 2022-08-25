@@ -16,17 +16,17 @@ class BMCHomePage extends StatefulWidget {
 
 class _BMCHomePageState extends State<BMCHomePage> {
   List<VendorListModel> vendorList = [
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    VendorListModel("Kirti Vadapav", "amazing vadapav"),
+    VendorListModel("Ramu Pavbhaji vala", "the most delicious pav bhaji ever"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
+    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
   ];
 
   @override
@@ -44,7 +44,31 @@ class _BMCHomePageState extends State<BMCHomePage> {
                       borderRadius:
                           BorderRadius.only(bottomRight: Radius.circular(70))),
                 ),
-                Container()
+                Padding(
+                  padding: const EdgeInsets.only(right: 30,top: 10),
+                  child: Row(
+                    children: [
+                      Expanded(child: Container()),
+                      Image(image: AssetImage("assets/images/testimonials.png"),width: 70,),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 45),
+                  child: Container(
+                    width: 250,
+                    decoration: BoxDecoration(
+                        color: Colors.pink,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),border:Border.all(color: Colors.white,width: 5)),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text("Your Feedbacks help us improve our app!!",style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20
+                      ),),
+                    ),
+                  ),
+                )
               ],
             ),
             // verticalSpaceSmall,
@@ -137,7 +161,7 @@ class _BMCHomePageState extends State<BMCHomePage> {
             //   ),
             // ),
             verticalSpaceMedium,
-            AppText.headingThree("Places to check"),
+            AppText.headingThree("My Feedbacks"),
             Container(
               height: 3,
               width: MediaQuery.of(context).size.width * 0.5,

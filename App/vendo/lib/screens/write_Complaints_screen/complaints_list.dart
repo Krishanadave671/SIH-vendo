@@ -81,27 +81,29 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
               ],
             ),
           ),
-          RefreshIndicator(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: vendorDetails.complaintsList.length,
-                itemBuilder: ((context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: ComplaintListTile(
-                      model: vendorDetails.complaintsList[index],
-                    ),
-                  );
-                }),
+          Expanded(
+            child: RefreshIndicator(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: vendorDetails.complaintsList.length,
+                  itemBuilder: ((context, index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: ComplaintListTile(
+                        model: vendorDetails.complaintsList[index],
+                      ),
+                    );
+                  }),
+                ),
               ),
+              onRefresh: () async {
+                final api = ref.watch(apiserviceProvider);
+                api.getuserData(context, ref);
+              },
             ),
-            onRefresh: () async {
-              final api = ref.watch(apiserviceProvider);
-              api.getuserData(context, ref);
-            },
           ),
         ],
       ),
