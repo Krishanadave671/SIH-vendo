@@ -3,7 +3,9 @@ import DashboardSidebar from "./components/DashboardSidebar";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 export default function dashboard({ VendorsPending, VendorsApproved }) {
   console.log(VendorsPending);
@@ -62,9 +64,10 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
                     <Card.Link
                       href={`/pending_application/${application.vendorId}`}
                     >
-                      Card Link
+                        <FontAwesomeIcon icon={faLocationArrow}  style={{paddingRight:"4px"}}/>
+                      View Details
                     </Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
+                    {/* <Card.Link href="#">Another Link</Card.Link> */}
                   </Card.Body>
                 </Card>
               </li>);
@@ -92,9 +95,10 @@ export default function dashboard({ VendorsPending, VendorsApproved }) {
                     <Card.Link
                       href={`/approved_application/${application.vendorId}`}
                     >
-                      Card Link
+                      <FontAwesomeIcon icon={faLocationArrow}  style={{paddingRight:"4px"}}/>
+                      View details
                     </Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
+                    {/* <Card.Link href="#">Another Link</Card.Link> */}
                   </Card.Body>
                 </Card>
               </li> );

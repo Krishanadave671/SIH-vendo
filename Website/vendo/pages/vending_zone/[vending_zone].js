@@ -200,6 +200,7 @@ export default function Bazaar({ VendingZoneID }) {
 export async function getServerSideProps(context) {
   const { params } = context;
   const { vending_zone } = params;
+  
   return {
     props: {
       VendingZoneID: vending_zone,
