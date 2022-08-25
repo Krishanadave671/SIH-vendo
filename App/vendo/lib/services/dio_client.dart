@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ import '../models/vendorDetailsModel/vendor_details.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.83.55:4000";
+  static const _baseurl = "https://sihvendoapi.herokuapp.com";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -32,7 +34,7 @@ class Apiservice {
   static const getSchema = "/api/getschemes/all";
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
-  static const getdataById = "/";
+  static const getdataById = "/checkapprovalstatus";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -303,17 +305,18 @@ class Apiservice {
   }
 
   Future<void> getUserDataFromId(BuildContext context, WidgetRef ref) async {
-    log("inside get user Data from id ${context.toString()}");
+    log("inside get user Data from id ");
     try {
-      final vendor = ref.watch(vendordetailsProvider);
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
       Response status = await _dio.post(
         _baseurl + getdataById,
         data: {
-          "vendorId": vendor.vendorId,
+          "vendorId": vendor.vendorId.toString(),
         },
       );
 
-      vendor.vendorId = status.data;
+      vendor.isApproved = status.data.toString();
     } catch (e) {
       // showSnackBar(context, e.toString());
       log("error of get status");

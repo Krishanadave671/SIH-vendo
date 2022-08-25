@@ -7,6 +7,7 @@ import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/providers/weekly_bazzar_provider.dart';
 import 'package:vendo/screens/WeeklyBazzar/DisplayCard.dart';
 import 'package:vendo/screens/Write_complaints_screen/complaint_list_tile.dart';
+import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 
 import '../../routes.dart';
@@ -55,7 +56,8 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
           ),
         ),
         onRefresh: () async {
-          ref.refresh(vendordetailsProvider);
+          var api = ref.watch(apiserviceProvider);
+          api.getuserData(context, ref);
         },
       ),
     );
