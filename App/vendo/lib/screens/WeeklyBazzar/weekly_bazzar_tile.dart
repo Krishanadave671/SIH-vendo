@@ -14,6 +14,97 @@ class MyBazzarListTile extends StatelessWidget {
   final String id;
   final String status;
 
+  Widget statusPill(status) {
+    if (status == "approved") {
+      return Container(
+        width: 110,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          color: Color.fromARGB(255, 200, 230, 201),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            children: [
+              Icon(
+                Icons.done,
+                color: Colors.green[900],
+                size: 20,
+              ),
+              Text(
+                status,
+                style: TextStyle(color: Colors.green[900], fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (status == "pending") {
+      return Container(
+        width: 100,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          color: Colors.yellow[50],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.hourglass_bottom,
+                color: Color.fromARGB(255, 212, 194, 26),
+                size: 20,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                status,
+                style: const TextStyle(
+                    color: Color.fromARGB(255, 212, 194, 26), fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else if (status == "rejected") {
+      return Container(
+        width: 110,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(30)),
+          color: Colors.red[100],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(4.0),
+          child: Row(
+            children: [
+              const Icon(
+                Icons.do_not_disturb,
+                color: Colors.red,
+                size: 20,
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                status,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      );
+    } else {
+      return Container(
+        width: 80,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+        ),
+        child: AppText.body(status),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,7 +128,7 @@ class MyBazzarListTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        AppText.bodyBold("Complaint Type: "),
+                        AppText.bodyBold("Bazaar name: "),
                         const SizedBox(
                           width: 10,
                         ),
@@ -47,7 +138,7 @@ class MyBazzarListTile extends StatelessWidget {
                     verticalSpaceSmall,
                     Row(
                       children: [
-                        AppText.bodyBold("Complaint Date: "),
+                        AppText.bodyBold("Bazaar id: "),
                         const SizedBox(
                           width: 20,
                         ),
@@ -59,19 +150,14 @@ class MyBazzarListTile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        AppText.bodyBold("Status: "),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: AppText.body(
-                            status,
-                            isSingleLined: 1,
-                          ),
-                        ),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(child: Container()),
+                          statusPill(status),
+                        ],
+                      ),
                     ),
                   ],
                 ),
