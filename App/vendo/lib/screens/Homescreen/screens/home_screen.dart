@@ -150,7 +150,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
                                     child: AppText.body1(
-                                        "Expiry date : $expiryDate"),
+                                        "License expiry date : $expiryDate"),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -282,6 +282,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 height: 20,
                               ),
                               AppText.headingThree("Goverment Schemes"),
+                              verticalSpaceLarge,
                               //carousel slider
 
                               governmentSchemesData.when(
@@ -323,8 +324,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     child: CircularProgressIndicator(),
                                   );
                                 },
-                                loading: () => const Center(
-                                  child: CircularProgressIndicator(),
+                                loading: () => Center(
+                                  //child: CircularProgressIndicator(),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                    child: const Text(
+                                        "Apply for Government Schemes here"),
+                                  ),
                                 ),
                               ),
                             ],
