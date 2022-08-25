@@ -244,7 +244,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     color: Colors.blue,
                                     icon: Icons.calendar_month,
                                     serviceName: "My Bazzars",
-                                    onTap: () async {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.bazzarList);
+                                    },
                                   ),
                                 ],
                               ),

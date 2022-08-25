@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +34,7 @@ class Apiservice {
   static const getSchema = "/api/getschemes/all";
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
+  static const getdataById = "/checkapprovalstatus";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -298,6 +301,26 @@ class Apiservice {
       );
     } catch (e) {
       showSnackBar(context, e.toString());
+    }
+  }
+
+  Future<void> getUserDataFromId(BuildContext context, WidgetRef ref) async {
+    log("inside get user Data from id ");
+    try {
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
+      Response status = await _dio.post(
+        _baseurl + getdataById,
+        data: {
+          "vendorId": vendor.vendorId.toString(),
+        },
+      );
+
+      vendor.isApproved = status.data.toString();
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
     }
   }
 }
