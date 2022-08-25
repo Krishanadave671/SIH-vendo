@@ -75,17 +75,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.pink,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.headingThree("Hi ${vendorDetails.name} !!"),
+            const Image(
+              image: AssetImage("assets/images/hello.png"),
+              width: 40,
+              fit: BoxFit.fitHeight,
+            ),
+            Text(
+              "Hi ${vendorDetails.name} !!",
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+            ),
             const Spacer(),
             GestureDetector(
               child: const Icon(
                 Icons.notifications,
-                color: colors.primary,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               onTap: () =>
                   Navigator.of(context).pushNamed(Routes.notificationScreen),
@@ -285,7 +293,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 height: 20,
                               ),
                               AppText.headingThree("Goverment Schemes"),
-                              verticalSpaceLarge,
+                              verticalSpaceSmall,
                               //carousel slider
 
                               governmentSchemesData.when(

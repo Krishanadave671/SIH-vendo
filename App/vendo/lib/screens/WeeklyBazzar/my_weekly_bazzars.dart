@@ -28,7 +28,7 @@ class _MyBazzars extends ConsumerState<MyBazzars> {
     log("hwlads ${vendorDetails.weeklyBazzarList[0]["bazzarName"]}");
     return Scaffold(
       appBar: AppBar(
-        title: AppText.headingOne("My Complaints"),
+        title: AppText.headingThree("My Bazaars"),
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -43,29 +43,51 @@ class _MyBazzars extends ConsumerState<MyBazzars> {
       ),
       body: Column(
         children: [
+          // Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: Row(
+          //     children: const [
+          //       Image(
+          //         image: AssetImage("assets/images/map.png"),
+          //         width: 80,
+          //         fit: BoxFit.fitHeight,
+          //       ),
+          //       SizedBox(width: 50),
+          //     ],
+          //   ),
+          // ),
           Container(
             decoration: const BoxDecoration(color: Colors.pink),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
+              padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+              child: Row(
                 children: [
-                  const Text(
-                    "Opportunities are where the bazzars are",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(child: Container()),
-                      const Image(
-                        image: AssetImage("assets/images/community.png"),
-                        width: 80,
+                  Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20))),
+                    child: const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Image(
+                        image: AssetImage("assets/images/map.png"),
+                        width: 70,
                         fit: BoxFit.fitHeight,
                       ),
-                      const SizedBox(width: 50),
-                    ],
+                    ),
+                  ),
+                  const Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        "These are the Bazaars that you applied for",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -75,7 +97,7 @@ class _MyBazzars extends ConsumerState<MyBazzars> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                AppText.headingTwo("Recent Bazzars"),
+                AppText.headingTwo("Status List"),
               ],
             ),
           ),
