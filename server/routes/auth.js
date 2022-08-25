@@ -192,7 +192,7 @@ module.exports = authRouter;
 
 authRouter.post("/api/setvendortime", async(req, res) => {
     try{
-        const {vendorId, inOrOut, time} = req.body;
+        const {vendorId, inOrOut, time } = req.body;
         let vendor = await Vendor.findOne({vendorId});
         if (inOrOut == true){
             await Vendor.updateOne({vendorId},  {inOrOut: true, "$push": {inTime: time}});

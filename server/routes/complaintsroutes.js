@@ -78,6 +78,18 @@ complaintsrouter.get("/api/getcomplaintsbyid/:id" , async (req, res) =>  {
 } );
 
 
+// resolve complaints 
+complaintsrouter.post("/api/resolvecomplaints" , async(req , res ) => {
+    try{
+        const {complaintId} = req.body;
+        let complaint = await Complaints.findOneAndUpdate({complaintId : complaintId}, 
+             {complaintStatus : "resolved"}, {new : true}); 
+        res.status(200).json(complaint);
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+})
+
 complaintsrouter.get("/api/getpendingcomplaints/:city/:tags/:status", async(req, res) => {
     try{
         const {city, tags, status} = req.params;
