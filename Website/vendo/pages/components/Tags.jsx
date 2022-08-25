@@ -1,9 +1,9 @@
 import React from 'react';
 const Tags = ({ Text = 'text' }) => {
-    let color = "yellow";
-    if(Text=="harrasement") color = "blue";
-    else if(Text == "WaterClogging" ) color = "orange";
-    else if(Text == "waterClogging") color = "red";
+    let color = "#4d4111";
+    if(Text=="harrasement") color = "#1c1c20";
+    else if(Text == "WaterClogging" ) color = "blue";
+    else if(Text == "waterClogging") color = "skyblue";
 
 	return (
 		<div
