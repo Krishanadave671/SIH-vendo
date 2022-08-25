@@ -27,6 +27,7 @@ final dropDownProvider = StateProvider<String>((ref) {
 });
 
 String location = '';
+bool _validate = false;
 
 final locationProvider = StateProvider((ref) {
   return location;
@@ -34,7 +35,7 @@ final locationProvider = StateProvider((ref) {
 
 class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
   double _sliderTaxValue = 20;
-
+  String _name = '';
   String shopCity = '';
 
   void showPlacePicker() async {
@@ -58,9 +59,10 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
     vendordata.vendorCategory = vendorCategory;
     vendordata.shopCity = shopCity;
     vendordata.creditScore = _sliderTaxValue;
+    vendordata.shopName = _name;
 
     log(vendordata.toJson().toString());
-    print(" $vendorCategory , $_sliderTaxValue ");
+    print(" $shopCity ,$vendorCategory , $_sliderTaxValue ");
   }
 
   @override
@@ -82,168 +84,190 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Container(
-        color: Colors.white,
-        child: Padding(
-          padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.01,
-            bottom: 20,
-            left: 0,
-            right: 20,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: AppText.headingOne("Register"),
-              ),
-              verticalSpaceMedium,
-              SizedBox(
-                height: 50,
-                width: 350,
-                child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: colors.primary,
-                    borderRadius: BorderRadiusDirectional.only(
-                        topEnd: Radius.circular(20),
-                        bottomEnd: Radius.circular(20)),
-                  ),
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(top: 8.0, right: 8.0, bottom: 8),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.01,
+              bottom: 20,
+              left: 0,
+              right: 20,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: AppText.headingOne("Register"),
+                ),
+                verticalSpaceMedium,
+                SizedBox(
+                  height: 50,
+                  width: 350,
+                  child: DecoratedBox(
+                    decoration: const BoxDecoration(
+                      color: colors.primary,
+                      borderRadius: BorderRadiusDirectional.only(
+                          topEnd: Radius.circular(20),
+                          bottomEnd: Radius.circular(20)),
+                    ),
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: AppText.headingTwo(
-                        "Shop Details",
-                        color: colors.backgroundColor,
+                      padding: const EdgeInsets.only(
+                          top: 8.0, right: 8.0, bottom: 8),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: AppText.headingTwo(
+                          "Shop Details",
+                          color: colors.backgroundColor,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              verticalSpaceLarge,
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    DecoratedBox(
-                      decoration: borderBoxOutline,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: TextField(
-                          onChanged: (value) => value,
-                          readOnly: true,
-                          onTap: () {
-                            showPlacePicker();
-                          },
-                          decoration: InputDecoration(
-                              border: InputBorder.none,
-                              labelText: 'Location of Shop',
-                              hintText: ref.watch(locationProvider),
-                              hintStyle: body1Style),
-                        ),
-                      ),
-                    ),
-                    verticalSpaceMedium,
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: DecoratedBox(
+                verticalSpaceLarge,
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DecoratedBox(
                         decoration: borderBoxOutline,
                         child: Padding(
                           padding: const EdgeInsets.only(left: 20),
-                          child: DropdownButton<String>(
-                            hint: AppText.body("Category of shop"),
-                            value: ref.read(dropDownProvider.notifier).state,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            elevation: 16,
-                            style: const TextStyle(
-                              color: colors.kcPrimaryTextColor,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
+                          child: TextField(
+                            keyboardType: TextInputType.name,
+                            onChanged: ((value) {
+                              _name = value;
+                            }),
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              labelText: 'Shop Name',
+                              hintText: 'Enter Shop Name',
+                              errorText:
+                                  _validate ? 'Value Can\'t Be Empty' : null,
                             ),
-                            onChanged: (String? newValue) {
-                              ref.read(dropDownProvider.notifier).state =
-                                  newValue!;
+                          ),
+                        ),
+                      ),
+                      verticalSpaceMedium,
+                      DecoratedBox(
+                        decoration: borderBoxOutline,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: TextField(
+                            onChanged: (value) => value,
+                            readOnly: true,
+                            onTap: () {
+                              showPlacePicker();
                             },
-                            items: <String>[
-                              'fruitsVegetable',
-                              'fastFoodVeg',
-                              'fastFoodNonVeg',
-                              'toy',
-                              'utensils',
-                              'flower',
-                            ].map<DropdownMenuItem<String>>((String value) {
-                              return DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                labelText: 'Location of Shop',
+                                hintText: ref.watch(locationProvider),
+                                hintStyle: body1Style),
                           ),
                         ),
                       ),
-                    ),
-                    verticalSpaceLarge,
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: AppText.subheading("Location Tax Range"),
-                    ),
-                    verticalSpaceSmall,
-                    Slider(
-                      activeColor: colors.primary,
-                      inactiveColor: colors.primary,
-                      thumbColor: colors.primary,
-                      value: _sliderTaxValue,
-                      max: 100000,
-                      label: _sliderTaxValue.round().toString(),
-                      onChanged: (double value) {
-                        setState(() {
-                          _sliderTaxValue = value;
-                        });
-                      },
-                    ),
-                    verticalSpaceLarge,
-                    GestureDetector(
-                      onTap: () {
-                        onContinue();
-                        Navigator.of(context).pushNamed(
-                          Routes.spaceallocationList,
-                        );
-                      },
-                      child: Center(
-                        child: SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: colors.primary,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                AppText.body(
-                                  "Search Location",
-                                  color: colors.backgroundColor,
-                                ),
-                                const Icon(
-                                  Icons.search,
-                                  color: colors.backgroundColor,
-                                ),
-                              ],
+                      verticalSpaceMedium,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: DecoratedBox(
+                          decoration: borderBoxOutline,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: DropdownButton<String>(
+                              hint: AppText.body("Category of shop"),
+                              value: ref.read(dropDownProvider.notifier).state,
+                              icon: const Icon(Icons.arrow_drop_down),
+                              elevation: 16,
+                              style: const TextStyle(
+                                color: colors.kcPrimaryTextColor,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              onChanged: (String? newValue) {
+                                ref.read(dropDownProvider.notifier).state =
+                                    newValue!;
+                              },
+                              items: <String>[
+                                'fruitsVegetable',
+                                'fastFoodVeg',
+                                'fastFoodNonVeg',
+                                'toy',
+                                'utensils',
+                                'flower',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      verticalSpaceLarge,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: AppText.subheading("Location Tax Range"),
+                      ),
+                      verticalSpaceSmall,
+                      Slider(
+                        activeColor: colors.primary,
+                        inactiveColor: colors.primary,
+                        thumbColor: colors.primary,
+                        value: _sliderTaxValue,
+                        max: 100000,
+                        label: _sliderTaxValue.round().toString(),
+                        onChanged: (double value) {
+                          setState(() {
+                            _sliderTaxValue = value;
+                          });
+                        },
+                      ),
+                      verticalSpaceLarge,
+                      GestureDetector(
+                        onTap: () {
+                          onContinue();
+                          Navigator.of(context).pushNamed(
+                            Routes.spaceallocationList,
+                          );
+                        },
+                        child: Center(
+                          child: SizedBox(
+                            height: 50,
+                            width: 300,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: colors.primary,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  AppText.body(
+                                    "Search Location",
+                                    color: colors.backgroundColor,
+                                  ),
+                                  const Icon(
+                                    Icons.search,
+                                    color: colors.backgroundColor,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

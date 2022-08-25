@@ -30,7 +30,7 @@ authRouter.post("/api/signup", async(req, res) => {
             shopLocationLong,
             vendingZoneIdApplied,
             shopCity,
-            isApproved,
+        
             shopName,
         } = req.body;
 
@@ -64,7 +64,6 @@ authRouter.post("/api/signup", async(req, res) => {
             vendingZoneIdApplied,
             shopCity,
             vendorCategory,
-            isApproved,
             shopName,
         });
         vendor = await vendor.save();
@@ -116,10 +115,24 @@ authRouter.post("/api/tokenIsValid", async(req, res) => {
 
 // get user data
 authRouter.get("/getuserdata", auth, async(req, res) => {
-    const vendor = await Vendor.findById(req.vendor);
+    let vendor = await Vendor.findById(req.vendor);
     console.log(vendor); 
     res.json({token: req.token ,...vendor._doc});
 });
+
+authRouter.post("/checkapprovalstatus" , async(req, res) => {
+    try{
+        const {vendorId} = req.body;
+    let vendorapprovalstatus = await Vendor.findOne({vendorId : vendorId}); 
+    if(vendorapprovalstatus.isApproved == "approved"){
+        res.send("approved");
+    }else if(vendorapprovalstatus.isApproved == "rejected") res.send("rejected");
+    else res.send("pending"); 
+    }catch (e){
+        res.status(500).send({ error: e.message });
+    }
+    
+})
 
 //get approved vendors
 authRouter.get("/api/getvendors/approved", async(req, res) => {
