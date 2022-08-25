@@ -238,6 +238,3 @@ height: 30%;
 .social-media-icons a:hover{
   color: var(--shade-color);
 }
-.gm-ui-hover-effect {
-  display: none !important;
-}

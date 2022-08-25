@@ -148,12 +148,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       const SizedBox(
                                         width: 95,
                                       ),
-                                      Text(
-                                        vendorDetails.shopName,
-                                        style: const TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.orange,
+                                      Expanded(
+                                        child: Text(
+                                          vendorDetails.shopName,
+                                          style: const TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -370,33 +372,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: isQRVisible,
-                  child: GestureDetector(
-                    onTap: () {
-                      qrPressed();
-                    },
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                      child: Center(
-                        child: Container(
-                          decoration: const BoxDecoration(color: Colors.black),
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          height: MediaQuery.of(context).size.height * 0.95,
-                          child: Center(
-                            child: QrImage(
-                              data: "hii yassh",
-                              // "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
-                              version: QrVersions.auto,
-                              size: 300.0,
-                            ),
-                          ),
-                        ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: isQRVisible,
+            child: GestureDetector(
+              onTap: () {
+                qrPressed();
+              },
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                child: Center(
+                  child: Container(
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    height: MediaQuery.of(context).size.height * 0.95,
+                    child: Center(
+                      child: QrImage(
+                        data:
+                            "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
+                        version: QrVersions.auto,
+                        size: 300.0,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],

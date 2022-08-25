@@ -31,7 +31,7 @@ class VendorCard extends StatelessWidget {
               verticalSpaceSmall,
               Row(
                 children: [
-                  AppText.body("Location: "),
+                  AppText.body("Feedback: "),
                   Expanded(child: AppText.body(location))
                 ],
               ),

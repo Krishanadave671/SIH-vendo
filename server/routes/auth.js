@@ -9,6 +9,9 @@ const vendingzones = require("../models/vendingzones");
 //Sign Up
 authRouter.post("/api/signup", async(req, res) => {
     try {
+<<<<<<< HEAD
+        const {phone , password , vendingZoneIdApplied}  =  req.body ; 
+=======
         const {
             vendorId,
             vendorCategory,
@@ -34,6 +37,7 @@ authRouter.post("/api/signup", async(req, res) => {
             shopName,
         } = req.body;
 
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
             return res
@@ -43,6 +47,9 @@ authRouter.post("/api/signup", async(req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
+<<<<<<< HEAD
+        let vendor = new Vendor({...req.body , password : hashedPassword});
+=======
         let vendor = new Vendor({
             vendorId,
             name,
@@ -67,9 +74,9 @@ authRouter.post("/api/signup", async(req, res) => {
 
             shopName,
         });
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
-        // await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
         res.json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });
@@ -77,6 +84,39 @@ authRouter.post("/api/signup", async(req, res) => {
 
 });
 
+
+// setting inTime 
+authRouter.post("/api/setintime", async(req, res) => {
+    try {
+        const { vendorId, inTime } = req.body;
+        let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { inTime: inTime }, { new: true });
+        res.status(200).json(vendor);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}); 
+// senduserlive location lat and long 
+authRouter.post("/api/senduserlivelocation", async(req, res) => {
+    try {
+        const { vendorId, shopLocationLat, shopLocationLong } = req.body;   
+        let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { shopLocationLat: shopLocationLat, shopLocationLong: shopLocationLong }, { new: true });
+        res.status(200).json(vendor);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}),
+
+authRouter.get("/api/getvendorlivelocation/:city", async (req, res) => {
+   
+    try{
+        const {city} = req.params;
+        let vendor = await Vendor.find({shopCity : city ,}).select({ shopLocationLat: 1, shopLocationLong: 1 });
+    res.status(200).json(vendor);
+
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }   
+})
 //Sign In
 authRouter.post("/api/login", async(req, res) => {
     try {

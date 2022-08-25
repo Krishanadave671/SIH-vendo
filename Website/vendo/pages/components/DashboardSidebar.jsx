@@ -39,7 +39,7 @@ function Side() {
               Vendor Registration
             </a>
           </li>
-          {/* <li>
+          <li>
             <a href="/customer_complaints">
               <FontAwesomeIcon
                 icon={faPenToSquare}
@@ -48,7 +48,7 @@ function Side() {
               />
               Customer Complaints
             </a>
-          </li> */}
+          </li>
           <li>
             <a href="/vendor_complaints">
               <FontAwesomeIcon

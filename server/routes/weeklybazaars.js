@@ -113,13 +113,20 @@ bazzarsrouter.get("/api/getallbazaars", async (req, res) => {
     }
 } );
 
-bazzarsrouter.get("/api/getvendingregisteredlist/:bazzarid" , async (req , res) => {
+bazzarsrouter.get("/api/getpendingvendorregisteredlist/:bazzarid" , async (req , res) => {
     try {
         const {bazzarid} = req.params;
-        let bazzars = await Bazzars.find({bazzarId : bazzarid}).select("vendorRegisteredList");
-        res.status(200).json(bazzars) ;
+        let bazzars = await Bazzars.findOne({bazzarId : bazzarid});
+        list = []; 
+        for(let i = 0 ; i < bazzars.vendorRegisteredList.length ; i++){
+            if(bazzars.vendorRegisteredList[i].vendorstatus == "pending"){
+                list.push(bazzars.vendorRegisteredList[i]);
+            }
+        } 
+        res.status(200).json(list);
     }catch(e){
         res.status(500).json({e : e.message});
     }
 })
+
 module.exports = bazzarsrouter;

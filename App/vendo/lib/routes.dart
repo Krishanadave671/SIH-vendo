@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 import 'package:vendo/Screens/Main_page/mainpage.dart';
 import 'package:vendo/Screens/registration/space_allocation_list.dart';
@@ -33,6 +34,7 @@ import 'package:vendo/screens/registration/vending_zone_view.dart';
 import 'package:vendo/screens/scheme_details/SchemeDetails.dart';
 import 'package:vendo/screens/splash_screen.dart';
 import 'package:vendo/screens/write_Complaints_screen/complaints.dart';
+import 'package:vendo/util/AppInterface/appapplied.dart';
 
 class Routes {
   static const calendarScreen = '/calendar_screen';
@@ -59,7 +61,11 @@ class Routes {
   static const weeklyBazzarCard = '/weekly_bazzar_card';
   static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
+<<<<<<< HEAD
+  static const approvedPage = '/approvedPage';
+=======
   static const bazzarList = '/bazzar_list_view';
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
 
   static const availableIncentives = '/available_incentives';
 }
@@ -187,6 +193,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const WhereToDirect(),
       );
 
+    case Routes.approvedPage:
+      return MaterialPageRoute(builder: (context) => const ApprovedPage()); 
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
