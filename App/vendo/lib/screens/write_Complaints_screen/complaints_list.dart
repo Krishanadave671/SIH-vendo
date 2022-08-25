@@ -25,7 +25,7 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
     final vendorDetails = ref.watch(vendordetailsProvider);
     return Scaffold(
       appBar: AppBar(
-        title: AppText.headingOne("My Complaints"),
+        title: AppText.headingThree("My Complaints"),
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -46,22 +46,27 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  const Text(
-                    "Opportunities are where the complaints are",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                    ),
-                  ),
                   Row(
-                    children: [
-                      Expanded(child: Container()),
-                      const Image(
+                    children: const [
+                      //Expanded(child: Container()),
+                      Image(
                         image: AssetImage("assets/images/community.png"),
                         width: 80,
                         fit: BoxFit.fitHeight,
                       ),
-                      const SizedBox(width: 50),
+                      //const SizedBox(width: 50),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Opportunities are where the complaints are",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],

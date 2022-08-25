@@ -54,9 +54,10 @@ padding-top: 0px;
 
 }
 
-.wrapper>ul>li{
+.wrapper>ul>li>a{
   white-space: nowrap;
   color: white;
+  text-decoration: none;
 }
 
 

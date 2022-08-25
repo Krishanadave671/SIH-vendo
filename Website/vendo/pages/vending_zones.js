@@ -66,6 +66,7 @@ export default function dashboard({ VendingZones }) {
     lat: 19.076,
     lng: 72.8777,
   });
+
   const [vendingZoneImageurl,setVendorZoneImageURL] = React.useState("");
   
   const [position, setPosition] = React.useState({
