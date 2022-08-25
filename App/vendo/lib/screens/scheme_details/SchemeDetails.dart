@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:vendo/models/governmentSchemeModel/government_scheme_model.dart';
+import 'package:vendo/util/AppInterface/ui_helpers.dart';
+
+import '../../routes.dart';
 
 class SchemeDetails extends StatefulWidget {
-  const SchemeDetails({Key? key,required this.governmentSchemeModel}) : super(key: key);
+  const SchemeDetails({Key? key, required this.governmentSchemeModel})
+      : super(key: key);
   final GovernmentSchemeModel governmentSchemeModel;
 
   @override
@@ -68,7 +72,7 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                     height: 20,
                   ),
                   Text(
-                   widget.governmentSchemeModel.schemeName,
+                    widget.governmentSchemeModel.schemeName,
                     style: TextStyle(fontSize: 20, height: 1.2),
                   ),
                   // Padding(
@@ -95,7 +99,7 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                   widget.governmentSchemeModel.schemeReq,
+                    widget.governmentSchemeModel.schemeReq,
                     style: TextStyle(height: 1.6),
                   ),
                   SizedBox(
@@ -109,13 +113,18 @@ class _SchemeDetailsState extends State<SchemeDetails> {
                         fontWeight: FontWeight.bold),
                   ),
                   Text(
-                   widget.governmentSchemeModel.schemeBenefits,
+                    widget.governmentSchemeModel.schemeBenefits,
                     style: TextStyle(height: 1.6),
                   ),
                   SizedBox(
                     height: 20,
                   ),
-                  ElevatedButton(onPressed: () {}, child: Text("Apply Now!!"))
+                  ElevatedButton(
+                      onPressed: () {
+                        showSnackBar(context, "succefully applied!!");
+                        Navigator.of(context).pushNamed(Routes.mainPage);
+                      },
+                      child: Text("Apply Now!!"))
                 ],
               ),
             ),

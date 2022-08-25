@@ -75,17 +75,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.pink,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            AppText.headingThree("Hi ${vendorDetails.name} !!"),
+            const Image(
+              image: AssetImage("assets/images/hello.png"),
+              width: 40,
+              fit: BoxFit.fitHeight,
+            ),
+            Text(
+              "Hi ${vendorDetails.name} !!",
+              style: const TextStyle(color: Colors.white, fontSize: 20),
+            ),
             const Spacer(),
             GestureDetector(
               child: const Icon(
                 Icons.notifications,
-                color: colors.primary,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
               onTap: () =>
                   Navigator.of(context).pushNamed(Routes.notificationScreen),
@@ -135,22 +143,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       color: Colors.green,
                                     ),
                                   ),
-                                  Center(
-                                      child: Text(
-                                    vendorDetails.shopName,
-                                    style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orange,
-                                    ),
-                                  )),
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 95,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          vendorDetails.shopName,
+                                          style: const TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.orange,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                   const SizedBox(
                                     height: 20,
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 16),
                                     child: AppText.body1(
-                                        "Expiry date : $expiryDate"),
+                                        "License expiry date : $expiryDate"),
                                   ),
                                   const SizedBox(
                                     height: 10,
@@ -244,7 +260,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     color: Colors.blue,
                                     icon: Icons.calendar_month,
                                     serviceName: "My Bazzars",
-                                    onTap: () async {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.bazzarList);
+                                    },
                                   ),
                                 ],
                               ),
@@ -282,6 +301,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 height: 20,
                               ),
                               AppText.headingThree("Goverment Schemes"),
+                              verticalSpaceSmall,
                               //carousel slider
 
                               governmentSchemesData.when(
@@ -323,8 +343,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     child: CircularProgressIndicator(),
                                   );
                                 },
-                                loading: () => const Center(
-                                  child: CircularProgressIndicator(),
+                                loading: () => Center(
+                                  //child: CircularProgressIndicator(),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(20))),
+                                    child: const Text(
+                                        "Apply for Government Schemes here"),
+                                  ),
                                 ),
                               ),
                             ],
@@ -345,33 +372,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ),
                   ),
                 ),
-                Visibility(
-                  visible: isQRVisible,
-                  child: GestureDetector(
-                    onTap: () {
-                      qrPressed();
-                    },
-                    child: BackdropFilter(
-                      filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
-                      child: Center(
-                        child: Container(
-                          decoration: const BoxDecoration(color: Colors.black),
-                          width: MediaQuery.of(context).size.width * 0.95,
-                          height: MediaQuery.of(context).size.height * 0.95,
-                          child: Center(
-                            child: QrImage(
-                              data: "hii yassh",
-                              // "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
-                              version: QrVersions.auto,
-                              size: 300.0,
-                            ),
-                          ),
-                        ),
+              ],
+            ),
+          ),
+          Visibility(
+            visible: isQRVisible,
+            child: GestureDetector(
+              onTap: () {
+                qrPressed();
+              },
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 4.0, sigmaY: 4.0),
+                child: Center(
+                  child: Container(
+                    decoration: const BoxDecoration(color: Colors.transparent),
+                    width: MediaQuery.of(context).size.width * 0.95,
+                    height: MediaQuery.of(context).size.height * 0.95,
+                    child: Center(
+                      child: QrImage(
+                        data:
+                            "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
+                        version: QrVersions.auto,
+                        size: 300.0,
                       ),
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
         ],

@@ -3,12 +3,16 @@ import 'package:vendo/models/vendorComplainsModel/vendor_complaints.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import '../../util/AppInterface/ui_helpers.dart';
 
-class ComplaintListTile extends StatelessWidget {
-  const ComplaintListTile({
+class MyBazzarListTile extends StatelessWidget {
+  const MyBazzarListTile({
     Key? key,
-    required this.model,
+    required this.name,
+    required this.id,
+    required this.status,
   }) : super(key: key);
-  final VendorComplaintModel model;
+  final String name;
+  final String id;
+  final String status;
 
   Widget statusPill(status) {
     if (status == "approved") {
@@ -124,23 +128,23 @@ class ComplaintListTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        AppText.bodyBold("Complaint Type: "),
+                        AppText.bodyBold("Bazaar name: "),
                         const SizedBox(
                           width: 10,
                         ),
-                        AppText.body(model.complaintType[0]),
+                        AppText.body(name),
                       ],
                     ),
                     verticalSpaceSmall,
                     Row(
                       children: [
-                        AppText.bodyBold("Complaint Date: "),
+                        AppText.bodyBold("Bazaar id: "),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                           child: AppText.body(
-                            model.complaintDate.toString(),
+                            id,
                             isSingleLined: 1,
                           ),
                         ),
@@ -151,7 +155,7 @@ class ComplaintListTile extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(child: Container()),
-                          statusPill(model.complaintStatus.toString()),
+                          statusPill(status),
                         ],
                       ),
                     ),

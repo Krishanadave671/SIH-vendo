@@ -1,6 +1,7 @@
 import Highlighter from "../components/Highlighter";
 import Navbar from "../components/Navbar2";
 import React from "react";
+import axios from "axios";
 import {
   GoogleMap,
   LoadScript,
@@ -9,12 +10,13 @@ import {
 } from "@react-google-maps/api";
 import Card from "react-bootstrap/Card";
 
-export default function Bazaar({ VendingZoneID }) {
+export default function Bazaar({ VendingZoneID, VendingZoneData }) {
   const containerStyle = {
     // width: '800px',
     height: "400px",
     marginTop: "20px",
   };
+  console.log(VendingZoneData);
   let vendorList = [
     { vendorID: "V134dw4", vendorName: "Kirti College" },
     { vendorID: "V134dw4", vendorName: "Kirti College" },
@@ -23,14 +25,10 @@ export default function Bazaar({ VendingZoneID }) {
     { vendorID: "V134dw4", vendorName: "Kirti College" },
   ];
   const [center, setCenter] = React.useState({
-    lat: 19.076,
-    lng: 72.8777,
+    lat: VendingZoneData.vendingZoneLat,
+    lng: VendingZoneData.vendingZoneLong,
   });
 
-  const [position, setPosition] = React.useState({
-    lat: 37.772,
-    lng: -122.214,
-  });
 
   const [state, setState] = React.useState(0);
 
@@ -94,13 +92,16 @@ export default function Bazaar({ VendingZoneID }) {
           <Highlighter Text={"Vending Zone ID - " + VendingZoneID } fontSize="1.6rem" />
           <div className="bazaar-flex">
             <div>
-              <Highlighter Text="Date of the event" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">16/04/2003</div>
+              <Highlighter Text="Zone description" fontSize="1.2rem" />
+              <div className="bazaar-section-desc">{VendingZoneData.vendingZoneDescription}</div>
               <Highlighter Text="Maximum vendors capacity" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">12</div>
-              <Highlighter Text="Bazaar Description" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">Best bazaar</div>
-              {/* <img src="" alt="" /> */}
+              <div className="bazaar-section-desc">{VendingZoneData.maximumVendorsAllowed}</div>
+              <Highlighter Text="Ward number" fontSize="1.2rem" />
+              <div className="bazaar-section-desc">{VendingZoneData.vendingZoneWard}</div>
+              <Highlighter Text="Vending zone address" fontSize="1.2rem" />
+              <div className="bazaar-section-desc">{VendingZoneData.vendingZoneAddress}</div>
+              <Highlighter Text="Vending zone image" fontSize="1.2rem" />
+              <img src={VendingZoneData.vendingZoneImageurl} alt="" />
             </div>
             <div>
               <Highlighter Text="Location of Event" fontSize="1.2rem" />
@@ -113,25 +114,10 @@ export default function Bazaar({ VendingZoneID }) {
                   mapContainerStyle={containerStyle}
                   center={center}
                   zoom={16}
-                  onClick={(e) => {
-                    setPosition({ lat: e.latLng.lat(), lng: e.latLng.lng() });
-                    Geocode.fromLatLng(
-                      position.lat.toString(),
-                      position.lng.toString()
-                    ).then(
-                      (response) => {
-                        console.log(response.results[0].formatted_address);
-                        setAddress(response.results[0].formatted_address);
-                      },
-                      (error) => {
-                        console.log(error);
-                      }
-                    );
-                  }}
                 >
                   <MarkerF
                     // onLoad={onLoad}
-                    position={position}
+                    position={center}
                   />
                   {/* Child components, such as markers, info windows, etc. */}
                   {/* <></> */}
@@ -200,10 +186,14 @@ export default function Bazaar({ VendingZoneID }) {
 export async function getServerSideProps(context) {
   const { params } = context;
   const { vending_zone } = params;
-  
+  const res = await axios.get(
+    "http://localhost:4000/api/getvendingzonesbyId/" + vending_zone,
+  );
+  const data = await JSON.parse(JSON.stringify(res.data));
   return {
     props: {
       VendingZoneID: vending_zone,
+      VendingZoneData: data,
     },
   };
 }

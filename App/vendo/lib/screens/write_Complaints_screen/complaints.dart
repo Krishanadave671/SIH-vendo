@@ -128,7 +128,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 232, 231, 231),
       appBar: AppBar(
-        title: AppText.headingTwo("Vendor Complaints"),
+        title: AppText.headingThree("Vendor Complaints"),
         elevation: 0,
         backgroundColor: Colors.white,
         leading: IconButton(
@@ -143,7 +143,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
       ),
       body: Center(
         child: Container(
-          margin: EdgeInsets.only(top: 20, bottom: 20),
+          margin: const EdgeInsets.only(top: 20, bottom: 20),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
@@ -198,7 +198,7 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                               ).toList(),
                             ),
                           ),
-                          verticalSpaceLarge,
+                          verticalSpaceMedium,
                           AppText.bodyBold("Write short description"),
                           TextField(
                             onChanged: ((value) {
@@ -208,11 +208,13 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                             maxLines: null,
                           ),
                           verticalSpaceLarge,
-                          SizedBox(
-                            width: double.infinity,
-                            child: (displayImagePath != null)
-                                ? Image.file(File(displayImagePath!))
-                                : Image.asset("assets/images/user.png"),
+                          Center(
+                            child: SizedBox(
+                              width: 150,
+                              child: (displayImagePath != null)
+                                  ? Image.file(File(displayImagePath!))
+                                  : Image.asset("assets/images/takeaphoto.png"),
+                            ),
                           ),
                           verticalSpaceMedium,
                           Center(
@@ -221,17 +223,35 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                                 takePhoto();
                               },
                               child: SizedBox(
-                                height: 100,
-                                width: 100,
+                                //height: 100,
+                                width: 130,
                                 child: DecoratedBox(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  child: Icon(
-                                    Icons.camera,
-                                    size:
-                                        MediaQuery.of(context).size.width * 0.2,
-                                    color: colors.primary,
+                                  // child: Icon(
+                                  //   Icons.camera_alt,
+                                  //   size:
+                                  //       MediaQuery.of(context).size.width * 0.2,
+                                  //   color: colors.primary,
+                                  // ),
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        color: Colors.pink,
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Icons.camera_alt,
+                                            color: Colors.white,
+                                          ),
+                                          AppText.containerText("Take photo")
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -242,28 +262,21 @@ class _AddComplaintsState extends ConsumerState<AddComplaints> {
                     ),
                   ),
                   verticalSpaceLarge,
-                  GestureDetector(
-                    onTap: () async {
-                      await uploadPhoto();
-                      onContinue();
-
-                      Navigator.of(context).pushNamed(Routes.mainPage);
-                    },
-                    child: Center(
-                      child: SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: 50,
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                              color: colors.primary,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Center(
-                            child: AppText.body("Raise issue"),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  ElevatedButton(
+                      onPressed: () async {
+                        await uploadPhoto();
+                        onContinue();
+                        Navigator.of(context).pushNamed(Routes.mainPage);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.pink,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)))),
+                      child: const Text(
+                        "Raise issue",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
                   verticalSpaceMedium,
                 ],
               ),

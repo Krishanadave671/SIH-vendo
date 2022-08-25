@@ -15,6 +15,7 @@ import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
 
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
+import 'package:vendo/screens/WeeklyBazzar/my_weekly_bazzars.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar.dart';
 import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_card.dart';
 import 'package:vendo/screens/Write_complaints_screen/complaints_list.dart';
@@ -60,7 +61,11 @@ class Routes {
   static const weeklyBazzarCard = '/weekly_bazzar_card';
   static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
+<<<<<<< HEAD
   static const approvedPage = '/approvedPage';
+=======
+  static const bazzarList = '/bazzar_list_view';
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
 
   static const availableIncentives = '/available_incentives';
 }
@@ -178,6 +183,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case Routes.complaintsList:
       return MaterialPageRoute(
         builder: (context) => const ComplaintsList(),
+      );
+       case Routes.bazzarList:
+      return MaterialPageRoute(
+        builder: (context) => const MyBazzars(),
       );
     case Routes.whereTo:
       return MaterialPageRoute(

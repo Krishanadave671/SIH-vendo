@@ -55,10 +55,10 @@
 }
 .pending-application-btn{
     display:flex;
-    margin-top: 20px;
+    margin: 20px;
    
-   justify-content: space-evenly;
-    margin-left: -28%;
+   justify-content: space-between;
+    /* margin-left: -28%; */
 }
 .pending-application-docs a{
     display: block;

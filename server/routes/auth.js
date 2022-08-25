@@ -9,7 +9,35 @@ const vendingzones = require("../models/vendingzones");
 //Sign Up
 authRouter.post("/api/signup", async(req, res) => {
     try {
+<<<<<<< HEAD
         const {phone , password , vendingZoneIdApplied}  =  req.body ; 
+=======
+        const {
+            vendorId,
+            vendorCategory,
+            name,
+            address,
+            dob,
+            gender,
+            phone,
+            aadharNo,
+            panCardNo,
+            password,
+            isPassport,
+            isElectionid,
+            isMcgmLicense,
+            aadharcardImageUrl,
+            pancardImageUrl,
+            shopLocationAddress,
+            shopLocationLat,
+            shopLocationLong,
+            vendingZoneIdApplied,
+            shopCity,
+
+            shopName,
+        } = req.body;
+
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
             return res
@@ -19,13 +47,41 @@ authRouter.post("/api/signup", async(req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
+<<<<<<< HEAD
         let vendor = new Vendor({...req.body , password : hashedPassword});
+=======
+        let vendor = new Vendor({
+            vendorId,
+            name,
+            dob,
+            gender,
+            address,
+            password: hashedPassword,
+            phone,
+            aadharNo,
+            panCardNo,
+            isPassport,
+            isElectionid,
+            isMcgmLicense,
+            aadharcardImageUrl,
+            pancardImageUrl,
+            shopLocationAddress,
+            shopLocationLat,
+            shopLocationLong,
+            vendingZoneIdApplied,
+            shopCity,
+            vendorCategory,
+
+            shopName,
+        });
+>>>>>>> 057dc227e6f58b16a489e6a759a714e4cdb76e94
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
         res.json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
+
 });
 
 
@@ -95,29 +151,29 @@ authRouter.post("/api/tokenIsValid", async(req, res) => {
         if (!vendor) return res.json(false);
         res.json(true);
     } catch (e) {
-         res.status(500).json({ error: e.message });
+        res.status(500).json({ error: e.message });
     }
 });
 
 // get user data
 authRouter.get("/getuserdata", auth, async(req, res) => {
-    let vendor = await Vendor.findById(req.vendor);
-    console.log(vendor); 
-    res.json({token: req.token ,...vendor._doc});
+    const vendor = await Vendor.findById(req.vendor);
+    console.log(vendor);
+    res.json({ token: req.token, ...vendor._doc });
 });
 
-authRouter.post("/checkapprovalstatus" , async(req, res) => {
-    try{
-        const {vendorId} = req.body;
-    let vendorapprovalstatus = await Vendor.findOne({vendorId : vendorId}); 
-    if(vendorapprovalstatus.isApproved == "approved"){
-        res.send("approved");
-    }else if(vendorapprovalstatus.isApproved == "rejected") res.send("rejected");
-    else res.send("pending"); 
-    }catch (e){
+authRouter.post("/checkapprovalstatus", async(req, res) => {
+    try {
+        const { vendorId } = req.body;
+        let vendorapprovalstatus = await Vendor.findOne({ vendorId: vendorId });
+        if (vendorapprovalstatus.isApproved == "approved") {
+            res.send("approved");
+        } else if (vendorapprovalstatus.isApproved == "rejected") res.send("rejected");
+        else res.send("pending");
+    } catch (e) {
         res.status(500).send({ error: e.message });
     }
-    
+
 })
 
 //get approved vendors
