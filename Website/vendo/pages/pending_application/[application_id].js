@@ -85,13 +85,6 @@ function VendorApplicationDetails({ VendorDetails }) {
           <div className="pending-application-section-desc">
             {VendorDetails.address}
           </div>
-          <div className="pending-application-section-title">
-            Educational qualification{" "}
-          </div>
-          <div className="pending-application-section-desc">
-            {" "}
-            BE in Computers, IIT Bombay
-          </div>
           <div className="pending-application-section-title">Documents </div>
           <div className="pending-application-docs">
             <a

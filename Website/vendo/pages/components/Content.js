@@ -3,15 +3,15 @@ import styles from "../../styles/Home.module.css";
 import { Line } from "react-chartjs-2";
 import { Doughnut } from "react-chartjs-2";
 import Chart from "chart.js/auto";
-import {
-  GoogleMap,
-  LoadScript,
-  MarkerF,
-  InfoWindowF,
-} from "@react-google-maps/api";
 import { CategoryScale } from "chart.js";
-import CommonInput from "./CommonInput";
-import { Button } from "react-bootstrap";
+import {
+   GoogleMap,
+   LoadScript,
+   MarkerF,
+   InfoWindowF,
+ } from "@react-google-maps/api";
+ import CommonInput from "./CommonInput";
+ import { Button } from "react-bootstrap";
 Chart.register(CategoryScale);
 
 const data = {
@@ -26,34 +26,36 @@ const data = {
 };
 
 const containerStyle = {
-  width: '800px',
-  height: "400px",
-  marginTop: "20px",
-  marginLeft: "20px",
-  marginBottom:"20px"
-};
-
-const center = {
-  lat: 19.076,
-  lng: 72.8777,
-};
-
-const position = {
-  lat: 37.772,
-  lng: -122.214,
-};
-const position1 = {
-  lat: 37.782,
-  lng: -122.214,
-};
-const position2 = {
-  lat: 37.772,
-  lng: -122.224,
-};
-const position3 = {
-  lat: 37.782,
-  lng: -122.224,
-};
+   width: '800px',
+   height: "400px",
+   marginTop: "20px",
+   marginLeft: "20px",
+   marginBottom:"20px"
+ };
+ 
+ const center = {
+   lat: 19.076,
+   lng: 72.8777,
+ };
+ 
+ const position = {
+   lat: 37.772,
+   lng: -122.214,
+ };
+ const position1 = {
+   lat: 37.782,
+   lng: -122.214,
+ };
+ const position2 = {
+   lat: 37.772,
+   lng: -122.224,
+ };
+ const position3 = {
+   lat: 37.782,
+   lng: -122.224,
+ };
+ //doughnut chart data set
+ 
 //doughnut chart data set
 
 const data1 = {
@@ -68,7 +70,6 @@ const data1 = {
 };
 
 function Content() {
-   const [city,setcity] = React.useState("Jaipur");
   return (
     <div className="ContentContainer">
       <section className="ScrollText">
@@ -141,7 +142,7 @@ function Content() {
           <MarkerF position={position3} /> */}
           <InfoWindowF position={position}>
             <div >
-               <a href="/approved_application/VX174">
+               <a href="/approved_application/VX065">
                   Kirti college ka vadapav link wala
                </a>
             </div>
@@ -165,6 +166,7 @@ function Content() {
       </LoadScript>
     </div>
   );
+
 }
 
 export default Content;
