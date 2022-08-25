@@ -69,3 +69,10 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+
+.profphoto{
+    width: 33vh;
+    background-image: url("../Images/vendorprofphoto.png");
+    background-repeat: no-repeat;
+}

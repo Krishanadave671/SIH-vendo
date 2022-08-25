@@ -5,6 +5,7 @@
     overflow-y: auto;
     background: linear-gradient(rgb(226, 235, 237), rgb(208, 227, 227));
     backdrop-filter: blur(5px);
+    
 }
 .pending-application-container-item{
     width: 50%;
@@ -21,6 +22,7 @@
     overflow: hidden;
     align-items: center;
     overflow-y: auto;
+   
     
 }
 .pending-application-container-item iframe{
@@ -47,6 +49,7 @@
     font-size: large;
     font-weight: 600;
     margin-left: 5%;
+   
     
 }
 .pending-application-accordion{
@@ -64,7 +67,7 @@
     display: block;
     width: 256px;
     align-self: center;
-    background-image: var(--gradient-text);
+    background-image: linear-gradient(to right, #334768 0%, #5b889d 51%, #242d3c 100%);;
     color: white;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -72,4 +75,6 @@
     height: 30px;
     border-radius: 40px;
     text-align: center;
+    
 }
+

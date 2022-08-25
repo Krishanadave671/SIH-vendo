@@ -48,7 +48,7 @@ export default function government_login() {
           </Button>
         </div>
       </div>
-      <div classname="ImageForLogin">
+      <div className="ImageForLogin">
         <Image src={loginimage} ></Image>
       </div>
 
