@@ -1,6 +1,7 @@
 import Highlighter from "../components/Highlighter";
 import Navbar from "../components/Navbar2";
 import React from "react";
+import axios from "axios";
 import {
   GoogleMap,
   LoadScript,
@@ -9,12 +10,15 @@ import {
 } from "@react-google-maps/api";
 import Card from "react-bootstrap/Card";
 
-export default function Bazaar({ BazaarID }) {
+export default function Bazaar({ BazaarID , BazaarData, vendorPendingList}) {
   const containerStyle = {
     // width: '800px',
     height: "400px",
     marginTop: "20px",
   };
+  
+  console.log("http://localhost:4000/api/getpendingvendorregisteredlist/" + BazaarID);
+  console.log(vendorPendingList);
   let vendorList = [
     { vendorID: "V134dw4", vendorName: "Kirti College" },
     { vendorID: "V134dw4", vendorName: "Kirti College" },
@@ -57,21 +61,20 @@ export default function Bazaar({ BazaarID }) {
       },
     ];
     const CustomOfficerReview = () => {
-      return custom_officer_review.map((reviews) => {
+      return vendorPendingList.map((vendors) => {
         return (
           <li>
             <Card>
               <Card.Body>
-                <Card.Title>{reviews.custom_officer_date}</Card.Title>
+                <Card.Title>zcnkjdnckjsakxks</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   <div className="pending-application-section-desc">
-                    {" "}
-                    {reviews.custom_officer_title}{" "}
+                    sxbhjabscjsabhxjsxc
                   </div>
                 </Card.Subtitle>
-                <Card.Text>{reviews.desc}</Card.Text>
-                <Card.Link href={``}>Card Link</Card.Link>
-                <Card.Link href="#">Another Link</Card.Link>
+                {/* <Card.Text>{reviews.desc}</Card.Text> */}
+                <Card.Link href={``}>Approve</Card.Link>
+                <Card.Link href="#">Reject</Card.Link>
               </Card.Body>
             </Card>
           </li>
@@ -91,18 +94,22 @@ export default function Bazaar({ BazaarID }) {
     if (state == 0) {
       return (
         <div>
-          <Highlighter Text="Bazaar ID - B1234234" fontSize="1.6rem" />
+          <Highlighter Text={"Bazaar ID - " + BazaarID} fontSize="1.6rem" />
           <div className="bazaar-flex">
             <div>
               <Highlighter Text="Date of the event" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">16/04/2003</div>
+              <div className="bazaar-section-desc">{BazaarData.bazzarDate}</div>
               <Highlighter Text="Maximum vendors capacity" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">12</div>
+              <div className="bazaar-section-desc">{BazaarData.bazzarMaximumCapacity}</div>
               <Highlighter Text="Bazaar Description" fontSize="1.2rem" />
-              <div className="bazaar-section-desc">Best bazaar</div>
-              {/* <img src="" alt="" /> */}
+              <div className="bazaar-section-desc">{BazaarData.bazzarDescription}</div>
+              <Highlighter Text="Bazaar Image" fontSize="1.2rem" />
+              <div className="bazaar-section-desc"><a href={BazaarData.bazzarImageUrl}> View Image</a></div>
             </div>
             <div>
+              {/* <Highlighter Text="Image of bazaar" fontSize="1.2rem" />
+              <image href={BazaarData.bazzarImageUrl} alt="bazaar img " style={{height:"200px",width:"200px"}}/> */}
+
               <Highlighter Text="Location of Event" fontSize="1.2rem" />
               <LoadScript
                 googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
@@ -200,9 +207,20 @@ export default function Bazaar({ BazaarID }) {
 export async function getServerSideProps(context) {
   const { params } = context;
   const { bazaar_id } = params;
+  const res = await axios.get(
+    "http://localhost:4000/api/getbazzar/" + bazaar_id,
+  );
+  const data = await JSON.parse(JSON.stringify(res.data));
+  const res1 = await axios.get(
+    "http://localhost:4000/api/getpendingvendorregisteredlist/" + bazaar_id,
+  );
+  const data1 = await JSON.parse(JSON.stringify(res.data));
+  console.log(data1);
   return {
     props: {
       BazaarID: bazaar_id,
+      BazaarData: data[0],
+      vendorPendingList: data1, 
     },
   };
 }

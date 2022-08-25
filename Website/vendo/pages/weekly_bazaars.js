@@ -277,10 +277,18 @@ export default function dashboard({ WeeklyBazaars }) {
                     onChange={(e) => {
                       file = e.target.files[0];
                     }}
+                    style={{
+                      marginTop:"20px",
+                    }}
                     accept="/image/*"
                   />
-                  <button onClick={UploadImage}>Upload to Firebase</button>
-                  <p> "% done"</p>
+                  <Button onClick={UploadImage}
+                    style={{
+                      marginTop:"20px",
+                      marginBottom:"20px",
+                    }}
+                  >Upload Image</Button>
+                  
                 </div>
                 <img src={bazaarImageUrl} alt="" width={"600px"} />
                 <Highlighter
@@ -474,7 +482,14 @@ export default function dashboard({ WeeklyBazaars }) {
                         <div className="pending-application-section-desc">
                           {bazaar.bazzarCity}
                         </div>
-                        {bazaar.bazzarDescription}
+                        {/* <br/> */}
+                        <div className="pending-application-section-desc" style={{
+                          color:"white"
+                        }}>
+                          {/* {bazaar.bazzarCity} */}
+                          {bazaar.bazzarDescription}
+                        </div>
+
                         {/* <div>{reviews.custom_officer_date}</div> */}
                       </Card.Subtitle>
                       <Card.Text>{bazaar.bazzarMaximumCapacity}</Card.Text>
@@ -496,7 +511,7 @@ export default function dashboard({ WeeklyBazaars }) {
 
 export async function getServerSideProps(context) {
   const res = await axios.get(
-    "http://localhost:4000/api/getallpendingbazaars",
+    "http://localhost:4000/api/getallbazaars",
   );
   const data = await JSON.parse(JSON.stringify(res.data));
   return {
