@@ -8,26 +8,35 @@ const vendingzones = require("../models/vendingzones");
 
 //Sign Up
 authRouter.post("/api/signup", async(req, res) => {
-    try {
+    try {console.log("hiiee");
 
         const {phone , password , vendingZoneIdApplied}  =  req.body ; 
+         console.log(req.body)
         const existingVendor = await Vendor.findOne({ phone });
+        console.log(existingVendor)
+
         if (existingVendor) {
             return res
                 .status(400)
                 .json({ msg: "Vendor with same phone number exists! " });
         }
+        console.log("wowowo");
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
         let vendor = new Vendor({...req.body , password : hashedPassword});
+        console(vendor)
 
-        
+        console.log("lessgoo");
         vendor = await vendor.save();
+        console.log("new");
+      
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
         res.json(vendor);
+        console.log("new11");
     } catch (e) {
         res.status(500).json({ error: e.message });
+        console.log("error");
     }
 
 });
