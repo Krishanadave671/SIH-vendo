@@ -57,15 +57,15 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
     String comp = ref.watch(goProvider);
     if (comp == "/") {
       ref.watch(apiserviceProvider).getuserData(context, ref);
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(),
         ),
       );
     } else if (comp == "") {
-      return LanguageSelector();
+      return const LanguageSelector();
     } else {
-      return MainPage();
+      return const MainPage();
     }
 
     // return FutureBuilder<String>(
