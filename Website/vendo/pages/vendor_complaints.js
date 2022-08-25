@@ -104,7 +104,9 @@ export default function dashboard({ VendorComplaints }) {
                 >
                   <div className="pending-application-section-title">
                     <a href={"/complaints_section/" + reviews.complaintId}>
-                      {reviews.vendorId}
+                      Vendor ID - {reviews.vendorId}
+                      <br/>
+                      Complaints ID - {reviews.complaintId}
                     </a>
                   </div>
                   <div>{reviews.complaintDate}</div>
@@ -119,7 +121,13 @@ export default function dashboard({ VendorComplaints }) {
                 <div>{reviews.custom_officer_date}</div>
               </Card.Subtitle>
               <Card.Text>{reviews.complaintDescription}</Card.Text>
-              <Card.Link href={``}><Button>Issue Resolved ?</Button></Card.Link>
+              <Card.Link href={``}><Button onClick={ async (e)=>{
+                const res = await axios.post("http://localhost:4000/api/resolvecomplaints/",{
+                  complaintId: reviews.complaintId
+                });
+                const data = await JSON.parse(JSON.stringify(res.data));
+                console.log(data);
+              }}>Issue Resolved ?</Button></Card.Link>
               <Card.Link href={``}><Button>Rejected</Button></Card.Link>
               {/* <Card.Link href="#">Another Link</Card.Link> */}
             </Card.Body>

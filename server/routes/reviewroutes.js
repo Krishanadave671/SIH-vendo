@@ -5,13 +5,10 @@ const Review = require("../models/reviews");
 // add review
 reviewsrouter.post("/api/addreview", async (req, res) =>{
     try{
-        const {vendorId , creditScoreAbsolute} = req.body ; 
+        const {vendorId} = req.body ; 
         let vendor = await Vendor.findOne({ vendorId : vendorId});
-
-        let review = new Review(req.body);
-         console.log(review); 
-        review = await review.save();
-        console.log(review); 
+        let review = new Review(req.body); 
+        review = await review.save(); 
         
         vendor.reviewList.push(review);
         let n  = vendor.reviewList.length ; 
