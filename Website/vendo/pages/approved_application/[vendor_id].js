@@ -1,12 +1,27 @@
 import Button from "react-bootstrap/Button";
 import Navbar2 from "../components/Navbar2.jsx";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Rating from "@mui/material/Rating";
 import Card from "react-bootstrap/Card";
-import axios from 'axios'
+import axios from "axios";
+import {
+  GoogleMap,
+  LoadScript,
+  MarkerF,
+  Autocomplete,
+} from "@react-google-maps/api";
 
-function VendorApplicationDetails({ VendorDetails }) {
+function VendorApplicationDetails({ VendorDetails, VendorId }) {
   let [state, changeState] = useState(0);
+  const containerStyle = {
+    // width: '800px',
+    height: "400px",
+    marginTop: "20px",
+  };
+  const position = {
+    lat: 37.772,
+    lng: -122.214,
+  };
 
   const MainContainer = () => {
     const custom_officer_review = [
@@ -62,38 +77,34 @@ function VendorApplicationDetails({ VendorDetails }) {
     if (state == 0) {
       return (
         <div className="approved-application-main-container">
-          <Button variant="primary" className="pending-application-banner">
-            {/* Application ID - {VendorId} */}
+          <Button variant="primary" className="pending-application-banner"
+          style={{marginLeft:"0%"}}
+          >
+            {VendorDetails.vendorId}
           </Button>{" "}
-          <div className="pending-application-section-title">Vendor Name </div>
+          <div className="pending-application-section-title">Shop Name </div>
           <div className="pending-application-section-desc">
-            kirti college ka vada pav{" "}
+            {VendorDetails.shopName}
           </div>
           <div className="pending-application-section-title">Vendor Type </div>
           <div className="pending-application-section-desc">
-            Snacks and fast food{" "}
+            {VendorDetails.vendorCategory}
           </div>
-          <Button variant="primary" className="pending-application-banner">
+          <Button variant="primary" className="pending-application-banner" style={{marginLeft:"0%"}}> 
             Applicant Details{" "}
           </Button>{" "}
           <div className="pending-application-section-title">
             Applicant Name{" "}
           </div>
-          <div className="pending-application-section-desc"> Ram Singh </div>
+          <div className="pending-application-section-desc">
+            {" "}
+            {VendorDetails.name}{" "}
+          </div>
           <div className="pending-application-section-title">
             Applicant Address{" "}
           </div>
           <div className="pending-application-section-desc">
-            {" "}
-            302, A complex, Satyam bhavan, near kirti college, VS Road, Dadar
-            west, Mumbai - 400028
-          </div>
-          <div className="pending-application-section-title">
-            Educational qualification{" "}
-          </div>
-          <div className="pending-application-section-desc">
-            {" "}
-            BE in Computers, IIT Bombay
+            {VendorDetails.shopLocationAddress}
           </div>
           <div className="pending-application-btn">
             <Button variant="primary">Send Warning</Button>{" "}
@@ -107,14 +118,14 @@ function VendorApplicationDetails({ VendorDetails }) {
           <div className="pending-application-section-title">Documents </div>
           <div className="pending-application-docs">
             <a
-              href="https://firebasestorage.googleapis.com/v0/b/dhatnoon-backend.appspot.com/o/DBMS_Notes.pdf?alt=media&token=6a001bc9-3a6c-4cd0-8324-460caeab3f15"
+              href={VendorDetails.aadharcardImageUrl}
               target="_blank"
               rel="noreferrer"
             >
               View Aadhar Card
             </a>
             <a
-              href="https://firebasestorage.googleapis.com/v0/b/dhatnoon-backend.appspot.com/o/DBMS_Notes.pdf?alt=media&token=6a001bc9-3a6c-4cd0-8324-460caeab3f15"
+              href={VendorDetails.pancardImageUrl}
               target="_blank"
               rel="noreferrer"
             >
@@ -127,11 +138,25 @@ function VendorApplicationDetails({ VendorDetails }) {
           <div className="pending-application-section-desc">
             Govardhan complex, Jogeshwari East
           </div>
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3769.272443884724!2d72.8550272!3d19.139548!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b7d211a8f3f9%3A0xc486c8427dd019a8!2sGovardhan%20Complex%2C%20Jogeshwari%20East%2C%20Mumbai%2C%20Maharashtra%20400060!5e0!3m2!1sen!2sin!4v1659283732518!5m2!1sen!2sin"
-            title="description"
-            height={400}
-          ></iframe>
+          <LoadScript
+            googleMapsApiKey="AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"
+            libraries={["places"]}
+          >
+            <GoogleMap
+              id="marker-example"
+              mapContainerStyle={containerStyle}
+              center={position}
+              zoom={16}
+            >
+              <MarkerF
+                // onLoad={onLoad}
+                position={position}
+              />
+              {/* Child components, such as markers, info windows, etc. */}
+              {/* <></> */}
+              <MarkerF />
+            </GoogleMap>
+          </LoadScript>
         </div>
       );
     } else {
@@ -167,7 +192,7 @@ function VendorApplicationDetails({ VendorDetails }) {
             className="approved-application-navbar-items"
             onClick={() => changeState(2)}
           >
-            Custom officer Review{" "}
+            Customer Review
           </div>
         </div>
       );
@@ -190,7 +215,7 @@ function VendorApplicationDetails({ VendorDetails }) {
             className="approved-application-navbar-items"
             onClick={() => changeState(2)}
           >
-            Custom officer Review{" "}
+            Customer Review
           </div>
         </div>
       );
@@ -213,7 +238,7 @@ function VendorApplicationDetails({ VendorDetails }) {
             className="approved-application-navbar-items approved-application-navbar-items-active"
             onClick={() => changeState(2)}
           >
-            Custom officer Review
+            Customer Review
           </div>
         </div>
       );
@@ -234,15 +259,16 @@ export default VendorApplicationDetails;
 
 export async function getServerSideProps(context) {
   const { params } = context;
-  const { application_id } = params;
+  const { vendor_id } = params;
   const res = await axios.get(
-    "http://localhost:4000/api/getvendorsfromID/" + application_id
+    "http://localhost:4000/api/getvendorsfromID/" + vendor_id
   );
   // console.log(res);
   const data = await JSON.parse(JSON.stringify(res.data));
   return {
     props: {
       VendorDetails: data,
+      VendorId: vendor_id,
     },
   };
 }

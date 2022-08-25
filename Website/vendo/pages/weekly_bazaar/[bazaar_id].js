@@ -2,11 +2,12 @@ import Highlighter from "../components/Highlighter";
 import Navbar from "../components/Navbar2";
 import React from "react";
 import axios from "axios";
+import Image from 'next-images';
+import axios from "axios";
 import {
   GoogleMap,
   LoadScript,
   MarkerF,
-  Autocomplete,
 } from "@react-google-maps/api";
 import Card from "react-bootstrap/Card";
 
@@ -17,7 +18,8 @@ export default function Bazaar({ BazaarID , BazaarData, vendorPendingList}) {
     marginTop: "20px",
   };
   
-  console.log("http://localhost:4000/api/getpendingvendorregisteredlist/" + BazaarID);
+  // console.log("http://localhost:4000/api/getpendingvendorregisteredlist/" + BazaarID);
+  console.log(BazaarData);
   console.log(vendorPendingList);
   let vendorList = [
     { vendorID: "V134dw4", vendorName: "Kirti College" },
@@ -61,12 +63,12 @@ export default function Bazaar({ BazaarID , BazaarData, vendorPendingList}) {
       },
     ];
     const CustomOfficerReview = () => {
-      return vendorPendingList.map((vendors) => {
+      return vendorPendingList.vendorRegisteredList.map((vendors) => {
         return (
           <li>
             <Card>
               <Card.Body>
-                <Card.Title>zcnkjdnckjsakxks</Card.Title>
+                <Card.Title>{vendors.vendorId}</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   <div className="pending-application-section-desc">
                     sxbhjabscjsabhxjsxc
@@ -104,7 +106,7 @@ export default function Bazaar({ BazaarID , BazaarData, vendorPendingList}) {
               <Highlighter Text="Bazaar Description" fontSize="1.2rem" />
               <div className="bazaar-section-desc">{BazaarData.bazzarDescription}</div>
               <Highlighter Text="Bazaar Image" fontSize="1.2rem" />
-              <div className="bazaar-section-desc"><a href={BazaarData.bazzarImageUrl}> View Image</a></div>
+              <img src={BazaarData.bazzarImageUrl} alt="" srcset="" style={{marginBottom:"20px"}}/>
             </div>
             <div>
               {/* <Highlighter Text="Image of bazaar" fontSize="1.2rem" />
@@ -212,15 +214,16 @@ export async function getServerSideProps(context) {
   );
   const data = await JSON.parse(JSON.stringify(res.data));
   const res1 = await axios.get(
-    "http://localhost:4000/api/getpendingvendorregisteredlist/" + bazaar_id,
+    "http://localhost:4000/api/getvendingregisteredlist/" + bazaar_id,
   );
-  const data1 = await JSON.parse(JSON.stringify(res.data));
+  const data1 = await JSON.parse(JSON.stringify(res1.data));
+  console.log(data);
   console.log(data1);
   return {
     props: {
       BazaarID: bazaar_id,
       BazaarData: data[0],
-      vendorPendingList: data1, 
+      vendorPendingList: data1[0], 
     },
   };
 }
