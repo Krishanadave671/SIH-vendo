@@ -45,10 +45,10 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
             PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
       ),
     );
-    print("wowow34oow ${result.subLocalityLevel1.name.toString()}");
-    print("wowow34oow ${result.subLocalityLevel2.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel1!.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel2!.name.toString()}");
 
-    shopCity = result.city.name.toString();
+    shopCity = result.city!.name.toString();
     print(shopCity);
     ref.watch(locationProvider.notifier).state =
         result.formattedAddress.toString();

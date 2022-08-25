@@ -36,6 +36,10 @@ dependencies:
   lottie: ^1.4.1
   translator: ^0.1.7
   flutter_geofence: ^0.4.4
+  geolocator: ^9.0.1
+  google_maps_flutter: ^2.1.12
+  location: ^4.3.0
+  permission_handler: ^10.0.0
 
   
 
