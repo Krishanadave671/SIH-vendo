@@ -40,14 +40,6 @@ const vendorDetails = mongoose.Schema({
             message: '{VALUE} is not a valid 10 digit phone number!'
         }
     },
-    inTime : [String],  
-    outTime : [String],
-    livelocationLat : {
-        type : Number 
-    }, 
-    livelocationLong : {
-        type : Number 
-    }, 
     aadharNo: {
         type: String,
         required: true,

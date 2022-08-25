@@ -76,18 +76,27 @@ authRouter.post("/api/signup", async(req, res) => {
 
 
 // setting inTime 
-authrouter.post("/api/firealltime", async(req, res) => {
+authRouter.post("/api/setintime", async(req, res) => {
     try {
-        const { livelocationLat , livelocationLong , vendorId } = req.body;
-        
-        
+        const { vendorId, inTime } = req.body;
+        let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { inTime: inTime }, { new: true });
+        res.status(200).json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
-}
-);
+}); 
+// senduserlive location lat and long 
+authRouter.post("/api/senduserlivelocation", async(req, res) => {
+    try {
+        const { vendorId, shopLocationLat, shopLocationLong } = req.body;   
+        let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { shopLocationLat: shopLocationLat, shopLocationLong: shopLocationLong }, { new: true });
+        res.status(200).json(vendor);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}),
 
-    authRouter.get("/api/getvendorlivelocation/:city", async (req, res) => {
+authRouter.get("/api/getvendorlivelocation/:city", async (req, res) => {
    
     try{
         const {city} = req.params;
