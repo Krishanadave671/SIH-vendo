@@ -81,7 +81,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AppText.headingThree("Hi ${vendorDetails.name} !!"),
-            Spacer(),
+            const Spacer(),
             GestureDetector(
               child: const Icon(
                 Icons.notifications,
@@ -244,8 +244,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     color: Colors.blue,
                                     icon: Icons.calendar_month,
                                     serviceName: "My Bazzars",
-                                    onTap: () async {
-                                      
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.bazzarList);
                                     },
                                   ),
                                 ],

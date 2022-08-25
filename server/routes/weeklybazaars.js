@@ -1,5 +1,6 @@
 const { S_IFCHR } = require('constants');
 const express = require('express');
+const { findOne } = require('../models/vendingzones');
 const bazzarsrouter = express.Router(); 
 const Vendors = require("../models/vendor_details");
 const Bazzars = require("../models/weeklybazzar");
@@ -45,16 +46,20 @@ bazzarsrouter.get("/api/getbazzar/:bazzarId", async (req, res) => {
 // register for weekly bazaars 
 bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
     try {
-        
        const {bazzarId , vendorId , bazzarName} = req.body;
-       let check =  await Bazzars.find({bazzarId : bazzarId , "vendorRegisteredList.vendorId" : vendorId});
-       if(check.length > 0) {
-              res.status(200).json({message : "You are already registered for this bazzar"});
-              return; 
-       } 
+       let vendor1 = await Vendors.findOne({vendorId : vendorId});
+       console.log(vendor1.weeklyBazzarList);
+       let n = vendor1.weeklyBazzarList.length;  
+       console.log(n); 
+       for(let i = 0  ; i < n ; i++){
+              if(vendor1.weeklyBazzarList[i].bazzarId == bazzarId){
+                res.status(200).json({e : "Already registered"});
+                return; 
+              }   
+       }
         let bazaars = await Bazzars.findOneAndUpdate({bazzarId : bazzarId},{ "$push": {vendorRegisteredList: {vendorId: vendorId}}}, {new: true});
          let vendor = await Vendors.findOneAndUpdate({vendorId : vendorId},{ "$push": {weeklyBazzarList: {bazzarId: bazzarId, bazzarName: bazzarName}}}, {new: true});
-         res.status(200).json(bazaars);
+          res.status(200).json(vendor);
     }catch(e){
         res.status(500).json({e : e.message});
     }
@@ -107,4 +112,14 @@ bazzarsrouter.get("/api/getallbazaars", async (req, res) => {
         res.status(500).json({e : e.message});
     }
 } );
-module.exports = bazzarsrouter ; 
+
+bazzarsrouter.get("/api/getvendingregisteredlist/:bazzarid" , async (req , res) => {
+    try {
+        const {bazzarid} = req.params;
+        let bazzars = await Bazzars.find({bazzarId : bazzarid}).select("vendorRegisteredList");
+        res.status(200).json(bazzars) ;
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+})
+module.exports = bazzarsrouter;

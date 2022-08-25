@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -6,23 +7,25 @@ import 'package:vendo/models/weeklyBazzarModel/weekly_bazzar_model.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/providers/weekly_bazzar_provider.dart';
 import 'package:vendo/screens/WeeklyBazzar/DisplayCard.dart';
+import 'package:vendo/screens/WeeklyBazzar/weekly_bazzar_tile.dart';
 import 'package:vendo/screens/Write_complaints_screen/complaint_list_tile.dart';
 import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 
 import '../../routes.dart';
 
-class ComplaintsList extends ConsumerStatefulWidget {
-  const ComplaintsList({Key? key}) : super(key: key);
+class MyBazzars extends ConsumerStatefulWidget {
+  const MyBazzars({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _ComplaintsListState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyBazzars();
 }
 
-class _ComplaintsListState extends ConsumerState<ComplaintsList> {
+class _MyBazzars extends ConsumerState<MyBazzars> {
   @override
   Widget build(BuildContext context) {
     final vendorDetails = ref.watch(vendordetailsProvider);
+    log("hwlads ${vendorDetails.weeklyBazzarList[0]["bazzarName"]}");
     return Scaffold(
       appBar: AppBar(
         title: AppText.headingOne("My Complaints"),
@@ -47,7 +50,7 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
               child: Column(
                 children: [
                   const Text(
-                    "Opportunities are where the complaints are",
+                    "Opportunities are where the bazzars are",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -72,7 +75,7 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
             padding: const EdgeInsets.all(8.0),
             child: Row(
               children: [
-                AppText.headingTwo("Recent complaints"),
+                AppText.headingTwo("Recent Bazzars"),
               ],
             ),
           ),
@@ -82,12 +85,14 @@ class _ComplaintsListState extends ConsumerState<ComplaintsList> {
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
                 shrinkWrap: true,
-                itemCount: vendorDetails.complaintsList.length,
+                itemCount: vendorDetails.weeklyBazzarList.length,
                 itemBuilder: ((context, index) {
                   return GestureDetector(
                     onTap: () {},
-                    child: ComplaintListTile(
-                      model: vendorDetails.complaintsList[index],
+                    child: MyBazzarListTile(
+                      name: vendorDetails.weeklyBazzarList[0]["bazzarName"],
+                      id: vendorDetails.weeklyBazzarList[0]["bazzarId"],
+                      status: vendorDetails.weeklyBazzarList[0]["status"],
                     ),
                   );
                 }),

@@ -3,12 +3,16 @@ import 'package:vendo/models/vendorComplainsModel/vendor_complaints.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import '../../util/AppInterface/ui_helpers.dart';
 
-class ComplaintListTile extends StatelessWidget {
-  const ComplaintListTile({
+class MyBazzarListTile extends StatelessWidget {
+  const MyBazzarListTile({
     Key? key,
-    required this.model,
+    required this.name,
+    required this.id,
+    required this.status,
   }) : super(key: key);
-  final VendorComplaintModel model;
+  final String name;
+  final String id;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +41,7 @@ class ComplaintListTile extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        AppText.body(model.complaintType[0]),
+                        AppText.body(name),
                       ],
                     ),
                     verticalSpaceSmall,
@@ -49,7 +53,7 @@ class ComplaintListTile extends StatelessWidget {
                         ),
                         Expanded(
                           child: AppText.body(
-                            model.complaintDate.toString(),
+                            id,
                             isSingleLined: 1,
                           ),
                         ),
@@ -57,13 +61,13 @@ class ComplaintListTile extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        AppText.bodyBold("Complaint status: "),
+                        AppText.bodyBold("Status: "),
                         const SizedBox(
                           width: 20,
                         ),
                         Expanded(
                           child: AppText.body(
-                            model.complaintStatus.toString(),
+                            status,
                             isSingleLined: 1,
                           ),
                         ),
