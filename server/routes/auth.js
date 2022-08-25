@@ -68,13 +68,36 @@ authRouter.post("/api/signup", async(req, res) => {
         });
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
-        // await vendingzones.findOneAndUpdate({vendingZoneId: vendingZoneIdApplied}, {"$push": {vendorIdList: {vendorId: vendorId, status: "pending"}}}, {new: true});
         res.json(vendor);
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
 });
 
+
+// setting inTime 
+authrouter.post("/api/firealltime", async(req, res) => {
+    try {
+        const { livelocationLat , livelocationLong , vendorId } = req.body;
+        
+        
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+}
+);
+
+    authRouter.get("/api/getvendorlivelocation/:city", async (req, res) => {
+   
+    try{
+        const {city} = req.params;
+        let vendor = await Vendor.find({shopCity : city ,}).select({ shopLocationLat: 1, shopLocationLong: 1 });
+    res.status(200).json(vendor);
+
+    }catch (e) {
+        res.status(500).json({ error: e.message });
+    }   
+})
 //Sign In
 authRouter.post("/api/login", async(req, res) => {
     try {
