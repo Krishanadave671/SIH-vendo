@@ -2,6 +2,7 @@ import Highlighter from "../components/Highlighter";
 import Navbar from "../components/Navbar2";
 import React from "react";
 import axios from "axios";
+import { Button } from "react-bootstrap";
 import {
   GoogleMap,
   LoadScript,
@@ -55,21 +56,21 @@ export default function Bazaar({ VendingZoneID, VendingZoneData }) {
       },
     ];
     const CustomOfficerReview = () => {
-      return custom_officer_review.map((reviews) => {
+      return VendingZoneData.vendorIdList.map((reviews) => {
         return (
           <li>
             <Card>
               <Card.Body>
-                <Card.Title>{reviews.custom_officer_date}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
+                <Card.Title>{reviews.vendorId}</Card.Title>
+                {/* <Card.Subtitle className="mb-2 text-muted">
                   <div className="pending-application-section-desc">
                     {" "}
                     {reviews.custom_officer_title}{" "}
                   </div>
                 </Card.Subtitle>
-                <Card.Text>{reviews.desc}</Card.Text>
-                <Card.Link href={``}>Card Link</Card.Link>
-                <Card.Link href="#">Another Link</Card.Link>
+                <Card.Text>{reviews.desc}</Card.Text> */}
+                <Card.Link href={``}><Button>Accept</Button></Card.Link>
+                <Card.Link href="#"><Button>Reject</Button></Card.Link>
               </Card.Body>
             </Card>
           </li>
