@@ -90,13 +90,13 @@ function VendorApplicationDetails({ VendorDetails }) {
             In time{" "}
           </div>
           <div className="pending-application-section-desc">
-            {VendorDetails.inTime}
+            {VendorDetails.inTime[0]}
           </div>
           <div className="pending-application-section-title">
             Out time{" "}
           </div>
           <div className="pending-application-section-desc">
-            {VendorDetails.outTime}
+            {VendorDetails.outTime[0]}
           </div>
           <div className="pending-application-section-title">Documents </div>
           <div className="pending-application-docs">
