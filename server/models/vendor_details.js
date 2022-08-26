@@ -105,7 +105,6 @@ const vendorDetails = mongoose.Schema({
     creditScore: {
         type: Number,
         required: true,
-        default: 0
     },
     vendorImageurl: {
         type: String,
@@ -143,7 +142,9 @@ const vendorDetails = mongoose.Schema({
       "status" : {
         type: String,
         default : "pending"
-      }
+      } , 
+      required : false 
+      
     }], 
     vendorCategory : {
       type : String , 
