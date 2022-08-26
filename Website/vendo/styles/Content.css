@@ -13,7 +13,7 @@ flex-shrink: 0;
 height: 50px;
 align-items: left;
 padding-left: 10px;
-animation: slide-right 20s linear infinite;
+animation: slide-right 60s linear infinite;
 background: none;
 margin-left: 100px;
 font-size: xx-large;
@@ -42,6 +42,7 @@ padding-top: 0%;
 .ContentWrapper{
   display: flex;
   padding: 20px;
+  margin-top: 50px;
   gap: 40px;
 }
 
@@ -50,21 +51,26 @@ padding-top: 0%;
  display: flex; 
  justify-content: space-evenly;
  align-items: center;
- width: 450px;
- height: 400px;
+ width: 350px;
+ height: 300px;
  background-color: #b2c2f252;
  border-radius: 30px;
  cursor: pointer;
  box-shadow: 0px 5px 5px 8px rgb(120, 132, 134);
  opacity: 90%;
+ padding: 40px;
 }
 
 .charts{
   display: flex;
-  justify-content: space-evenly;
+  width: 100%;
+  justify-content: space-between;
   position: relative;
   align-items: right;
-  margin-left: 30px;
+  /* margin-left: 30px; */
+  margin-left: 60px;
+  margin-right: 60px;
+  margin-top: 140px;
   row-gap: 40px;
   
 }

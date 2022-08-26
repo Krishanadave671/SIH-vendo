@@ -208,20 +208,20 @@ export async function getServerSideProps(context) {
   const { params } = context;
   const { bazaar_id } = params;
   const res = await axios.get(
-    "http://localhost:4000/api/getbazzar/" + bazaar_id,
+    "http://localhost:4000/api/getbazzar/"+bazaar_id ,
   );
   const data = await JSON.parse(JSON.stringify(res.data));
   const res1 = await axios.get(
-    "http://localhost:4000/api/getvendingregisteredlist/" + bazaar_id,
+    "http://localhost:4000/api/getpendingvendorregisteredlist/" + data.bazzarId,
   );
   const data1 = await JSON.parse(JSON.stringify(res1.data));
   console.log(data);
-  console.log(data1);
+  // console.log(data1);
   return {
     props: {
       BazaarID: bazaar_id,
       BazaarData: data[0],
-      vendorPendingList: data1[0], 
+      // vendorPendingList: data1[0], 
     },
   };
 }

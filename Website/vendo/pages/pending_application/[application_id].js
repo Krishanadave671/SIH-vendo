@@ -86,6 +86,18 @@ function VendorApplicationDetails({ VendorDetails }) {
           <div className="pending-application-section-desc">
             {VendorDetails.address}
           </div>
+          <div className="pending-application-section-title">
+            In time{" "}
+          </div>
+          <div className="pending-application-section-desc">
+            {VendorDetails.inTime[0]}
+          </div>
+          <div className="pending-application-section-title">
+            Out time{" "}
+          </div>
+          <div className="pending-application-section-desc">
+            {VendorDetails.outTime[0]}
+          </div>
           <div className="pending-application-section-title">Documents </div>
           <div className="pending-application-docs">
             <a
