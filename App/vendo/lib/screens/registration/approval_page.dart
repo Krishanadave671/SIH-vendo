@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
@@ -17,18 +19,27 @@ class ApprovalPage extends ConsumerStatefulWidget {
 }
 
 class _ApprovalPageState extends ConsumerState<ApprovalPage> {
+  // String? isApproved;
   Future<void> getStatus(WidgetRef ref) async {
     final _apiservice = ref.watch(apiserviceProvider);
     await _apiservice.getUserDataFromId(context, ref);
   }
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    String isApproved = ref.watch(vendordetailsProvider).isApproved;
+    final isApproved = ref.watch(vendordetailsProvider).isApproved;
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          await getStatus(ref);
+          // await getStatus(ref);
+
+          isApproved == "approved";
+          log(isApproved.toString());
         },
         child: Container(
           padding: EdgeInsets.only(left: 25, right: 25, top: 25),

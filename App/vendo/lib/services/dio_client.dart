@@ -88,7 +88,7 @@ class Apiservice {
         },
       );
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, "User Registered!");
     }
   }
 
@@ -118,7 +118,7 @@ class Apiservice {
       );
     } catch (e) {
       log(e.toString());
-      showSnackBar(context, e.toString());
+      showSnackBar(context, "Error Logging In!!");
     }
   }
 
@@ -275,8 +275,8 @@ class Apiservice {
     return <GovernmentSchemeModel>[];
   }
 
-  Future<void> registerBazzar(
-      String bazzarId, String vendorId, BuildContext context) async {
+  Future<void> registerBazzar(String bazzarId, String vendorId,
+      String bazzarName, BuildContext context) async {
     log("inside registerBazzar");
     try {
       log(_baseurl + registerbazzar);
@@ -286,6 +286,7 @@ class Apiservice {
         data: {
           "bazzarId": bazzarId,
           "vendorId": vendorId,
+          "bazzarName": bazzarName,
         },
       );
       log(response.toString());

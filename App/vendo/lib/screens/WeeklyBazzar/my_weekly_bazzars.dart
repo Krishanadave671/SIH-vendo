@@ -23,8 +23,15 @@ class MyBazzars extends ConsumerStatefulWidget {
 
 class _MyBazzars extends ConsumerState<MyBazzars> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ref.watch(apiserviceProvider).getuserData(context, ref);
     final vendorDetails = ref.watch(vendordetailsProvider);
+    log(vendorDetails.weeklyBazzarList.toString());
     log("hwlads ${vendorDetails.weeklyBazzarList[0]["bazzarName"]}");
     return Scaffold(
       appBar: AppBar(
@@ -41,91 +48,93 @@ class _MyBazzars extends ConsumerState<MyBazzars> {
               Navigator.of(context).pop();
             }),
       ),
-      body: Column(
-        children: [
-          // Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: Row(
-          //     children: const [
-          //       Image(
-          //         image: AssetImage("assets/images/map.png"),
-          //         width: 80,
-          //         fit: BoxFit.fitHeight,
-          //       ),
-          //       SizedBox(width: 50),
-          //     ],
-          //   ),
-          // ),
-          Container(
-            decoration: const BoxDecoration(color: Colors.pink),
-            child: Padding(
-              padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(20),
-                            bottomRight: Radius.circular(20))),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Image(
-                        image: AssetImage("assets/images/map.png"),
-                        width: 70,
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
-                  const Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "These are the Bazaars that you applied for",
-                        style: TextStyle(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Row(
+            //     children: const [
+            //       Image(
+            //         image: AssetImage("assets/images/map.png"),
+            //         width: 80,
+            //         fit: BoxFit.fitHeight,
+            //       ),
+            //       SizedBox(width: 50),
+            //     ],
+            //   ),
+            // ),
+            Container(
+              decoration: const BoxDecoration(color: Colors.pink),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8, top: 8, bottom: 8),
+                child: Row(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
                           color: Colors.white,
-                          fontSize: 24,
+                          borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20))),
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Image(
+                          image: AssetImage("assets/images/map.png"),
+                          width: 70,
+                          fit: BoxFit.fitHeight,
                         ),
                       ),
                     ),
-                  ),
+                    const Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          "These are the Bazaars that you applied for",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  AppText.headingTwo("Status List"),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                AppText.headingTwo("Status List"),
-              ],
-            ),
-          ),
-          RefreshIndicator(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                itemCount: vendorDetails.weeklyBazzarList.length,
-                itemBuilder: ((context, index) {
-                  return GestureDetector(
-                    onTap: () {},
-                    child: MyBazzarListTile(
-                      name: vendorDetails.weeklyBazzarList[0]["bazzarName"],
-                      id: vendorDetails.weeklyBazzarList[0]["bazzarId"],
-                      status: vendorDetails.weeklyBazzarList[0]["status"],
-                    ),
-                  );
-                }),
+            RefreshIndicator(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemCount: vendorDetails.weeklyBazzarList.length,
+                  itemBuilder: ((context, index) {
+                    return GestureDetector(
+                      onTap: () {},
+                      child: MyBazzarListTile(
+                        name: vendorDetails.weeklyBazzarList[index]
+                            ["bazzarName"],
+                        id: vendorDetails.weeklyBazzarList[index]["bazzarId"],
+                        status: vendorDetails.weeklyBazzarList[index]["status"],
+                      ),
+                    );
+                  }),
+                ),
               ),
+              onRefresh: () async {
+                await ref.watch(apiserviceProvider).getuserData(context, ref);
+              },
             ),
-            onRefresh: () async {
-              final api = ref.watch(apiserviceProvider);
-              api.getuserData(context, ref);
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
