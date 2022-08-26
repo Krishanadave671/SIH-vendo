@@ -51,6 +51,8 @@ class VendorNotifier extends StateNotifier<VendorModel> {
   void addComplaint(VendorComplaintModel model) {
     state.complaintsList = [...state.complaintsList, model];
   }
+
+
 }
 
 final vendordetailsProvider =

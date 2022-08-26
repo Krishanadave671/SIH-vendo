@@ -155,7 +155,10 @@ class _WeeklyBazzarCardState extends ConsumerState<WeeklyBazzarCard> {
                         var response = await _api.registerBazzar(
                             weeklyBazzar.bazzarId,
                             vendorDetails.vendorId,
+                            weeklyBazzar.bazzarName,
                             context);
+
+                        await _api.getuserData(context, ref);
                       } on Exception catch (e) {
                         log(e.toString());
                       }

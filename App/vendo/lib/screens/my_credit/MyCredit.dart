@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
-class MyCreditScore extends StatefulWidget {
+class MyCreditScore extends ConsumerStatefulWidget {
   const MyCreditScore({Key? key}) : super(key: key);
 
   @override
-  State<MyCreditScore> createState() => _MyCreditScoreState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyCreditScoreState();
 }
 
-class _MyCreditScoreState extends State<MyCreditScore> {
+class _MyCreditScoreState extends ConsumerState<MyCreditScore> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.pink,
+        automaticallyImplyLeading: true,
+        leading: IconButton(
+            padding: const EdgeInsets.all(0),
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            }),
+      ),
       body: Column(
         children: [
           Stack(
@@ -62,8 +78,8 @@ class _MyCreditScoreState extends State<MyCreditScore> {
                         "Current Score: ",
                         style: TextStyle(color: Colors.white, fontSize: 28),
                       ),
-                      const Text(
-                        "35",
+                      Text(
+                        ref.watch(vendordetailsProvider).creditScore.toString(),
                         style: TextStyle(color: Colors.white, fontSize: 28),
                       ),
                       Expanded(child: Container())
