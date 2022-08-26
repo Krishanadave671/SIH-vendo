@@ -28,7 +28,10 @@ class _getStartedState extends State<getStarted> {
               ),
             ),
             verticalSpaceMedium,
-            AppText.headline(StringsList.translate["tagline"]!),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: AppText.headline(StringsList.translate["tagline"]!),
+            ),
             verticalSpaceMedium,
             Container(
               height: 300,
@@ -40,7 +43,7 @@ class _getStartedState extends State<getStarted> {
             ),
             verticalSpaceMedium,
             Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: AppText.body(StringsList.translate["message"]!),
             ),
             Expanded(child: Container()),
