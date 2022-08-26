@@ -1,36 +1,31 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
+import 'package:vendo/models/vendorReviewModel/vendor_review_model.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/vendor_card.dart';
+import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
 import '../../../models/vendor_visit_list/vendor_visit_list.dart';
+import '../../../providers/vendor_review_provider.dart';
 
-class BMCHomePage extends StatefulWidget {
+class BMCHomePage extends ConsumerStatefulWidget {
   const BMCHomePage({Key? key}) : super(key: key);
 
   @override
-  State<BMCHomePage> createState() => _BMCHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _BMCHomePageState();
 }
 
-class _BMCHomePageState extends State<BMCHomePage> {
-  List<VendorListModel> vendorList = [
-    VendorListModel("Kirti Vadapav", "amazing vadapav"),
-    VendorListModel("Ramu Pavbhaji vala", "the most delicious pav bhaji ever"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-    // VendorListModel("mera bhai", "sector 4, kharghar, navi mumbai"),
-  ];
-
+class _BMCHomePageState extends ConsumerState<BMCHomePage> {
   @override
   Widget build(BuildContext context) {
+    final myfeedback = ref.watch(myfeedbackProvider);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -45,11 +40,14 @@ class _BMCHomePageState extends State<BMCHomePage> {
                           BorderRadius.only(bottomRight: Radius.circular(70))),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 30,top: 10),
+                  padding: const EdgeInsets.only(right: 30, top: 10),
                   child: Row(
                     children: [
                       Expanded(child: Container()),
-                      Image(image: AssetImage("assets/images/testimonials.png"),width: 70,),
+                      Image(
+                        image: AssetImage("assets/images/testimonials.png"),
+                        width: 70,
+                      ),
                     ],
                   ),
                 ),
@@ -59,13 +57,14 @@ class _BMCHomePageState extends State<BMCHomePage> {
                     width: 250,
                     decoration: BoxDecoration(
                         color: Colors.pink,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),border:Border.all(color: Colors.white,width: 5)),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        border: Border.all(color: Colors.white, width: 5)),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Your Feedbacks help us improve our app!!",style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20
-                      ),),
+                      child: Text(
+                        "Your Feedbacks help us improve our app!!",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
                     ),
                   ),
                 )
@@ -169,16 +168,40 @@ class _BMCHomePageState extends State<BMCHomePage> {
                   color: Colors.grey,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
             ),
+
             Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: vendorList.length,
-                  itemBuilder: ((context, index) {
-                    return VendorCard(
-                        location: vendorList[index].location,
-                        name: vendorList[index].vendorName);
-                  })),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  ref.refresh(feedbackProvider);
+                },
+                child: Expanded(
+                  child: myfeedback.when(
+                    data: (data) {
+                      List<VendorReviewModel?> vendinReviewList =
+                          data.map((e) => e).toList();
+                      log(vendinReviewList.toList().toString());
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vendinReviewList.length,
+                          itemBuilder: ((context, index) {
+                            return VendorCard(
+                                location:
+                                    vendinReviewList[index]!.shortDescription,
+                                name: vendinReviewList[index]!.vendorId);
+                          }));
+                    },
+                    error: (e, t) {
+                      log(e.toString());
+
+                      return Center(child: CircularProgressIndicator());
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

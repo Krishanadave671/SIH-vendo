@@ -24,11 +24,13 @@ class VendorCheck extends ConsumerStatefulWidget {
     required this.expiry,
     required this.vendorLocation,
     required this.phoneNo,
+    required this.id,
   }) : super(key: key);
   final String shopName;
   final String vendorLocation;
   final String expiry;
   final String phoneNo;
+  final String id;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _VendorCheckState();
@@ -117,7 +119,9 @@ class _VendorCheckState extends ConsumerState<VendorCheck> {
     try {
       //api to submit the review
       final _api = ref.watch(apiserviceProvider);
+      vendorReview.vendorId = widget.id;
       var response = await _api.addReview(vendorReview, context);
+      ref.watch(feedbackProvider.notifier).addReview(vendorReview);
     } on Exception catch (e) {
       log(e.toString());
     }

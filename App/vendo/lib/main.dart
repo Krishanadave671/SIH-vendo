@@ -39,17 +39,12 @@ class _MyAppState extends ConsumerState<MyApp> {
     final vendordata = ref.watch(vendordetailsProvider);
     log("inside main ${vendordata.toJson().toString()}");
     // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
-<<<<<<< HEAD
-    return const MaterialApp( 
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: generateRoute,
-        initialRoute: Routes.bmcNavBar);
-=======
+
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: generateRoute,
-      initialRoute: Routes.whereTo,
+      initialRoute: Routes.bmcNavBar,
     );
->>>>>>> 9de13bbb1bd3c000cdc07ca3ffa5c5cd3d3ed60c
+
   }
 }

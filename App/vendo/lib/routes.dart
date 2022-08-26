@@ -66,7 +66,6 @@ class Routes {
   static const bazzarList = '/bazzar_list_view';
   static const availableIncentives = '/available_incentives';
   static const myCreditScore = '/my_credit_score_screen';
-
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -162,6 +161,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           shopName: args.shopName,
           vendorLocation: args.vendorLocation,
           phoneNo: args.phoneNo,
+          id:args.id,
         ),
       );
     case Routes.vendingZoneCard:
@@ -196,12 +196,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const WhereToDirect(),
       );
 
-    // case Routes.approvedPage:
-<<<<<<< HEAD
-    //   return MaterialPageRoute(builder: (context) => const ApprovedPage()); 
-=======
-    //   return MaterialPageRoute(builder: (context) => const ApprovedPage());
->>>>>>> 9de13bbb1bd3c000cdc07ca3ffa5c5cd3d3ed60c
+
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
@@ -215,11 +210,13 @@ class VendorCheckArguments {
     required this.expiry,
     required this.vendorLocation,
     required this.phoneNo,
+    required this.id,
   });
   final String shopName;
   final String vendorLocation;
   final String expiry;
   final String phoneNo;
+  final String id;
 }
 
 class VendingZoneViewArguments {

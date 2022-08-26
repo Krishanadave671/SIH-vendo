@@ -23,19 +23,20 @@ import '../models/vendorDetailsModel/vendor_details.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.219.247:4000";
+  static const _baseurl = "http://192.168.225.142:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
   static const tokenisValid = "/api/tokenIsValid";
   static const getuserdata = "/getuserdata";
   static const addcomplaint = "/api/addcomplaint";
-  static const addreview = "/";
+  static const addreview = "/api/addreview";
   static const getSchema = "/api/getschemes/all";
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
   static const getdataById = "/checkapprovalstatus";
   static const postTimes = "/api/setvendortime";
+  static const getmyfeedbacks = "/api/getreviewsfromcustomer";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -62,6 +63,32 @@ class Apiservice {
       }
     }
     return <VendingzoneModel>[];
+  }
+
+  Future<List<VendorReviewModel?>> getMyFeedbacks(String id) async {
+    log("inside getMyFeedbacks");
+    try {
+      log('${_baseurl + getmyfeedbacks}/BMC123');
+      Response bazzarRawData =
+          await _dio.get('${_baseurl + getmyfeedbacks}/$id');
+      List bazzarDataList = bazzarRawData.data;
+      List<VendorReviewModel?> list =
+          bazzarDataList.map((e) => VendorReviewModel.fromJson(e)).toList();
+      log(list[0].toString());
+      return list;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('Dio error!');
+        log('STATUS: ${e.response?.statusCode}');
+        log('DATA: ${e.response?.data}');
+        log('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        log('Error sending request!');
+        log(e.message);
+      }
+    }
+    return <VendorReviewModel>[];
   }
 
   Future<void> registerUser(
@@ -188,7 +215,8 @@ class Apiservice {
 
   Future<void> addReview(
       VendorReviewModel reviewData, BuildContext context) async {
-    log("inside addReview");
+    reviewData.bmcOfficerId = 'BM' + DateTime.now().microsecond.toString();
+    reviewData.reviewId = 'RV' + DateTime.now().microsecond.toString();
 
     try {
       log(reviewData.toJson().toString());
@@ -210,7 +238,7 @@ class Apiservice {
         },
       );
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, "Error!");
     }
   }
 

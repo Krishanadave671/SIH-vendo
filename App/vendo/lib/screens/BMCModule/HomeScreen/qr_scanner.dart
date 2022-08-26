@@ -84,6 +84,7 @@ class _ScanQRState extends State<ScanQR> {
               expiry: listData[2],
               vendorLocation: listData[1],
               phoneNo: listData[3],
+              id : listData[4],
             ),
           );
         }

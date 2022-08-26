@@ -394,7 +394,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: Center(
                       child: QrImage(
                         data:
-                            "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \n$uniqueString",
+                            "SN:${vendorDetails.shopName} \nVL:${LatLng(vendorDetails.shopLocationLat, vendorDetails.shopLocationLong)} \nED:$expiryDate \nPN:${vendorDetails.phone} \nVI:${vendorDetails.vendorId} \n$uniqueString",
                         version: QrVersions.auto,
                         size: 300.0,
                       ),
