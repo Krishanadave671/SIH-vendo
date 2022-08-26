@@ -35,6 +35,7 @@ class Apiservice {
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
   static const getdataById = "/checkapprovalstatus";
+  static const postTimes = "/api/setvendortime";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -313,6 +314,50 @@ class Apiservice {
         _baseurl + getdataById,
         data: {
           "vendorId": vendor.vendorId.toString(),
+        },
+      );
+
+      vendor.isApproved = status.data.toString();
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
+    }
+  }
+
+  Future<void> putInTime(BuildContext context, WidgetRef ref) async {
+    log("put maps ");
+    try {
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
+      Response status = await _dio.post(
+        _baseurl + postTimes,
+        data: {
+          "vendorId": vendor.vendorId.toString(),
+          "inOrOut": vendor.inOrOut,
+          "time": vendor.inTime.last,
+        },
+      );
+
+      vendor.isApproved = status.data.toString();
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
+    }
+  }
+
+  Future<void> putOutTime(BuildContext context, WidgetRef ref) async {
+    log("put maps out ");
+    try {
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
+      Response status = await _dio.post(
+        _baseurl + postTimes,
+        data: {
+          "vendorId": vendor.vendorId,
+          "inOrOut": vendor.inOrOut,
+          "time": vendor.outTime.last,
         },
       );
 

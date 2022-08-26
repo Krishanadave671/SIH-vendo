@@ -11,6 +11,7 @@ import "../styles/GovernmentLogin.css";
 import "../styles/weekly_bazaar.css";
 import "../styles/VendingZones.css";
 import  "../styles/bazaar.css";
+import "../styles/governmentschemes.css"
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }

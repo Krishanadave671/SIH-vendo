@@ -33,7 +33,7 @@ incentiverouter.get("api/getincentives/:vendorId", async(req , res) => {
     catch(e){
         res.status(500).json({e : e.message});
     }
-} );
+});
  
 
 module.exports = incentiverouter ; 
