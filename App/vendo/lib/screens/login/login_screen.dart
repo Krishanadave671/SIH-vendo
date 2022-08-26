@@ -32,11 +32,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   }
 
   void signInUser(BuildContext context) async {
-    final _api = ref.watch(apiserviceProvider);
-    log(_phonenoController.text);
-    log(_passwordController.text);
-    await _api.login(
-        _phonenoController.text, _passwordController.text, context, ref);
+    try {
+      final _api = ref.watch(apiserviceProvider);
+      log(_phonenoController.text);
+      log(_passwordController.text);
+      await _api.login(
+          _phonenoController.text, _passwordController.text, context, ref);
+    } catch (e) {
+      showSnackBar(
+        context,
+        "Error Logging In!!",
+      );
+    }
   }
 
   late bool _validate = false;

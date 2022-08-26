@@ -119,60 +119,60 @@ const vendorDetails = mongoose.Schema({
         type: [complaints]
     },
     reviewList: {
-        type : [reviews]
+        type: [reviews]
     },
     weeklyBazzarList: [{
-      "bazzarId" : {
-        type: String,  
-      },
-      "bazzarName" : {
-        type: String,
-       
-      },
-      "status" : {
-        type: String,
-        default : "pending"
-      } 
-}]  ,
-    schemeList :[{
-      "schemeId" : {
-        type: String,
-        unique : true, 
-        
-      },
-      "status" : {
-        type: String,
-        default : "pending"
-      }
-    }], 
-    vendorCategory : {
-      type : String , 
-      required : true 
-    }, 
-    shopName : {
-        type : String ,
-        required : true ,
-        trim : true
-    }, 
+        "bazzarId": {
+            type: String,
+        },
+        "bazzarName": {
+            type: String,
 
-    currentLat : {
-        type : Number , 
-    
+        },
+        "status": {
+            type: String,
+            default: "pending"
+        }
+    }],
+    schemeList: [{
+        "schemeId": {
+            type: String,
+            unique: true,
 
-    }, 
-    currentLong : {
-        type : Number , 
-    }, 
-    inTime : {
-        type : [String] ,
-
-    }, 
-    outTime : {
-        type : [String] ,
+        },
+        "status": {
+            type: String,
+            default: "pending"
+        }
+    }],
+    vendorCategory: {
+        type: String,
+        required: true
     },
-    inOrOut : {
-        type : Boolean ,
-        default : true 
+    shopName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    currentLat: {
+        type: Number,
+
+
+    },
+    currentLong: {
+        type: Number,
+    },
+    inTime: {
+        type: [String],
+
+    },
+    outTime: {
+        type: [String],
+    },
+    inOrOut: {
+        type: Boolean,
+        default: true
     }
 })
 

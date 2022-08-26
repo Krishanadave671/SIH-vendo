@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'firebase_options.dart';
+
 import 'services/dio_client.dart';
 
 Future<void> main() async {
@@ -38,7 +39,9 @@ class _MyAppState extends ConsumerState<MyApp> {
     log("inside main ${vendordata.toJson().toString()}");
     // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
     return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        initialRoute: Routes.approvedPage);
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: generateRoute,
+      initialRoute: Routes.whereTo,
+    );
   }
 }

@@ -24,6 +24,7 @@ import 'package:vendo/screens/incentive_detail/incentive_detail.dart';
 import 'package:vendo/screens/incentive_lists/incentive_list.dart';
 import 'package:vendo/screens/language_selector/language_selector.dart';
 import 'package:vendo/screens/login/login_screen.dart';
+import 'package:vendo/screens/my_credit/MyCredit.dart';
 import 'package:vendo/screens/registration/approval_page.dart';
 import 'package:vendo/screens/registration/documentarty_evidence.dart';
 import 'package:vendo/screens/registration/nationality_evidence.dart';
@@ -61,11 +62,11 @@ class Routes {
   static const weeklyBazzarCard = '/weekly_bazzar_card';
   static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
-
-  static const approvedPage = '/approvedPage';
+  // static const approvedPage = '/approvedPage';
   static const bazzarList = '/bazzar_list_view';
-
   static const availableIncentives = '/available_incentives';
+  static const myCreditScore = '/my_credit_score_screen';
+
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -82,6 +83,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => SchemeDetails(
           governmentSchemeModel: args.model,
         ),
+      );
+    case Routes.myCreditScore:
+      return MaterialPageRoute(
+        builder: (context) => const MyCreditScore(),
       );
     case Routes.availableIncentives:
       return MaterialPageRoute(
@@ -182,7 +187,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const ComplaintsList(),
       );
-       case Routes.bazzarList:
+    case Routes.bazzarList:
       return MaterialPageRoute(
         builder: (context) => const MyBazzars(),
       );
@@ -191,8 +196,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const WhereToDirect(),
       );
 
-    case Routes.approvedPage:
-      return MaterialPageRoute(builder: (context) => const ApprovedPage()); 
+    // case Routes.approvedPage:
+    //   return MaterialPageRoute(builder: (context) => const ApprovedPage());
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),

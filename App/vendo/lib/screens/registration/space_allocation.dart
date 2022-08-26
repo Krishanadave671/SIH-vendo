@@ -45,10 +45,10 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
             PlacePicker("AIzaSyClwDKfzGV_7ICoib-lk2rH0iw5IlKW5Lw"),
       ),
     );
-    print("wowow34oow ${result.subLocalityLevel1.name.toString()}");
-    print("wowow34oow ${result.subLocalityLevel2.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel1!.name.toString()}");
+    print("wowow34oow ${result.subLocalityLevel2!.name.toString()}");
 
-    shopCity = result.city.name.toString();
+    shopCity = result.city!.name.toString();
     print(shopCity);
     ref.watch(locationProvider.notifier).state =
         result.formattedAddress.toString();
@@ -180,7 +180,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                             padding: const EdgeInsets.only(left: 20),
                             child: DropdownButton<String>(
                               hint: AppText.body("Category of shop"),
-                              value: ref.read(dropDownProvider.notifier).state,
+                              value: ref.watch(dropDownProvider.notifier).state,
                               icon: const Icon(Icons.arrow_drop_down),
                               elevation: 16,
                               style: const TextStyle(
