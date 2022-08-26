@@ -37,6 +37,7 @@ class Apiservice {
   static const getdataById = "/checkapprovalstatus";
   static const postTimes = "/api/setvendortime";
   static const getmyfeedbacks = "/api/getreviewsfromcustomer";
+  static const getvendorReviews = "/api/getreviews";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -71,6 +72,33 @@ class Apiservice {
       log('${_baseurl + getmyfeedbacks}/BMC123');
       Response bazzarRawData =
           await _dio.get('${_baseurl + getmyfeedbacks}/$id');
+      List bazzarDataList = bazzarRawData.data;
+      List<VendorReviewModel?> list =
+          bazzarDataList.map((e) => VendorReviewModel.fromJson(e)).toList();
+      log(list[0].toString());
+      return list;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        log('Dio error!');
+        log('STATUS: ${e.response?.statusCode}');
+        log('DATA: ${e.response?.data}');
+        log('HEADERS: ${e.response?.headers}');
+      } else {
+        // Error due to setting up or sending the request
+        log('Error sending request!');
+        log(e.message);
+      }
+    }
+    return <VendorReviewModel>[];
+  }
+
+
+  Future<List<VendorReviewModel?>> getVendorFeedback(String id) async {
+    log("inside getVendorFeedback");
+    try {
+      log('${_baseurl +getvendorReviews }/$id');
+      Response bazzarRawData =
+          await _dio.get('${_baseurl + getvendorReviews}/$id');
       List bazzarDataList = bazzarRawData.data;
       List<VendorReviewModel?> list =
           bazzarDataList.map((e) => VendorReviewModel.fromJson(e)).toList();

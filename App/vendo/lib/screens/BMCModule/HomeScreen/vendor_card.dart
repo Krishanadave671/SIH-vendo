@@ -24,7 +24,7 @@ class VendorCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  AppText.body("Name: "),
+                  AppText.body("Id: "),
                   AppText.body(name),
                 ],
               ),
