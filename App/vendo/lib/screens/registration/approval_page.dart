@@ -32,7 +32,7 @@ class _ApprovalPageState extends ConsumerState<ApprovalPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isApproved = ref.watch(vendordetailsProvider).isApproved;
+    final isApproved = "approved";
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
