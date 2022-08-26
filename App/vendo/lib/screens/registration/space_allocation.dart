@@ -180,7 +180,7 @@ class _SpaceAllocationState extends ConsumerState<SpaceAllocation> {
                             padding: const EdgeInsets.only(left: 20),
                             child: DropdownButton<String>(
                               hint: AppText.body("Category of shop"),
-                              value: ref.read(dropDownProvider.notifier).state,
+                              value: ref.watch(dropDownProvider.notifier).state,
                               icon: const Icon(Icons.arrow_drop_down),
                               elevation: 16,
                               style: const TextStyle(

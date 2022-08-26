@@ -29,7 +29,7 @@ class VendorNotifier extends StateNotifier<VendorModel> {
             weeklyBazzarList: [],
             creditScore: 0,
             vendorImageurl: '',
-            isApproved: '',
+            isApproved: 'pending',
             shopLocationLat: 26.8377363,
             shopLocationLong: 75.653357,
             vendorCategory: '',

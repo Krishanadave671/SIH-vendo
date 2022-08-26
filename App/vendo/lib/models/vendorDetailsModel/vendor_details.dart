@@ -25,7 +25,7 @@ class VendorModel {
   String token;
   String vendingZoneIdApplied;
   List<dynamic> reviewList;
-  List<VendorComplaintModel> complaintsList;
+  List<dynamic> complaintsList;
   List<dynamic> weeklyBazzarList;
   double creditScore;
   String vendorImageurl;

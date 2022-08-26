@@ -54,6 +54,7 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
     vendor = ref.watch(vendordetailsProvider);
     tokenGeneration(ref);
     _listenLocation();
+
     String comp = ref.watch(goProvider);
     if (comp == "/") {
       ref.watch(apiserviceProvider).getuserData(context, ref);
@@ -110,10 +111,20 @@ class _WhereToDirect extends ConsumerState<WhereToDirect> {
       print("distance : $distance");
       if (distance > 1 && vendor.inOrOut == true) {
         vendor.inOrOut = false;
-        print("outtime : ${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        print(
+            "outtime : ${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        vendor.inTime.add(
+            "${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        final _api = ref.watch(apiserviceProvider);
+        _api.putOutTime(context, ref);
       } else if (distance < 1 && vendor.inOrOut == false) {
         vendor.inOrOut = true;
-        print("intime :${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        print(
+            "intime :${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        vendor.outTime.add(
+            "${DateTime.now().hour.toString()},${DateTime.now().minute.toString()}");
+        final _api = ref.watch(apiserviceProvider);
+        _api.putInTime(context, ref);
       }
 
       // await FirebaseFirestore.instance.collection('location').doc('user1').set({
