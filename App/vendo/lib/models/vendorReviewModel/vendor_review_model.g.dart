@@ -8,6 +8,8 @@ part of 'vendor_review_model.dart';
 
 VendorReviewModel _$VendorReviewModelFromJson(Map<String, dynamic> json) =>
     VendorReviewModel(
+      reviewId: json['reviewId'] as String,
+      vendorId: json['vendorId'] as String,
       waterClogging: json['waterClogging'] as String,
       foodCover: json['foodCover'] as String,
       cleanDrinkingWater: json['cleanDrinkingWater'] as String,
@@ -23,6 +25,7 @@ VendorReviewModel _$VendorReviewModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$VendorReviewModelToJson(VendorReviewModel instance) =>
     <String, dynamic>{
+      'vendorId': instance.vendorId,
       'waterClogging': instance.waterClogging,
       'foodCover': instance.foodCover,
       'cleanDrinkingWater': instance.cleanDrinkingWater,
@@ -34,4 +37,5 @@ Map<String, dynamic> _$VendorReviewModelToJson(VendorReviewModel instance) =>
       'shortDescription': instance.shortDescription,
       'reviewImageUrl': instance.reviewImageUrl,
       'creditScoreAbsolute': instance.creditScoreAbsolute,
+      'reviewId': instance.reviewId,
     };

@@ -6,6 +6,7 @@ part 'vendor_review_model.g.dart';
 
 @JsonSerializable()
 class VendorReviewModel {
+  String vendorId;
   String waterClogging;
   String foodCover;
   String cleanDrinkingWater;
@@ -17,8 +18,11 @@ class VendorReviewModel {
   String shortDescription;
   String reviewImageUrl;
   double creditScoreAbsolute;
+  String reviewId;
 
   VendorReviewModel({
+    required this.reviewId,
+    required this.vendorId,
     required this.waterClogging,
     required this.foodCover,
     required this.cleanDrinkingWater,
