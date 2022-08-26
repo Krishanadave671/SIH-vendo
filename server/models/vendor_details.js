@@ -105,7 +105,6 @@ const vendorDetails = mongoose.Schema({
     creditScore: {
         type: Number,
         required: true,
-        default: 0
     },
     vendorImageurl: {
         type: String,
@@ -122,29 +121,41 @@ const vendorDetails = mongoose.Schema({
         type: [reviews]
     },
     weeklyBazzarList: [{
-        "bazzarId": {
-            type: String,
-        },
-        "bazzarName": {
-            type: String,
 
-        },
-        "status": {
-            type: String,
-            default: "pending"
-        }
-    }],
-    schemeList: [{
-        "schemeId": {
-            type: String,
-            unique: true,
-
-        },
-        "status": {
-            type: String,
-            default: "pending"
-        }
-    }],
+      "bazzarId" : {
+        type: String,  
+      },
+      "bazzarName" : {
+        type: String,
+       
+      },
+      "status" : {
+        type: String,
+        default : "pending"
+      } 
+}]  ,
+    schemeList :[{
+      "schemeId" : {
+        type: String,
+        unique : true, 
+        
+      },
+      "status" : {
+        type: String,
+        default : "pending"
+      } , 
+      required : false 
+      
+    }], 
+    vendorCategory : {
+      type : String , 
+      required : true 
+    }, 
+    shopName : {
+        type : String ,
+        required : true ,
+        trim : true
+    },
     vendorCategory: {
         type: String,
         required: true

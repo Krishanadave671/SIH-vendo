@@ -37,5 +37,14 @@ reviewsrouter.get("/api/getreviews/:vendorId", async(req, res) => {
     }
 } );
 
+reviewsrouter.get("/api/getreviewsfromcustomer/:cusid" , async (req , res )=> {
+    try{
+        const {cusid} = req.params;
+        let reviews = await Review.find({bmcId : cusid});
+        res.status(200).json(reviews);
+    }catch(e){
+        res.status(500).json({e : e.message});
+    }
+})
 
 module.exports = reviewsrouter;

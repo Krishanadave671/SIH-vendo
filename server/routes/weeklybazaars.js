@@ -68,12 +68,10 @@ bazzarsrouter.post("/api/registerforbazzar", async (req, res) => {
 // approved bazzar by admin
 bazzarsrouter.post("/api/approvebazzar", async (req, res) => {
     try {
-        
         const {bazzarId , vendorId} = req.body;
-    
         await Bazzars.findOneAndUpdate({bazzarId : bazzarId , "vendorRegisteredList.vendorId" : vendorId },
         {"$set" : {"vendorRegisteredList.$.vendorstatus" : "approved"}}, {new: true});
-     let vendors = await Vendors.findOneAndUpdate({ vendorId : vendorId , "weeklyBazzarList.bazzarId" : bazzarId },
+     let vendors = await Vendors.updateOne({ vendorId : vendorId , "weeklyBazzarList.bazzarId" : bazzarId },
         {"$set" : {"weeklyBazzarList.$.status" : "approved"}}, {new: true});
         return res.status(200).json(vendors);
     }catch(e){
