@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/providers/vendor_detailsprovider.dart';
 import 'package:vendo/routes.dart';
 import 'firebase_options.dart';
+
 import 'services/dio_client.dart';
 
 Future<void> main() async {

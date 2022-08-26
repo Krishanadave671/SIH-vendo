@@ -35,7 +35,9 @@ dependencies:
   shared_preferences: ^2.0.15
   table_calendar: ^3.0.6
   translator: ^0.1.7
+
   url_launcher: ^6.1.5
+
   flutter_geofence: ^0.4.4
   geolocator: ^9.0.1
   google_maps_flutter: ^2.1.12
@@ -43,6 +45,7 @@ dependencies:
   permission_handler: ^10.0.0
 
   
+
 
 
 
