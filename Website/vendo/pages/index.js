@@ -103,44 +103,57 @@ export default function Home() {
       </div>
       
       <div className={styles.stories }>
-        <div className={styles.headline}> Inspiring stories</div>
+        <div className={styles.headline}> Inspiring story of vendors</div>
         <Carousel activeIndex={index} onSelect={handleSelect}>
-          <Carousel.Item>
-            <img
+          <Carousel.Item style={{height:"200px  "}} >
+            {/* <img
               // className="d-block w-100"
               src="https://www.sundaynews.co.zw/wp-content/uploads/sites/16/2018/11/vendor1.jpg"
               alt="First slide"
-            />
-            <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            /> */}
+            <Carousel.Caption style={{backgroundColor:"black",opacity:"80%"}}>
+              <h3> Swapnil journey to success
+              </h3>
+              <p >
+                Swapnil Pandhare is one of millions who are part of an informal workforce that has emerged in the last few years and whose circumstances did not leave them with much choice
+Swapnil Pandhare has tried to defy his circumstances and pick up skills that have kept him going despite the lack of a good formal education
+
+                <a href="https://www.livemint.com/budget/news/the-story-of-a-street-vendor-who-drove-his-way-out-of-poverty-1548874595069.html">Read more</a>
+              </p>
             </Carousel.Caption>
           </Carousel.Item>
-          <Carousel.Item>
-            <img
+          <Carousel.Item style={{height:"200px"}}>
+            {/* <img
               // className="d-block w-100"
               src="image.png"
               // src="holder.js/800x400?text=Second slide&bg=282c34"
               alt="Second slide"
-            />
+            /> */}
 
-            <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <Carousel.Caption style={{backgroundColor:"black",opacity:"80%"}}>
+              <h3>From encroachers to self-employed</h3>
+              <p>Dinesh Kumar Dixit is one of those street vendors—known locally as a “rehri-patri walla”—and he’s spent the last 40 years standing on a Delhi street, selling the sort of glass bangles that are a specialty
+of Firozabad, his hometown in Uttar Pradesh. According to India’s Ministry of Housing and Urban
+Poverty Alleviation, there are 10 million street vendors like Dinesh in India—600,000 just in Delhi.
+
+<a href="https://www.dignityunbound.org/doing-development-differently-india-from-floor-to-sky-a-street-vendor-in-india-finds-his-voice/index.html">Read more</a>
+
+</p>
             </Carousel.Caption>
           </Carousel.Item>
-          <Carousel.Item>
-            <img
+          <Carousel.Item style={{height:"200px"}}>
+            {/* <img
               // className="d-block w-100"
               src="image.png"
               // src="holder.js/800x400?text=Third slide&bg=20232a"
               alt="Third slide"
-            />
+            /> */}
 
-            <Carousel.Caption>
-              <h3>Third slide label</h3>
+            <Carousel.Caption style={{backgroundColor:"black",opacity:"80%"}}>
+              <h3>Street vendor turned crorepati</h3>
               <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              Venkatesh Iyer, the founder of Goli Vada Pav, started his adventure with this venture in 2004. 18 years down the line, the business grew to 350+ outlets, expanding in 20 states and 100 cities. Venky always emphasized ensuring that the taste remained exactly the same in each and every outlet. He got inspiration from the stories of Narayan Murthy while starting his own business. Top business schools like Harvard business school, ISB Hyderabad practices case studies today on Venkatesh Iyer and his Rs 50 crore food business.
+              <a href="https://curlytales.com/these-street-vendors-in-mumbai-turned-crorepatis-by-selling-vada-pav/">Read More</a>
               </p>
             </Carousel.Caption>
           </Carousel.Item>

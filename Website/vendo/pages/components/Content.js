@@ -12,6 +12,7 @@ import {
  } from "@react-google-maps/api";
  import CommonInput from "./CommonInput";
  import { Button } from "react-bootstrap";
+import { Router, useRouter } from "next/router";
 Chart.register(CategoryScale);
 
 const data = {
@@ -70,6 +71,7 @@ const data1 = {
 };
 
 function Content() {
+  const [card, setcard] = React.useState([0,0,0,0]);
   return (
     <div className="ContentContainer">
       <section className="ScrollText">
@@ -81,8 +83,18 @@ function Content() {
       </section>
       <div className="ContentWrapper">
         <div className="Tabs">
-          <div className="Categories">
-            <h2>Vendors under me</h2>
+          <div className="Categories" onClick={(e)=>{
+            var tmpstate = card;
+            tmpstate[0]^=1;
+            console.log(tmpstate);
+            setcard(tmpstate);
+            console.log(card);
+            // React.useState();
+            // useRouter().push("/dashboard")
+          }}>
+            <h2>
+              {card[0]}
+            </h2>
           </div>
         </div>
 
