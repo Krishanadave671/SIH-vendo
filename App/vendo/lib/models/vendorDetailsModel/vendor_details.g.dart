@@ -25,9 +25,7 @@ VendorModel _$VendorModelFromJson(Map<String, dynamic> json) => VendorModel(
       token: json['token'] as String,
       vendingZoneIdApplied: json['vendingZoneIdApplied'] as String,
       reviewList: json['reviewList'] as List<dynamic>,
-      complaintsList: (json['complaintsList'] as List<dynamic>)
-          .map((e) => VendorComplaintModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      complaintsList: json['complaintsList'] as List<dynamic>,
       weeklyBazzarList: json['weeklyBazzarList'] as List<dynamic>,
       creditScore: (json['creditScore'] as num).toDouble(),
       vendorImageurl: json['vendorImageurl'] as String,

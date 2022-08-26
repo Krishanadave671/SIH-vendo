@@ -62,7 +62,7 @@ class Routes {
   static const incentiveDetails = '/incentive_detail';
   static const complaintsList = '/complaints_list';
 
-  static const approvedPage = '/approvedPage';
+  // static const approvedPage = '/approvedPage';
   static const bazzarList = '/bazzar_list_view';
 
   static const availableIncentives = '/available_incentives';
@@ -182,7 +182,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const ComplaintsList(),
       );
-       case Routes.bazzarList:
+    case Routes.bazzarList:
       return MaterialPageRoute(
         builder: (context) => const MyBazzars(),
       );
@@ -191,8 +191,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const WhereToDirect(),
       );
 
-    case Routes.approvedPage:
-      return MaterialPageRoute(builder: (context) => const ApprovedPage()); 
+    // case Routes.approvedPage:
+    //   return MaterialPageRoute(builder: (context) => const ApprovedPage());
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
