@@ -39,8 +39,9 @@ class _MyAppState extends ConsumerState<MyApp> {
     log("inside main ${vendordata.toJson().toString()}");
     // vendordata.token ?  Routes.mainpage  : Routes.welcomescreen
     return const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: generateRoute,
-        initialRoute: Routes.myCreditScore);
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: generateRoute,
+      initialRoute: Routes.whereTo,
+    );
   }
 }
