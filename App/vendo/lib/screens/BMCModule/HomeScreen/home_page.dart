@@ -169,34 +169,36 @@ class _BMCHomePageState extends ConsumerState<BMCHomePage> {
                   borderRadius: BorderRadius.all(Radius.circular(20))),
             ),
 
-            RefreshIndicator(
-              onRefresh: () async {
-                ref.refresh(feedbackProvider);
-              },
-              child: Expanded(
-                child: myfeedback.when(
-                  data: (data) {
-                    List<VendorReviewModel?> vendinReviewList =
-                        data.map((e) => e).toList();
-                    log(vendinReviewList.toList().toString());
-                    return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: vendinReviewList.length,
-                        itemBuilder: ((context, index) {
-                          return VendorCard(
-                              location:
-                                  vendinReviewList[index]!.shortDescription,
-                              name: vendinReviewList[index]!.vendorId);
-                        }));
-                  },
-                  error: (e, t) {
-                    log(e.toString());
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  ref.refresh(feedbackProvider);
+                },
+                child: Expanded(
+                  child: myfeedback.when(
+                    data: (data) {
+                      List<VendorReviewModel?> vendinReviewList =
+                          data.map((e) => e).toList();
+                      log(vendinReviewList.toList().toString());
+                      return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: vendinReviewList.length,
+                          itemBuilder: ((context, index) {
+                            return VendorCard(
+                                location:
+                                    vendinReviewList[index]!.shortDescription,
+                                name: vendinReviewList[index]!.vendorId);
+                          }));
+                    },
+                    error: (e, t) {
+                      log(e.toString());
 
-                    return Center(child: CircularProgressIndicator());
-                  },
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
+                      return Center(child: CircularProgressIndicator());
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 ),
               ),

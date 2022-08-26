@@ -196,12 +196,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => const WhereToDirect(),
       );
 
-    // case Routes.approvedPage:
-<<<<<<< HEAD
-    //   return MaterialPageRoute(builder: (context) => const ApprovedPage()); 
-=======
-    //   return MaterialPageRoute(builder: (context) => const ApprovedPage());
->>>>>>> 9de13bbb1bd3c000cdc07ca3ffa5c5cd3d3ed60c
+
     default:
       return MaterialPageRoute(
         builder: (context) => const BMCBottomNav(),
