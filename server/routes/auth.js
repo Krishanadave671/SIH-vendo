@@ -10,7 +10,7 @@ const vendingzones = require("../models/vendingzones");
 authRouter.post("/api/signup", async(req, res) => {
     try {
 
-        const {phone , password , vendingZoneIdApplied}  =  req.body ; 
+        const { phone, password, vendingZoneIdApplied } = req.body;
         const existingVendor = await Vendor.findOne({ phone });
         if (existingVendor) {
             return res
@@ -20,9 +20,9 @@ authRouter.post("/api/signup", async(req, res) => {
 
         const hashedPassword = await bcryptjs.hash(password, 8);
 
-        let vendor = new Vendor({...req.body , password : hashedPassword});
+        let vendor = new Vendor({...req.body, password: hashedPassword });
 
-        
+        console.log(vendor.toJSON.toString);
         vendor = await vendor.save();
         await vendingzones.findOneAndUpdate({ vendingZoneId: vendingZoneIdApplied }, { $inc: { pendingRegistrations: 1 } });
         res.json(vendor);
@@ -42,30 +42,30 @@ authRouter.post("/api/setintime", async(req, res) => {
     } catch (e) {
         res.status(500).json({ error: e.message });
     }
-}); 
+});
 // senduserlive location lat and long 
 authRouter.post("/api/senduserlivelocation", async(req, res) => {
-    try {
-        const { vendorId, shopLocationLat, shopLocationLong } = req.body;   
-        let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { shopLocationLat: shopLocationLat, shopLocationLong: shopLocationLong }, { new: true });
-        res.status(200).json(vendor);
-    } catch (e) {
-        res.status(500).json({ error: e.message });
-    }
-}),
+        try {
+            const { vendorId, shopLocationLat, shopLocationLong } = req.body;
+            let vendor = await Vendor.findOneAndUpdate({ vendorId: vendorId }, { shopLocationLat: shopLocationLat, shopLocationLong: shopLocationLong }, { new: true });
+            res.status(200).json(vendor);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    }),
 
-authRouter.get("/api/getvendorlivelocation/:city", async (req, res) => {
-   
-    try{
-        const {city} = req.params;
-        let vendor = await Vendor.find({shopCity : city ,}).select({ shopLocationLat: 1, shopLocationLong: 1 });
-    res.status(200).json(vendor);
+    authRouter.get("/api/getvendorlivelocation/:city", async(req, res) => {
 
-    }catch (e) {
-        res.status(500).json({ error: e.message });
-    }   
-})
-//Sign In
+        try {
+            const { city } = req.params;
+            let vendor = await Vendor.find({ shopCity: city, }).select({ shopLocationLat: 1, shopLocationLong: 1 });
+            res.status(200).json(vendor);
+
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+    })
+    //Sign In
 authRouter.post("/api/login", async(req, res) => {
     try {
         const { phone, password } = req.body;
@@ -163,7 +163,7 @@ authRouter.get("/api/getvendors/pending/:location", async(req, res) => {
     } catch (e) {
         res.status(500).json({ e: e.message });
     }
-}) 
+})
 
 
 // set vendors checkin and checkout time -- set inOrOutTime
@@ -185,26 +185,24 @@ authRouter.get("/api/getvendors/approved/:location", async(req, res) => {
     } catch (e) {
         res.status(500).json({ e: e.message });
     }
-}) 
+})
 
 module.exports = authRouter;
 
 
 authRouter.post("/api/setvendortime", async(req, res) => {
-    try{
-        const {vendorId, inOrOut, time } = req.body;
-        let vendor = await Vendor.findOne({vendorId});
-        if (inOrOut == true){
-            await Vendor.updateOne({vendorId},  {inOrOut: true, "$push": {inTime: time}});
-        }
-        else {
-            await Vendor.updateOne({vendorId}, {inOrOut: false, "$push": {outTime: time}});
+    try {
+        const { vendorId, inOrOut, time } = req.body;
+        let vendor = await Vendor.findOne({ vendorId });
+        if (inOrOut == true) {
+            await Vendor.updateOne({ vendorId }, { inOrOut: true, "$push": { inTime: time } });
+        } else {
+            await Vendor.updateOne({ vendorId }, { inOrOut: false, "$push": { outTime: time } });
         }
         res.status(200).json(vendor);
-    }catch (e) {
+    } catch (e) {
         res.status(500).json({ e: e.message });
     }
 })
 
 module.exports = authRouter;
-

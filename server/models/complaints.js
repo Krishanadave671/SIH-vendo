@@ -4,11 +4,11 @@ const complaintDetails = mongoose.Schema({
     vendorId: {
         type: String,
         trim: true,
-        required : true 
-    }, 
+        required: true
+    },
     complaintId: {
-        type: String,  
-        trim: true, 
+        type: String,
+        trim: true,
         unique: true
     },
     complaintDate: {
