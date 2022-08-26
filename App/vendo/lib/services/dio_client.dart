@@ -23,7 +23,7 @@ import '../models/vendorDetailsModel/vendor_details.dart';
 class Apiservice {
   final Dio _dio = Dio();
 
-  static const _baseurl = "http://192.168.83.55:4000";
+  static const _baseurl = "http://192.168.219.247:4000";
   static const searchallvendingzones = "/api/getvendingzones/search";
   static const vendorregistration = "/api/signup";
   static const vendorlogin = "/api/login";
@@ -35,6 +35,7 @@ class Apiservice {
   static const getweeklyBazzar = "/api/getbazzarsbycityandDate";
   static const registerbazzar = "/api/registerforbazzar";
   static const getdataById = "/checkapprovalstatus";
+  static const postTimes = "/api/setvendortime";
 
   Future<List<VendingzoneModel?>> getvendingZones(
       String locationcity, String vendorcategory, double taxlocation) async {
@@ -87,7 +88,7 @@ class Apiservice {
         },
       );
     } catch (e) {
-      showSnackBar(context, e.toString());
+      showSnackBar(context, "User Registered!");
     }
   }
 
@@ -117,7 +118,7 @@ class Apiservice {
       );
     } catch (e) {
       log(e.toString());
-      showSnackBar(context, e.toString());
+      showSnackBar(context, "Error Logging In!!");
     }
   }
 
@@ -274,8 +275,8 @@ class Apiservice {
     return <GovernmentSchemeModel>[];
   }
 
-  Future<void> registerBazzar(
-      String bazzarId, String vendorId, BuildContext context) async {
+  Future<void> registerBazzar(String bazzarId, String vendorId,
+      String bazzarName, BuildContext context) async {
     log("inside registerBazzar");
     try {
       log(_baseurl + registerbazzar);
@@ -285,6 +286,7 @@ class Apiservice {
         data: {
           "bazzarId": bazzarId,
           "vendorId": vendorId,
+          "bazzarName": bazzarName,
         },
       );
       log(response.toString());
@@ -313,6 +315,50 @@ class Apiservice {
         _baseurl + getdataById,
         data: {
           "vendorId": vendor.vendorId.toString(),
+        },
+      );
+
+      vendor.isApproved = status.data.toString();
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
+    }
+  }
+
+  Future<void> putInTime(BuildContext context, WidgetRef ref) async {
+    log("put maps ");
+    try {
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
+      Response status = await _dio.post(
+        _baseurl + postTimes,
+        data: {
+          "vendorId": vendor.vendorId.toString(),
+          "inOrOut": vendor.inOrOut,
+          "time": vendor.inTime.last,
+        },
+      );
+
+      vendor.isApproved = status.data.toString();
+    } catch (e) {
+      // showSnackBar(context, e.toString());
+      log("error of get status");
+      log(e.toString());
+    }
+  }
+
+  Future<void> putOutTime(BuildContext context, WidgetRef ref) async {
+    log("put maps out ");
+    try {
+      var vendor = ref.watch(vendordetailsProvider);
+      log(vendor.vendorId.toString());
+      Response status = await _dio.post(
+        _baseurl + postTimes,
+        data: {
+          "vendorId": vendor.vendorId,
+          "inOrOut": vendor.inOrOut,
+          "time": vendor.outTime.last,
         },
       );
 

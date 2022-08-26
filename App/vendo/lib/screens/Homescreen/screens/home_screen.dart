@@ -278,7 +278,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     icon: Icons.score_rounded,
                                     serviceName: "My Credit Score",
                                     color: Colors.yellow,
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.myCreditScore);
+                                    },
                                   ),
                                   Servicescard(
                                     color: Colors.lightGreen,

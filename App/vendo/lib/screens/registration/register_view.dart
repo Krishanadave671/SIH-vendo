@@ -255,7 +255,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                         decoration: InputDecoration(
                             errorText:
                                 _validate ? 'Value Can\'t Be Empty' : null,
-                            icon: Icon(Icons.calendar_today),
+                            icon: const Icon(Icons.calendar_today),
                             labelText: "Enter Birthday"),
                         readOnly: true,
                         onTap: () async {

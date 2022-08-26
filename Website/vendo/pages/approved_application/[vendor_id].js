@@ -17,6 +17,7 @@ function VendorApplicationDetails({ VendorDetails, VendorId }) {
     height: "400px",
     marginTop: "20px",
   };
+  console.log(VendorDetails);
   const position = {
     lat: 37.772,
     lng: -122.214,

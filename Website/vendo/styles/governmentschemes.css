@@ -1,0 +1,22 @@
+.inputforschema{
+    width: 40%;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 10%;
+    column-gap: 20px;
+
+}
+
+.inputforschemas{
+    margin-top: 10%;
+}
+
+.ForImage{
+    background-image: url(../Images/eligibility.png);
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 300px;
+
+    margin-left: 20%;
+
+}

@@ -118,9 +118,10 @@ const vendorDetails = mongoose.Schema({
         type: [complaints]
     },
     reviewList: {
-        type : [reviews]
+        type: [reviews]
     },
     weeklyBazzarList: [{
+
       "bazzarId" : {
         type: String,  
       },
@@ -154,26 +155,35 @@ const vendorDetails = mongoose.Schema({
         type : String ,
         required : true ,
         trim : true
-    }, 
-
-    currentLat : {
-        type : Number , 
-    
-
-    }, 
-    currentLong : {
-        type : Number , 
-    }, 
-    inTime : {
-        type : [String] ,
-
-    }, 
-    outTime : {
-        type : [String] ,
     },
-    inOrOut : {
-        type : Boolean ,
-        default : true 
+    vendorCategory: {
+        type: String,
+        required: true
+    },
+    shopName: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    currentLat: {
+        type: Number,
+
+
+    },
+    currentLong: {
+        type: Number,
+    },
+    inTime: {
+        type: [String],
+
+    },
+    outTime: {
+        type: [String],
+    },
+    inOrOut: {
+        type: Boolean,
+        default: true
     }
 })
 

@@ -16,43 +16,75 @@ class DisplayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 5, bottom: 5),
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          //color: colors.primary,
-          color: Colors.orange,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  AppText.containerText("Bazzar Name: "),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  AppText.containerText(weeklyBazzarModel.bazzarName),
-                ],
-              ),
-              verticalSpaceMedium,
-              Row(
-                children: [
-                  AppText.containerText("Favourable Type: "),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  Expanded(
-                    child: AppText.containerText(
-                      weeklyBazzarModel.vendorTypeFavourable.toString(),
-                      isSingleLined: 1,
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 5, bottom: 5),
+      child: Material(
+        //elevation: 10,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            //border: Border.all(color: Colors.yellow),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            //color: colors.primary,
+            color: Color.fromARGB(255, 246, 210, 223),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    //AppText.bodyBold("Bazzar Name: "),
+                    const Text(
+                      "Bazar Name: ",
+                      style: TextStyle(
+                          color: Colors.pink,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    //AppText.body(weeklyBazzarModel.bazzarName),
+                    Text(
+                      weeklyBazzarModel.bazzarName,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                verticalSpaceSmall,
+                Row(
+                  children: [
+                    //AppText.bodyBold("Favourable Type: "),
+                    const Text(
+                      "Favourable type: ",
+                      style: TextStyle(
+                          color: Colors.pink,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: AppText.body(
+                        weeklyBazzarModel.vendorTypeFavourable
+                            .toString()
+                            .substring(
+                                1,
+                                weeklyBazzarModel.vendorTypeFavourable
+                                        .toString()
+                                        .length -
+                                    1),
+                        isSingleLined: 1,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -40,7 +40,7 @@ class _CalendarState extends ConsumerState<Calendar> {
             child: _buildDefaultSingleDatePickerWithValue(),
           ),
         ),
-        const SizedBox(height: 25),
+        const SizedBox(height: 15),
         Padding(
           padding: const EdgeInsets.only(bottom: 10),
           child: Container(
@@ -58,7 +58,7 @@ class _CalendarState extends ConsumerState<Calendar> {
 
   Widget _buildDefaultSingleDatePickerWithValue() {
     var config = CalendarDatePicker2Config(
-      selectedDayHighlightColor: Colors.amber[900],
+      selectedDayHighlightColor: Colors.pink,
       weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       weekdayLabelTextStyle: const TextStyle(
         color: Colors.black87,
@@ -71,7 +71,7 @@ class _CalendarState extends ConsumerState<Calendar> {
         fontWeight: FontWeight.bold,
       ),
       dayTextStyle: const TextStyle(
-        color: Colors.amber,
+        color: Colors.pink,
         fontWeight: FontWeight.bold,
       ),
       disabledDayTextStyle: const TextStyle(
@@ -83,7 +83,6 @@ class _CalendarState extends ConsumerState<Calendar> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 10),
-          //const Text('Single Date Picker (With default value)'),
           CalendarDatePicker2(
             config: config,
             initialValue: ref.watch(selectedDateProvider),
@@ -97,8 +96,7 @@ class _CalendarState extends ConsumerState<Calendar> {
                 .difference(DateTime.now().subtract(const Duration(days: 1)))
                 .isNegative,
           ),
-          const SizedBox(height: 10),
-
+          const SizedBox(height: 0),
           Container(
             height: 2,
             width: 100,
