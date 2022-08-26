@@ -13,6 +13,7 @@ import 'package:vendo/screens/BMCModule/HomeScreen/home_page.dart';
 
 import 'package:vendo/screens/BMCModule/VendorReview/vendor_review.dart';
 import 'package:vendo/screens/BMCModule/VendorReview/where_to_go.dart';
+import 'package:vendo/screens/Homescreen/screens/widgets/my_reviews.dart';
 
 import 'package:vendo/screens/Notification_screen/notification_screen.dart';
 import 'package:vendo/screens/WeeklyBazzar/my_weekly_bazzars.dart';
@@ -66,6 +67,7 @@ class Routes {
   static const bazzarList = '/bazzar_list_view';
   static const availableIncentives = '/available_incentives';
   static const myCreditScore = '/my_credit_score_screen';
+  static const myReviews = '/my_reviews_view';
 }
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -161,7 +163,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           shopName: args.shopName,
           vendorLocation: args.vendorLocation,
           phoneNo: args.phoneNo,
-          id:args.id,
+          id: args.id,
         ),
       );
     case Routes.vendingZoneCard:
@@ -195,7 +197,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => const WhereToDirect(),
       );
-
+    case Routes.myReviews:
+      return MaterialPageRoute(builder: (context) => const MyReviews());
 
     default:
       return MaterialPageRoute(

@@ -6,25 +6,23 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vendo/models/vendorDetailsModel/vendor_details.dart';
 import 'package:vendo/models/vendorReviewModel/vendor_review_model.dart';
+import 'package:vendo/providers/vendor_review_provider.dart';
 import 'package:vendo/screens/BMCModule/HomeScreen/vendor_card.dart';
 import 'package:vendo/services/dio_client.dart';
 import 'package:vendo/util/AppFonts/app_text.dart';
 import 'package:vendo/util/AppInterface/ui_helpers.dart';
 
-import '../../../models/vendor_visit_list/vendor_visit_list.dart';
-import '../../../providers/vendor_review_provider.dart';
-
-class BMCHomePage extends ConsumerStatefulWidget {
-  const BMCHomePage({Key? key}) : super(key: key);
+class MyReviews extends ConsumerStatefulWidget {
+  const MyReviews({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _BMCHomePageState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyReviews();
 }
 
-class _BMCHomePageState extends ConsumerState<BMCHomePage> {
+class _MyReviews extends ConsumerState<MyReviews> {
   @override
   Widget build(BuildContext context) {
-    final myfeedback = ref.watch(myfeedbackProvider);
+    final myfeedback = ref.watch(vendorFeedbackProvider);
 
     return Scaffold(
       body: SafeArea(
@@ -189,7 +187,7 @@ class _BMCHomePageState extends ConsumerState<BMCHomePage> {
                             return VendorCard(
                                 location:
                                     vendinReviewList[index]!.shortDescription,
-                                name: vendinReviewList[index]!.vendorId);
+                                name: vendinReviewList[index]!.bmcOfficerId);
                           }));
                     },
                     error: (e, t) {

@@ -287,7 +287,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                     color: Colors.lightGreen,
                                     icon: Icons.reviews,
                                     serviceName: "My Reviews",
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.of(context)
+                                          .pushNamed(Routes.myReviews);
+                                    },
                                   ),
                                   Servicescard(
                                     color: Colors.black,
